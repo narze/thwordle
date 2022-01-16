@@ -1,4 +1,4 @@
-import { CharState, splitWord, validateWord } from "./Wordle"
+import { CharState, normalizeWord, splitWord, validateWord } from "./Wordle"
 
 describe("#splitWord", () => {
   it("exists", () => {
@@ -40,6 +40,15 @@ describe("#splitWord", () => {
   })
 })
 
+describe("normalizeWord", () => {
+  it("strips upper-lower characters", () => {
+    const input = "สวัสดี"
+    const expectedOutput = "สวสด"
+
+    expect(normalizeWord(input)).toEqual(expectedOutput)
+  })
+})
+
 describe("validateWord", () => {
   it("exists", () => {
     expect(validateWord).toBeDefined()
@@ -77,6 +86,34 @@ describe("validateWord", () => {
       { correct: CharState.Correct, char: "ไ" },
       { correct: CharState.OutOfPlace, char: "ย" },
       { correct: CharState.Wrong, char: "ล" },
+    ]
+    expect(validateWord(input, solution)).toEqual(expectedOutput)
+  })
+
+  it("checks without upper/lower sara", () => {
+    const input = "ปลาชชร"
+    const solution = "ประชุมว"
+
+    const expectedOutput = [
+      { correct: CharState.Correct, char: "ป" },
+      { correct: CharState.Wrong, char: "ล" },
+      { correct: CharState.Wrong, char: "า" },
+      { correct: CharState.Correct, char: "ชุ" },
+      { correct: CharState.Wrong, char: "ช" },
+      { correct: CharState.OutOfPlace, char: "ร" },
+    ]
+    expect(validateWord(input, solution)).toEqual(expectedOutput)
+  })
+
+  it("ignores already correct characters from matching again", () => {
+    const input = "ชมนม"
+    const solution = "ชุมชน"
+
+    const expectedOutput = [
+      { correct: CharState.Correct, char: "ชุ" },
+      { correct: CharState.Correct, char: "ม" },
+      { correct: CharState.OutOfPlace, char: "น" },
+      { correct: CharState.Wrong, char: "ม" },
     ]
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
