@@ -9,14 +9,15 @@
   import { CharState, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
 
-  const url = "https://single-page-svelte.vercel.app"
-  const title = "Single Page Svelte"
+  const url = "https://thwordle.vercel.app"
+  const title = "Thwordle"
 
-  const menuItems = [{ name: "Github", url: "https://github.com/narze/single-page-svelte" }]
+  const menuItems = [{ name: "Github", url: "https://github.com/narze/thwordle" }]
 
-  const description = "Build a single page app with Svelte, quickly."
+  const description = "Wordle clone, but it's Thai."
   const imageUrl =
-    "https://raw.githubusercontent.com/narze/timelapse/master/projects/single-page-svelte_home.png"
+    "https://raw.githubusercontent.com/narze/timelapse/master/projects/thwordle_home.png"
+
   const gtagId = null
   const words5to7 = words.filter((word) => {
     const w = splitWord(word)

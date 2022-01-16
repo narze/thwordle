@@ -1,6 +1,6 @@
-# Single Page Svelte
+# Thwordle
 
-Build a single page app with Svelte, quickly.
+[Wordle](https://www.powerlanguage.co.uk/wordle/) clone, but it's Thai.
 
 ## Setup
 
@@ -14,10 +14,3 @@ Build a single page app with Svelte, quickly.
 - Tailwind.css using [Twind](https://twind.dev)
 - [Ko-fi](https://ko-fi.com)
 - [Jest](https://jestjs.io) & [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library)
-
-## TODOs
-
-- [ ] Responsive design (Mobile first)
-- [ ] Linting with ESLint
-- [ ] Toggleable Dark Mode
-- [ ] Modal view (About/Credits)
