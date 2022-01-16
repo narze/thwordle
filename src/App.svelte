@@ -95,8 +95,8 @@
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
 <main class="w-full h-screen flex flex-col justify-center items-center">
-  <h1 class="text-6xl text-green-400 flex flex-col">
-    <span>Thwordle</span>
+  <h1 class="text-6xl text-green-400 flex flex-col mb-4">
+    <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
   </h1>
 
   <!-- Input word -->
