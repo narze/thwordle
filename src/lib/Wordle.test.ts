@@ -90,6 +90,20 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
+  it("validate out-of-place alphabets and match substring with upper-lower sara", () => {
+    const input = "xจxxx"
+    const solution = "จังหวัด"
+
+    const expectedOutput = [
+      { correct: CharState.Wrong, char: "x" },
+      { correct: CharState.OutOfPlace, char: "จ" },
+      { correct: CharState.Wrong, char: "x" },
+      { correct: CharState.Wrong, char: "x" },
+      { correct: CharState.Wrong, char: "x" },
+    ]
+    expect(validateWord(input, solution)).toEqual(expectedOutput)
+  })
+
   it("checks without upper/lower sara", () => {
     const input = "ปลาชชร"
     const solution = "ประชุมว"

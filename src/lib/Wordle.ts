@@ -28,16 +28,20 @@ export function normalizeWord(word: string) {
 
 export function validateWord(word: string, solution: string) {
   const wordSplitted = splitWord(word)
-  // const wordNormalizedSplitted = splitWord(normalizeWord(word))
+  const wordNormalizedSplitted = splitWord(normalizeWord(word))
   const solutionSplitted = splitWord(solution)
   const solutionNormalizedSplitted = splitWord(normalizeWord(solution))
 
   const output = solutionSplitted.map((s, idx) => {
     const sNormalized = solutionNormalizedSplitted[idx]
     const char = wordSplitted[idx]
+    const cNormalized = wordNormalizedSplitted[idx]
     if (char === s || char === sNormalized) {
       return { correct: CharState.Correct, char: s }
-    } else if (solutionSplitted.includes(char)) {
+    } else if (
+      solutionSplitted.includes(char) ||
+      solutionNormalizedSplitted.includes(cNormalized)
+    ) {
       return { correct: CharState.OutOfPlace, char }
     } else {
       return { correct: CharState.Wrong, char }
@@ -48,7 +52,10 @@ export function validateWord(word: string, solution: string) {
     if (sol1.correct == CharState.Correct) {
       // Find OutOfPlace characters and make it wrong
       output.forEach((sol2, idx) => {
-        if (sol1.char == sol2.char && sol2.correct == CharState.OutOfPlace) {
+        if (
+          (sol1.char == sol2.char || normalizeWord(sol1.char) == normalizeWord(sol2.char)) &&
+          sol2.correct == CharState.OutOfPlace
+        ) {
           output[idx] = { correct: CharState.Wrong, char: sol2.char }
         }
       })
