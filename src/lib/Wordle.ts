@@ -6,7 +6,6 @@ export enum CharState {
 
 export function splitWord(word: string) {
   const alphas = word.split("")
-
   const out = []
 
   alphas.forEach((a) => {
