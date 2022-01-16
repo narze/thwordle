@@ -6,6 +6,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
+  import { CharState, validateWord } from "./lib/Wordle"
 
   const url = "https://single-page-svelte.vercel.app"
   const title = "Single Page Svelte"
@@ -16,6 +17,21 @@
   const imageUrl =
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/single-page-svelte_home.png"
   const gtagId = null
+
+  let input = ""
+  let solution = "ไทย"
+  let validate
+
+  $: input = input.replace(/[^ก-๙]/g, "")
+
+  $: validate = validateWord(input, solution)
+  $: console.log(validate)
+
+  const colors = {
+    [CharState.Correct]: "bg-green-500 border-green-500",
+    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
+    [CharState.Wrong]: "bg-slate-500 border-slate-500",
+  }
 </script>
 
 <Kofi name="narze" label="Support Me" />
@@ -25,8 +41,27 @@
 
 <main class="w-full h-screen flex flex-col justify-center items-center">
   <h1 class="text-6xl text-green-400 flex flex-col">
-    <span>Single</span><span>Page</span><span>Svelte</span>
+    <span>Thwordle</span>
   </h1>
+
+  <!-- Input word -->
+  <input type="text" class="border" bind:value={input} />
+  <!-- Solution word -->
+  <input type="text" class="border" bind:value={solution} />
+  <!-- Output -->
+  <div class="flex justify-center mb-1">
+    {#each validate as { correct, char }}
+      <div
+        class={`${
+          colors[correct] || "bg-white"
+        } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+         rounded`}
+      >
+        {char ?? ""}
+      </div>
+    {/each}
+  </div>
+  {JSON.stringify(validate)}
 </main>
 
 <style>

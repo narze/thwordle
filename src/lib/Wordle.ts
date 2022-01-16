@@ -1,3 +1,9 @@
+export enum CharState {
+  Correct = 0,
+  OutOfPlace,
+  Wrong,
+}
+
 export function splitWord(word: string) {
   const alphas = word.split("")
 
@@ -14,4 +20,20 @@ export function splitWord(word: string) {
   })
 
   return out
+}
+
+export function validateWord(word: string, solution: string) {
+  const wordSplitted = splitWord(word)
+  const solutionSplitted = splitWord(solution)
+
+  return solutionSplitted.map((s, idx) => {
+    const char = wordSplitted[idx]
+    if (char === s) {
+      return { correct: CharState.Correct, char }
+    } else if (solutionSplitted.includes(char)) {
+      return { correct: CharState.OutOfPlace, char }
+    } else {
+      return { correct: CharState.Wrong, char }
+    }
+  })
 }
