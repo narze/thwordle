@@ -2,6 +2,13 @@
 
 [Wordle](https://www.powerlanguage.co.uk/wordle/) clone, but it's Thai.
 
+## TODOs
+
+- [ ] Share (Copy result)
+- [ ] Word of the day
+- [ ] Save result (localstorage)
+- [ ] Limit attempts
+
 ## Setup
 
 - Clone/fork this repository
