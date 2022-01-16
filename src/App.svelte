@@ -18,20 +18,66 @@
   const imageUrl =
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/single-page-svelte_home.png"
   const gtagId = null
+  const words5to7 = words.filter((word) => {
+    const w = splitWord(word)
+    return w.length >= 5 && w.length <= 7
+  })
 
   let input = ""
-  let solution = words[Math.floor(Math.random() * words.length)]
-  let validate
+  let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
+  let attempts: string[] = []
+  let gameEnded = false
 
-  $: input = input.replace(/[^ก-๙a-zA-Z]/g, "")
+  $: solutionLength = splitWord(solution).length
 
-  $: validate = validateWord(input, solution)
-  $: console.log(validate)
+  $: input = input.replace(/[^ก-๙]/g, "")
+  $: splittedInput = splitWord(input)
+
+  // $: validate = validateWord(input, solution)
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500",
     [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
     [CharState.Wrong]: "bg-slate-500 border-slate-500",
+  }
+
+  function onKeypress(e: KeyboardEvent) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      submit()
+    }
+  }
+
+  function submit() {
+    if (gameEnded) {
+      return
+    }
+
+    // Check if the length is valid
+    if (splitWord(input).length != solutionLength) {
+      alert("กรุณากรอกคำตอบ")
+      return
+    }
+
+    // Add to solution array
+    attempts = [...attempts, input]
+
+    const validation = validateWord(input, solution)
+
+    // if all validation is correct
+    let win = true
+    validation.forEach((v) => {
+      if (v.correct !== CharState.Correct) {
+        win = false
+      }
+    })
+
+    if (win) {
+      alert("คุณชนะแล้ว!")
+      gameEnded = true
+    }
+
+    input = ""
   }
 </script>
 
@@ -46,23 +92,49 @@
   </h1>
 
   <!-- Input word -->
-  <input type="text" class="border" bind:value={input} />
+  <input type="text" class="border" on:keypress={onKeypress} bind:value={input} />
+
+  <button
+    on:click={submit}
+    class="flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+  >
+    Enter</button
+  >
+
   <!-- Solution word -->
-  <input type="text" class="border" bind:value={solution} />
-  <!-- Output -->
+  <!-- <input type="text" class="border" bind:value={solution} /> -->
+  <!-- Check Solution -->
+  {#each attempts.slice(-6) as input}
+    <div class="flex justify-center my-1">
+      {#each validateWord(input, solution) as { correct, char }}
+        <div
+          class={`${
+            colors[correct] || "bg-white"
+          } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+      rounded`}
+        >
+          {char ?? ""}
+        </div>
+      {/each}
+    </div>
+  {/each}
+  {#if !gameEnded}
+    <div class="flex justify-center my-1">
+      {#each new Array(solutionLength).fill(0) as _, i}
+        <div
+          class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
+        >
+          {splittedInput[i] || ""}
+        </div>
+      {/each}
+    </div>
+  {/if}
+
+  <!-- Debug -->
   <div class="flex justify-center my-20">
-    {#each validate as { correct, char }}
-      <div
-        class={`${
-          colors[correct] || "bg-white"
-        } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
-         rounded`}
-      >
-        {char ?? ""}
-      </div>
-    {/each}
+    <div>DEBUG</div>
+    {JSON.stringify(attempts)}
   </div>
-  {JSON.stringify(validate)}
 </main>
 
 <style>
