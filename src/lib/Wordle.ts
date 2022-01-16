@@ -10,11 +10,11 @@ export function splitWord(word: string) {
   const out = []
 
   alphas.forEach((a) => {
-    // if a is in a-z
+    // ถ้าตัวอักษรเป็นตัวตรงกลาง ให้ถือเป็นตัวใหม่
     if (a.match(/[ก-ฮa-zA-Z]/) || a.match(/[ใเแโไาำะๆฯฤา]/)) {
       out.push(a)
     } else {
-      // append to last element
+      // ถ้าเป็นสระบนล่าง หรือวรรณยุกต์ ให้ต่อท้ายตัวเดิม
       out[out.length - 1] += a
     }
   })
