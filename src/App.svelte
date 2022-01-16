@@ -148,12 +148,13 @@
   <!-- Layout -->
   <div class="grid grid-cols-10 justify-center mb-1 mt-8">
     {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
-      <div
+      <button
+        on:click={() => (input += alphabet)}
         class={colors[correctState] +
           " w-12 h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
       >
         {alphabet}
-      </div>
+      </button>
     {/each}
   </div>
 
