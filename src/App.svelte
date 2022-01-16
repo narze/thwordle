@@ -6,7 +6,8 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, validateWord } from "./lib/Wordle"
+  import { CharState, splitWord, validateWord } from "./lib/Wordle"
+  import words from "./lib/words"
 
   const url = "https://single-page-svelte.vercel.app"
   const title = "Single Page Svelte"
@@ -19,7 +20,7 @@
   const gtagId = null
 
   let input = ""
-  let solution = "ภาษาไทย"
+  let solution = words[Math.floor(Math.random() * words.length)]
   let validate
 
   $: input = input.replace(/[^ก-๙a-zA-Z]/g, "")
@@ -49,7 +50,7 @@
   <!-- Solution word -->
   <input type="text" class="border" bind:value={solution} />
   <!-- Output -->
-  <div class="flex justify-center mb-1">
+  <div class="flex justify-center my-20">
     {#each validate as { correct, char }}
       <div
         class={`${
