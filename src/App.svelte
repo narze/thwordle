@@ -6,7 +6,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, splitWord, validateWord } from "./lib/Wordle"
+  import { CharState, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
 
   const url = "https://single-page-svelte.vercel.app"
@@ -22,23 +22,29 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
+  const alphabets = "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ"
 
   let input = ""
   let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
   let attempts: string[] = []
+  let validations = []
   let gameEnded = false
 
   $: solutionLength = splitWord(solution).length
 
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
+  $: alphabetsLayout = layout(alphabets, validations.flat())
+
+  // $: console.log(alphabetsLayout)
 
   // $: validate = validateWord(input, solution)
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500",
     [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
-    [CharState.Wrong]: "bg-slate-500 border-slate-500",
+    [CharState.Wrong]: "bg-gray-500 border-gray-500",
+    [CharState.NotUsed]: "bg-white",
   }
 
   function onKeypress(e: KeyboardEvent) {
@@ -63,6 +69,7 @@
     attempts = [...attempts, input]
 
     const validation = validateWord(input, solution)
+    validations = [...validations, validation]
 
     // if all validation is correct
     let win = true
@@ -130,11 +137,23 @@
     </div>
   {/if}
 
+  <!-- Layout -->
+  <div class="grid grid-cols-10 justify-center mb-1 mt-8">
+    {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
+      <div
+        class={colors[correctState] +
+          " w-12 h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
+      >
+        {alphabet}
+      </div>
+    {/each}
+  </div>
+
   <!-- Debug -->
-  <div class="flex justify-center my-20">
+  <!-- <div class="flex justify-center my-20">
     <div>DEBUG</div>
     {JSON.stringify(attempts)}
-  </div>
+  </div> -->
 </main>
 
 <style>
