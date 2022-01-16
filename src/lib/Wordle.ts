@@ -2,6 +2,7 @@ export enum CharState {
   Correct = 0,
   OutOfPlace,
   Wrong,
+  NotUsed,
 }
 
 export function splitWord(word: string) {
@@ -55,4 +56,26 @@ export function validateWord(word: string, solution: string) {
   })
 
   return output
+}
+
+export function layout(
+  alphabets: string,
+  validations: Array<{ correct: CharState; char: string }> = []
+) {
+  const layout: Record<string, CharState> = {}
+
+  alphabets.split("").forEach((a, idx) => {
+    layout[a] = CharState.NotUsed
+  })
+
+  validations.forEach(({ correct, char }) => {
+    char.split("").forEach((c) => {
+      if (correct < layout[c]) {
+        // Correct < OutOfPlace < Wrong < Unused
+        layout[c] = correct
+      }
+    })
+  })
+
+  return layout
 }

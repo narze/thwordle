@@ -1,4 +1,4 @@
-import { CharState, normalizeWord, splitWord, validateWord } from "./Wordle"
+import { CharState, layout, normalizeWord, splitWord, validateWord } from "./Wordle"
 
 describe("#splitWord", () => {
   it("exists", () => {
@@ -116,5 +116,30 @@ describe("validateWord", () => {
       { correct: CharState.Wrong, char: "ม" },
     ]
     expect(validateWord(input, solution)).toEqual(expectedOutput)
+  })
+})
+
+describe("layout", () => {
+  it("returns sets of all possible alphabets as keys", () => {
+    const alphabets = "กขค"
+    expect(Object.keys(layout(alphabets))).toEqual("กขค".split(""))
+  })
+
+  it("returns state of alphabet as values", () => {
+    const alphabets = "กขคง"
+    const validations = [
+      { correct: CharState.Wrong, char: "ก" },
+      { correct: CharState.OutOfPlace, char: "ข" },
+      { correct: CharState.Wrong, char: "ค" },
+      { correct: CharState.Correct, char: "ก" },
+      { correct: CharState.Wrong, char: "ก" }, // Ignore if already at correct state
+    ]
+
+    expect(layout(alphabets, validations)).toEqual({
+      ก: CharState.Correct,
+      ข: CharState.OutOfPlace,
+      ค: CharState.Wrong,
+      ง: CharState.NotUsed,
+    })
   })
 })
