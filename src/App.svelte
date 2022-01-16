@@ -100,11 +100,18 @@
   </h1>
 
   <!-- Input word -->
-  <input type="text" class="border" on:keypress={onKeypress} bind:value={input} />
+  <!-- svelte-ignore a11y-autofocus -->
+  <input
+    type="text"
+    class="border px-4 py-2 text-lg text-center"
+    on:keypress={onKeypress}
+    bind:value={input}
+    autofocus
+  />
 
   <button
     on:click={submit}
-    class="flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+    class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
   >
     Enter</button
   >
