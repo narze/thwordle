@@ -11,7 +11,7 @@ export function splitWord(word: string) {
 
   alphas.forEach((a) => {
     // if a is in a-z
-    if (a.match(/[ก-ฮ]/) || a.match(/[ใเแโไาำะๆฯฤา]/)) {
+    if (a.match(/[ก-ฮa-zA-Z]/) || a.match(/[ใเแโไาำะๆฯฤา]/)) {
       out.push(a)
     } else {
       // append to last element

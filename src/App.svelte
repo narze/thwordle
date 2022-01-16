@@ -19,10 +19,10 @@
   const gtagId = null
 
   let input = ""
-  let solution = "ไทย"
+  let solution = "ภาษาไทย"
   let validate
 
-  $: input = input.replace(/[^ก-๙]/g, "")
+  $: input = input.replace(/[^ก-๙a-zA-Z]/g, "")
 
   $: validate = validateWord(input, solution)
   $: console.log(validate)
