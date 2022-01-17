@@ -5,7 +5,7 @@
 ## TODOs
 
 - [ ] Show rule & special rule for Thai language
-- [ ] Share (Copy result)
+- [x] Share (Copy result)
 - [ ] Word of the day
 - [ ] Save result (localstorage)
 - [ ] Limit attempts
