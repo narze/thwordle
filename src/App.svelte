@@ -124,7 +124,7 @@
   <!-- Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
-  <div class="attempts grow overflow-scroll" bind:this={attemptsContainer}>
+  <div class="attempts grow overflow-y-auto" bind:this={attemptsContainer}>
     {#each attempts as input}
       <div class="flex justify-center my-1">
         {#each validateWord(input, solution) as { correct, char }}
