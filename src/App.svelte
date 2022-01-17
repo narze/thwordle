@@ -8,6 +8,7 @@
   import Social from "./lib/Social.svelte"
   import { CharState, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
+  import { tick } from "svelte"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -30,6 +31,7 @@
   let attempts: string[] = []
   let validations = []
   let gameEnded = false
+  let attemptsContainer
 
   $: solutionLength = splitWord(solution).length
 
@@ -55,7 +57,7 @@
     }
   }
 
-  function submit() {
+  async function submit() {
     if (gameEnded) {
       return
     }
@@ -86,6 +88,9 @@
     }
 
     input = ""
+
+    await tick()
+    attemptsContainer.scrollTop = attemptsContainer.scrollHeight
   }
 </script>
 
@@ -94,7 +99,7 @@
 <Social {url} {title} />
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
-<main class="w-full h-screen flex flex-col justify-center items-center">
+<main class="w-full h-screen py-4 flex flex-col items-center">
   <h1 class="text-6xl text-green-400 flex flex-col mb-4">
     <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
   </h1>
@@ -119,34 +124,36 @@
   <!-- Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
-  {#each attempts.slice(-6) as input}
-    <div class="flex justify-center my-1">
-      {#each validateWord(input, solution) as { correct, char }}
-        <div
-          class={`${
-            colors[correct] || "bg-white"
-          } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+  <div class="attempts grow overflow-scroll" bind:this={attemptsContainer}>
+    {#each attempts as input}
+      <div class="flex justify-center my-1">
+        {#each validateWord(input, solution) as { correct, char }}
+          <div
+            class={`${
+              colors[correct] || "bg-white"
+            } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
       rounded`}
-        >
-          {char ?? ""}
-        </div>
-      {/each}
-    </div>
-  {/each}
-  {#if !gameEnded}
-    <div class="flex justify-center my-1">
-      {#each new Array(solutionLength).fill(0) as _, i}
-        <div
-          class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
-        >
-          {splittedInput[i] || ""}
-        </div>
-      {/each}
-    </div>
-  {/if}
+          >
+            {char ?? ""}
+          </div>
+        {/each}
+      </div>
+    {/each}
+    {#if !gameEnded}
+      <div class="flex justify-center my-1">
+        {#each new Array(solutionLength).fill(0) as _, i}
+          <div
+            class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
+          >
+            {splittedInput[i] || ""}
+          </div>
+        {/each}
+      </div>
+    {/if}
+  </div>
 
   <!-- Layout -->
-  <div class="grid grid-cols-10 justify-center mb-1 mt-8">
+  <div class="grid grid-cols-10 justify-center mb-16 mt-8">
     {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
       <button
         on:click={() => (input += alphabet)}
@@ -169,5 +176,9 @@
   :root {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
       "Open Sans", "Helvetica Neue", sans-serif;
+  }
+
+  .attempts {
+    min-height: 96px;
   }
 </style>
