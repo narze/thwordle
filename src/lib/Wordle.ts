@@ -5,6 +5,12 @@ export enum CharState {
   NotUsed,
 }
 
+const emojiColors = {
+  [CharState.Correct]: "🟩",
+  [CharState.OutOfPlace]: "🟨",
+  [CharState.Wrong]: "⬜",
+}
+
 export function splitWord(word: string) {
   const alphas = word.split("")
   const out = []
@@ -85,4 +91,14 @@ export function layout(
   })
 
   return layout
+}
+
+export function getShareResults(attempts: Array<Array<Partial<{ correct: CharState }>>>) {
+  return attempts.map((attempt) => {
+    return attempt
+      .map(({ correct }) => {
+        return emojiColors[correct]
+      })
+      .join("")
+  })
 }

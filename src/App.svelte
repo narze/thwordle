@@ -6,7 +6,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, layout, splitWord, validateWord } from "./lib/Wordle"
+  import { CharState, getShareResults, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
   import { tick } from "svelte"
 
@@ -92,6 +92,14 @@
     await tick()
     attemptsContainer.scrollTop = attemptsContainer.scrollHeight
   }
+
+  function copyResult() {
+    const results = getShareResults(validations)
+
+    navigator.clipboard.writeText(
+      `Thwordle Beta (${results.length} tries)\n\n${results.join("\n")}`
+    )
+  }
 </script>
 
 <Kofi name="narze" label="Support Me" />
@@ -114,14 +122,23 @@
     autofocus
   />
 
-  <button
-    on:click={submit}
-    class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
-  >
-    Enter</button
-  >
+  {#if gameEnded}
+    <button
+      on:click={copyResult}
+      class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+    >
+      Share
+    </button>
+  {:else}
+    <button
+      on:click={submit}
+      class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+    >
+      Enter</button
+    >
+  {/if}
 
-  <!-- Solution word -->
+  <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
   <div class="attempts grow overflow-y-auto" bind:this={attemptsContainer}>

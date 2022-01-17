@@ -1,4 +1,11 @@
-import { CharState, layout, normalizeWord, splitWord, validateWord } from "./Wordle"
+import {
+  CharState,
+  getShareResults,
+  layout,
+  normalizeWord,
+  splitWord,
+  validateWord,
+} from "./Wordle"
 
 describe("#splitWord", () => {
   it("exists", () => {
@@ -155,5 +162,30 @@ describe("layout", () => {
       ค: CharState.Wrong,
       ง: CharState.NotUsed,
     })
+  })
+})
+
+describe("#getShareResults", () => {
+  it("receives sets of attempts, then returns sharable text with emojis", () => {
+    const input = [
+      [
+        { correct: CharState.Wrong, char: "ก" },
+        { correct: CharState.OutOfPlace, char: "ข" },
+        { correct: CharState.Wrong, char: "ค" },
+        { correct: CharState.Correct, char: "ก" },
+        { correct: CharState.Wrong, char: "ก" },
+      ],
+      [
+        { correct: CharState.Correct, char: "ก" },
+        { correct: CharState.Correct, char: "ข" },
+        { correct: CharState.Correct, char: "ค" },
+        { correct: CharState.Correct, char: "ก" },
+        { correct: CharState.Correct, char: "ก" },
+      ],
+    ]
+    const expectedOutput = ["⬜🟨⬜🟩⬜", "🟩🟩🟩🟩🟩"]
+
+    expect(getShareResults).toBeDefined()
+    expect(getShareResults(input)).toEqual(expectedOutput)
   })
 })
