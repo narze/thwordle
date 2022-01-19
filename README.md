@@ -4,11 +4,12 @@
 
 ## TODOs
 
-- [ ] Show rule & special rule for Thai language
+- [x] Show rule & special rule for Thai language
 - [x] Share (Copy result)
-- [ ] Word of the day
-- [ ] Save result (localstorage)
+- [x] Word of the day
+- [x] Save result (localstorage)
 - [ ] Limit attempts
+- [ ] Fix bugs
 
 ## Setup
 
