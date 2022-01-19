@@ -10,7 +10,7 @@
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
-  import dict from "./lib/words.json"
+  import dict from "./lib/dict.json"
   import { store } from "./lib/store"
 
   const url = "https://thwordle.vercel.app"
@@ -27,7 +27,7 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
-  const alphabets = "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ"
+  const alphabets = "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ่้๊๋์"
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
