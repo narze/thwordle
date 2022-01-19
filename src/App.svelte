@@ -9,6 +9,7 @@
   import { CharState, getShareResults, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
   import { tick } from "svelte"
+  import Modal from "./lib/Modal.svelte"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -32,6 +33,7 @@
   let validations = []
   let gameEnded = false
   let attemptsContainer
+  let modal = true
 
   $: solutionLength = splitWord(solution).length
 
@@ -187,6 +189,13 @@
     <div>DEBUG</div>
     {JSON.stringify(attempts)}
   </div> -->
+  {#if modal}
+    <Modal
+      onClose={() => {
+        modal = false
+      }}
+    />
+  {/if}
 </main>
 
 <style>
