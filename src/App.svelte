@@ -10,7 +10,7 @@
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
-  import dict from "./lib/dict.json"
+  import dict from "./lib/words.json"
   import { store } from "./lib/store"
 
   const url = "https://thwordle.vercel.app"
@@ -123,7 +123,7 @@
     const results = getShareResults(validations)
 
     navigator.clipboard.writeText(
-      `Thwordle ${dateIndex + 1} (${results.length} ครั้ง)\n\n${results.join("\n")}`
+      `#Thwordle ${dateIndex + 1} (${results.length} ครั้ง)\n\n${results.join("\n")}`
     )
 
     copied = true
