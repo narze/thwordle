@@ -184,12 +184,22 @@
       {copied ? "Copied" : "Share"}
     </button>
   {:else}
-    <button
-      on:click={submit}
-      class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
-    >
-      Enter</button
-    >
+    <div class="flex flex-row">
+      <button
+        on:click={submit}
+        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+      >
+        Enter</button
+      >
+      <button
+        on:click={() => {
+          input = ""
+        }}
+        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+      >
+        Clear</button
+      >
+    </div>
   {/if}
 
   <!-- DEBUG: Solution word -->
