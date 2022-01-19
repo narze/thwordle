@@ -10,6 +10,7 @@
   import words from "./lib/words"
   import { tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
+  import dict from "./lib/dict.json"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -78,6 +79,12 @@
       return
     }
 
+    // Check if the word is in the dict
+    if (!wordExists(input)) {
+      alert("คำนี้ไม่มีในพจนานุกรม")
+      return
+    }
+
     // Add to solution array
     attempts = [...attempts, input]
 
@@ -115,6 +122,17 @@
     setTimeout(() => {
       copied = false
     }, 2000)
+  }
+
+  function wordExists(input: string) {
+    if (words.includes(input)) {
+      return true
+    }
+    if (dict.includes(input)) {
+      return true
+    }
+
+    return false
   }
 </script>
 
