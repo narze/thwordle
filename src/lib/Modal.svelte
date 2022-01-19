@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CharState, getShareResults, layout, splitWord, validateWord } from "./Wordle"
+  import { CharState } from "./Wordle"
 
   const example1 = [
     { correct: CharState.Correct, char: "อ" },

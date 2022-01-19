@@ -27,8 +27,15 @@
   })
   const alphabets = "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ"
 
+  // January 19, 2022 Game Epoch
+  const epochMs = 1642525200000
+  const now = Date.now()
+  const msInDay = 86400000
+  const dateIndex = Math.floor((now - epochMs) / msInDay)
+
   let input = ""
-  let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
+  // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
+  let solution = words5to7[dateIndex % words5to7.length]
   let attempts: string[] = []
   let validations = []
   let gameEnded = false
@@ -99,7 +106,7 @@
     const results = getShareResults(validations)
 
     navigator.clipboard.writeText(
-      `Thwordle Beta (${results.length} tries)\n\n${results.join("\n")}`
+      `Thwordle ${dateIndex + 1} (${results.length} ครั้ง)\n\n${results.join("\n")}`
     )
   }
 </script>
@@ -113,6 +120,8 @@
   <h1 class="text-6xl text-green-400 flex flex-col mb-4">
     <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
   </h1>
+
+  วันที่ {dateIndex + 1}
 
   <!-- Input word -->
   <!-- svelte-ignore a11y-autofocus -->
