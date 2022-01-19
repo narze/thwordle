@@ -137,6 +137,14 @@
       return true
     }
 
+    for (let i = 2; i < input.length - 1; i++) {
+      const left = input.slice(0, i)
+      const right = input.slice(i)
+      if (dict.includes(left) && dict.includes(right)) {
+        return true
+      }
+    }
+
     return false
   }
 </script>
