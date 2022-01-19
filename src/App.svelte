@@ -66,6 +66,11 @@
       e.preventDefault()
       submit()
     }
+
+    if (splittedInput.length >= solutionLength + 1) {
+      e.preventDefault()
+      return
+    }
   }
 
   async function submit() {
