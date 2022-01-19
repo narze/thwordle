@@ -8,9 +8,10 @@
   import Social from "./lib/Social.svelte"
   import { CharState, getShareResults, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
-  import { tick } from "svelte"
+  import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
+  import { store } from "./lib/store"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -37,9 +38,9 @@
   let input = ""
   // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
   let solution = words5to7[dateIndex % words5to7.length]
-  let attempts: string[] = []
-  let validations = []
-  let gameEnded = false
+  let attempts: string[] = $store.data[dateIndex]?.attempts || []
+  let validations = attempts.map((word) => validateWord(word, solution))
+  let gameEnded = !!$store.data[dateIndex]?.win
   let attemptsContainer
   let modal = true
   let copied = false
@@ -49,6 +50,9 @@
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: alphabetsLayout = layout(alphabets, validations.flat())
+  $: {
+    store.set({ data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } } })
+  }
 
   // $: console.log(alphabetsLayout)
 
@@ -168,6 +172,7 @@
     class="border px-4 py-2 text-lg text-center"
     on:keypress={onKeypress}
     bind:value={input}
+    disabled={gameEnded}
     autofocus
   />
 
