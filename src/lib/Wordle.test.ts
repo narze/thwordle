@@ -35,10 +35,7 @@ describe("#splitWord", () => {
 
     expect(splitWord(input1).length).toEqual(7 + 9 + 7 + 6 + 5 + 7 + 6 + 4)
 
-    const input2 = "วิชาการ อย่าล้างผลาญ ฤาเข่นฆ่า บีฑาใคร ไม่ถือโทษ โกรธแช่งซัด".replaceAll(
-      " ",
-      ""
-    )
+    const input2 = "วิชาการ อย่าล้างผลาญ ฤาเข่นฆ่า บีฑาใคร ไม่ถือโทษ โกรธแช่งซัด".replace(/ /g, "")
     expect(splitWord(input2).length).toEqual(6 + 10 + 7 + 6 + 7 + 9)
 
     const input3 =
