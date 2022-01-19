@@ -195,6 +195,13 @@
                 มีตัวอักษร <strong>พ</strong> และอยู่ในตำแหน่งที่ถูกต้อง
                 จะทำการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ (<strong>พิ่</strong>)
               </p>
+
+              <hr class="my-2" />
+
+              <a
+                class="text-gray-500 text-sm underline"
+                href="https://twitter.com/narze/status/1483857313224355840">แจ้งบั๊ก / ข้อเสนอแนะ</a
+              >
             </div>
           </div>
         </div>
