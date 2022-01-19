@@ -25,7 +25,7 @@
   const imageUrl =
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/thwordle_home.png"
 
-  const gtagId = null
+  const gtagId = "G-F2Q37REQE6"
   const words5to7 = words.filter((word) => {
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
