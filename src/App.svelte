@@ -41,6 +41,7 @@
   let gameEnded = false
   let attemptsContainer
   let modal = true
+  let copied = false
 
   $: solutionLength = splitWord(solution).length
 
@@ -108,6 +109,12 @@
     navigator.clipboard.writeText(
       `Thwordle ${dateIndex + 1} (${results.length} ครั้ง)\n\n${results.join("\n")}`
     )
+
+    copied = true
+
+    setTimeout(() => {
+      copied = false
+    }, 2000)
   }
 </script>
 
@@ -138,7 +145,7 @@
       on:click={copyResult}
       class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
     >
-      Share
+      {copied ? "Copied" : "Share"}
     </button>
   {:else}
     <button
