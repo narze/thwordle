@@ -16,7 +16,10 @@
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
 
-  const menuItems = [{ name: "Github", url: "https://github.com/narze/thwordle" }]
+  const menuItems = [
+    { name: "เจอบั๊ก?", url: "https://twitter.com/narze/status/1483857313224355840" },
+    { name: "Github", url: "https://github.com/narze/thwordle" },
+  ]
 
   const description = "Wordle clone, but it's Thai."
   const imageUrl =
