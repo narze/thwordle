@@ -238,7 +238,7 @@
   />
 
   <!-- Layout -->
-  <div class="layout my-4 w-full px-2">
+  <div class="layout my-4 w-full px-2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
     {#each alphabetsLayoutRows as alphabetsLayout}
       <div class="w-full flex flex-row justify-center">
         {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
