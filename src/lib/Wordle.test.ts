@@ -135,6 +135,38 @@ describe("validateWord", () => {
     ]
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
+
+  describe("edge cases", () => {
+    it("mark only one character to be out of place", () => {
+      const input = "อัศจรรย์"
+      const solution = "ประเทศ"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "อั" },
+        { correct: CharState.OutOfPlace, char: "ศ" },
+        { correct: CharState.Wrong, char: "จ" },
+        { correct: CharState.OutOfPlace, char: "ร" },
+        { correct: CharState.Wrong, char: "ร" },
+        { correct: CharState.Wrong, char: "ย์" },
+      ]
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+
+    it("mark two of the same characters to be out of place", () => {
+      const input = "อัศจรรย์"
+      const solution = "ปรรเทศ"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "อั" },
+        { correct: CharState.OutOfPlace, char: "ศ" },
+        { correct: CharState.Wrong, char: "จ" },
+        { correct: CharState.OutOfPlace, char: "ร" },
+        { correct: CharState.OutOfPlace, char: "ร" },
+        { correct: CharState.Wrong, char: "ย์" },
+      ]
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+  })
 })
 
 describe("layout", () => {
