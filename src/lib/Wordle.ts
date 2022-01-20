@@ -42,9 +42,11 @@ export function validateWord(word: string, solution: string) {
     const sNormalized = solutionNormalizedSplitted[idx]
     const char = wordSplitted[idx]
     const cNormalized = wordNormalizedSplitted[idx]
+    // console.log("input", char, "solution", sChar)
 
     // If matching character or normalized char, and in correct position
     if (char === sChar || cNormalized === sNormalized) {
+      // console.log(char, "correct", { solutionSplitted, sChar })
       solutionSplitted[idx] = null
       solutionNormalizedSplitted[idx] = null
 
@@ -69,26 +71,28 @@ export function validateWord(word: string, solution: string) {
         solutionSplitted[idx2] = null
         solutionNormalizedSplitted[idx2] = null
       }
+      // console.log(char, "oop", { solutionSplitted, sChar, idx1, idx2, correctChar })
 
       return { correct: CharState.OutOfPlace, char: correctChar }
     } else {
+      // console.log(char, "wrong", { solutionSplitted, sChar })
       return { correct: CharState.Wrong, char }
     }
   })
 
-  output.forEach((sol1) => {
-    if (sol1.correct == CharState.Correct) {
-      // Find OutOfPlace characters and make it wrong
-      output.forEach((sol2, idx) => {
-        if (
-          (sol1.char == sol2.char || normalizeWord(sol1.char) == normalizeWord(sol2.char)) &&
-          sol2.correct == CharState.OutOfPlace
-        ) {
-          output[idx] = { correct: CharState.Wrong, char: sol2.char }
-        }
-      })
-    }
-  })
+  // output.forEach((sol1) => {
+  //   if (sol1.correct == CharState.Correct) {
+  //     // Find OutOfPlace characters and make it wrong
+  //     output.forEach((sol2, idx) => {
+  //       if (
+  //         (sol1.char == sol2.char || normalizeWord(sol1.char) == normalizeWord(sol2.char)) &&
+  //         sol2.correct == CharState.OutOfPlace
+  //       ) {
+  //         output[idx] = { correct: CharState.Wrong, char: sol2.char }
+  //       }
+  //     })
+  //   }
+  // })
 
   return output
 }
