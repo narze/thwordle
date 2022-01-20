@@ -38,17 +38,17 @@ export function validateWord(word: string, solution: string) {
   const solutionSplitted = splitWord(solution)
   const solutionNormalizedSplitted = splitWord(normalizeWord(solution))
 
-  const output = solutionSplitted.map((s, idx) => {
+  const output = solutionSplitted.map((sChar, idx) => {
     const sNormalized = solutionNormalizedSplitted[idx]
     const char = wordSplitted[idx]
     const cNormalized = wordNormalizedSplitted[idx]
 
     // If matching character or normalized char, and in correct position
-    if (char === s || char === sNormalized) {
+    if (char === sChar || cNormalized === sNormalized) {
       solutionSplitted[idx] = null
       solutionNormalizedSplitted[idx] = null
 
-      return { correct: CharState.Correct, char: s }
+      return { correct: CharState.Correct, char: sChar }
     } else if (
       // If the solution has normalized char in other position, but only once
       solutionSplitted.includes(char) ||
@@ -61,12 +61,10 @@ export function validateWord(word: string, solution: string) {
 
       if (idx1 !== -1) {
         correctChar = solutionSplitted[idx1]
-        console.log({ correctChar, idx1 })
         solutionSplitted[idx1] = null
         solutionNormalizedSplitted[idx1] = null
       } else if (idx2 !== -1) {
         correctChar = solutionSplitted[idx2]
-        console.log({ correctChar, idx2 })
 
         solutionSplitted[idx2] = null
         solutionNormalizedSplitted[idx2] = null
