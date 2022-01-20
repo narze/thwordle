@@ -260,7 +260,7 @@
     {#if gameEnded}
       <button
         on:click={copyResult}
-        class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        class="flex text-lg items-center justify-center rounded border mx-2 p-3 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
       >
         {copied ? "Copied" : "Share"}
       </button>
@@ -268,7 +268,7 @@
       <div class="flex flex-row justify-center">
         <button
           on:click={submit}
-          class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+          class="flex text-lg items-center justify-center rounded border mx-2 p-3 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         >
           Enter</button
         >
@@ -276,7 +276,7 @@
           on:click={() => {
             input = ""
           }}
-          class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+          class="flex text-lg items-center justify-center rounded border mx-2 p-3 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         >
           Clear</button
         >
