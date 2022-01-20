@@ -152,6 +152,21 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
+    it("auto corrects in-place character", () => {
+      const input = "กรุงเทพ"
+      const solution = "ประเทศ"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "ก" },
+        { correct: CharState.Correct, char: "ร" }, // Auto-corrected
+        { correct: CharState.Wrong, char: "ง" },
+        { correct: CharState.Correct, char: "เ" },
+        { correct: CharState.Correct, char: "ท" },
+        { correct: CharState.Wrong, char: "พ" },
+      ]
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+
     it("strips all upper-lower characters of out-of-place characters", () => {
       const input = "นักเรียน"
       const solution = "ประเทศ"
