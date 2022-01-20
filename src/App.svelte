@@ -236,8 +236,9 @@
     placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
     autofocus
   />
+
   <!-- Layout -->
-  <div class="layout mb-4 mt-8 w-full px-2">
+  <div class="layout my-4 w-full px-2">
     {#each alphabetsLayoutRows as alphabetsLayout}
       <div class="w-full flex flex-row justify-center">
         {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
@@ -259,7 +260,7 @@
     {#if gameEnded}
       <button
         on:click={copyResult}
-        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
       >
         {copied ? "Copied" : "Share"}
       </button>
@@ -267,7 +268,7 @@
       <div class="flex flex-row justify-center">
         <button
           on:click={submit}
-          class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+          class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         >
           Enter</button
         >
@@ -275,7 +276,7 @@
           on:click={() => {
             input = ""
           }}
-          class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+          class="flex items-center justify-center rounded border mx-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
         >
           Clear</button
         >
