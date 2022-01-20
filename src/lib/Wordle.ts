@@ -45,6 +45,9 @@ export function validateWord(word: string, solution: string) {
 
     // If matching character or normalized char, and in correct position
     if (char === s || char === sNormalized) {
+      solutionSplitted[idx] = null
+      solutionNormalizedSplitted[idx] = null
+
       return { correct: CharState.Correct, char: s }
     } else if (
       // If the solution has normalized char in other position, but only once
@@ -54,16 +57,22 @@ export function validateWord(word: string, solution: string) {
       // Remove one matching char from solution, so that it cannot be matched again
       const idx1 = solutionSplitted.indexOf(char)
       const idx2 = solutionNormalizedSplitted.indexOf(cNormalized)
+      let correctChar
 
       if (idx1 !== -1) {
+        correctChar = solutionSplitted[idx1]
+        console.log({ correctChar, idx1 })
         solutionSplitted[idx1] = null
-      }
+        solutionNormalizedSplitted[idx1] = null
+      } else if (idx2 !== -1) {
+        correctChar = solutionSplitted[idx2]
+        console.log({ correctChar, idx2 })
 
-      if (idx2 !== -1) {
+        solutionSplitted[idx2] = null
         solutionNormalizedSplitted[idx2] = null
       }
 
-      return { correct: CharState.OutOfPlace, char }
+      return { correct: CharState.OutOfPlace, char: correctChar }
     } else {
       return { correct: CharState.Wrong, char }
     }
