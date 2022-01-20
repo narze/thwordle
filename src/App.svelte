@@ -30,7 +30,21 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
-  const alphabets = "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ่้๊๋์"
+  const alphabetRows = groupArr(
+    "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ่้๊๋์็".split(""),
+    11
+  ).map((row) => row.join(""))
+
+  // const alphabetRows = [
+  // ["ๅ", "/", "_", "ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช"].join(""),
+  // ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล", "ฃ"].join(""),
+  // ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"].join(""),
+  // ["ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ"].join(""),
+  // ["+", "๑", "๒", "๓", "๔", "ู", "฿", "๕", "๖", "๗", "๘", "๙"].join(""),
+  // ["๐", '"', "ฎ", "ฑ", "ธ", "ํ", "๊", "ณ", "ฯ", "ญ", "ฐ", ",", "ฅ"].join(""),
+  // ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "."].join(""),
+  // ["(", ")", "ฉ", "ฮ", "ฺ", "์", "?", "ฒ", "ฬ", "ฦ"].join(""),
+  // ]
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -52,7 +66,7 @@
 
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
-  $: alphabetsLayout = layout(alphabets, validations.flat())
+  $: alphabetsLayoutRows = layout(alphabetRows, validations.flat())
   $: {
     store.set({ data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } } })
   }
@@ -154,11 +168,23 @@
 
     return false
   }
+
+  function groupArr(data, n) {
+    var group = []
+    for (var i = 0, j = 0; i < data.length; i++) {
+      if (i >= n && i % n === 0) j++
+      group[j] = group[j] || []
+      group[j].push(data[i])
+    }
+    return group
+  }
 </script>
 
-<Kofi name="narze" label="Support Me" />
-<Menu items={menuItems} />
-<Social {url} {title} />
+<div class="footer-wrapper">
+  <Kofi name="narze" label="Support Me" />
+  <Menu items={menuItems} />
+  <Social {url} {title} />
+</div>
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
 <main class="w-full h-screen py-4 flex flex-col items-center">
@@ -167,43 +193,6 @@
   </h1>
 
   วันที่ {dateIndex + 1}
-
-  <!-- Input word -->
-  <!-- svelte-ignore a11y-autofocus -->
-  <input
-    type="text"
-    class="border px-4 py-2 text-lg text-center"
-    on:keypress={onKeypress}
-    bind:value={input}
-    disabled={gameEnded}
-    autofocus
-  />
-
-  {#if gameEnded}
-    <button
-      on:click={copyResult}
-      class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
-    >
-      {copied ? "Copied" : "Share"}
-    </button>
-  {:else}
-    <div class="flex flex-row">
-      <button
-        on:click={submit}
-        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
-      >
-        Enter</button
-      >
-      <button
-        on:click={() => {
-          input = ""
-        }}
-        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
-      >
-        Clear</button
-      >
-    </div>
-  {/if}
 
   <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
@@ -237,16 +226,61 @@
   </div>
 
   <!-- Layout -->
-  <div class="grid grid-cols-10 justify-center mb-16 mt-8">
-    {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
-      <button
-        on:click={() => (input += alphabet)}
-        class={colors[correctState] +
-          " w-12 h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
-      >
-        {alphabet}
-      </button>
+  <div class="layout mb-4 mt-8 w-full px-2">
+    {#each alphabetsLayoutRows as alphabetsLayout}
+      <div class="w-full flex flex-row justify-center">
+        {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
+          <button
+            on:click={() => (input += alphabet)}
+            class={colors[correctState] +
+              " " +
+              "flex-grow h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
+          >
+            {alphabet}
+          </button>
+        {/each}
+      </div>
     {/each}
+  </div>
+
+  <!-- Input word -->
+  <div class="input-word mb-16 text-center">
+    <!-- svelte-ignore a11y-autofocus -->
+    <input
+      type="text"
+      class="border px-4 py-2 text-center w-64"
+      on:keypress={onKeypress}
+      bind:value={input}
+      disabled={gameEnded}
+      placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+      autofocus
+    />
+
+    {#if gameEnded}
+      <button
+        on:click={copyResult}
+        class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+      >
+        {copied ? "Copied" : "Share"}
+      </button>
+    {:else}
+      <div class="flex flex-row justify-center">
+        <button
+          on:click={submit}
+          class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        >
+          Enter</button
+        >
+        <button
+          on:click={() => {
+            input = ""
+          }}
+          class="flex items-center justify-center rounded border m-2 px-4 py-2 bg-red-300 border-red-300 text-xs font-bold cursor-pointer bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+        >
+          Clear</button
+        >
+      </div>
+    {/if}
   </div>
 
   <!-- Debug -->
@@ -271,5 +305,11 @@
 
   .attempts {
     min-height: 96px;
+  }
+
+  @media (max-height: 750px) {
+    .footer-wrapper {
+      display: none;
+    }
   }
 </style>
