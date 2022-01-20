@@ -225,6 +225,17 @@
     {/if}
   </div>
 
+  <!-- Word Input -->
+  <!-- svelte-ignore a11y-autofocus -->
+  <input
+    type="text"
+    class="border px-4 py-2 text-center w-64"
+    on:keypress={onKeypress}
+    bind:value={input}
+    disabled={gameEnded}
+    placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+    autofocus
+  />
   <!-- Layout -->
   <div class="layout mb-4 mt-8 w-full px-2">
     {#each alphabetsLayoutRows as alphabetsLayout}
@@ -244,18 +255,7 @@
   </div>
 
   <!-- Input word -->
-  <div class="input-word mb-16 text-center">
-    <!-- svelte-ignore a11y-autofocus -->
-    <input
-      type="text"
-      class="border px-4 py-2 text-center w-64"
-      on:keypress={onKeypress}
-      bind:value={input}
-      disabled={gameEnded}
-      placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
-      autofocus
-    />
-
+  <div class="mb-16 text-center">
     {#if gameEnded}
       <button
         on:click={copyResult}
