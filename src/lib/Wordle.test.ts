@@ -202,7 +202,7 @@ describe("validateWord", () => {
 describe("layout", () => {
   it("returns sets of all possible alphabets as keys", () => {
     const alphabets = "กขค"
-    expect(Object.keys(layout(alphabets))).toEqual("กขค".split(""))
+    expect(Object.keys(layout([alphabets])[0])).toEqual("กขค".split(""))
   })
 
   it("returns state of alphabet as values", () => {
@@ -215,7 +215,7 @@ describe("layout", () => {
       { correct: CharState.Wrong, char: "ก" }, // Ignore if already at correct state
     ]
 
-    expect(layout(alphabets, validations)).toEqual({
+    expect(layout([alphabets], validations)[0]).toEqual({
       ก: CharState.Correct,
       ข: CharState.OutOfPlace,
       ค: CharState.Wrong,
