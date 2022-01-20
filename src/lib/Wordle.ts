@@ -94,25 +94,31 @@ export function validateWord(word: string, solution: string) {
 }
 
 export function layout(
-  alphabets: string,
+  alphabetRows: string[],
   validations: Array<{ correct: CharState; char: string }> = []
-) {
-  const layout: Record<string, CharState> = {}
+): Array<Record<string, CharState>> {
+  const layoutRows = []
 
-  alphabets.split("").forEach((a, idx) => {
-    layout[a] = CharState.NotUsed
-  })
+  alphabetRows.forEach((alphabets) => {
+    const layout: Record<string, CharState> = {}
 
-  validations.forEach(({ correct, char }) => {
-    char.split("").forEach((c) => {
-      if (correct < layout[c]) {
-        // Correct < OutOfPlace < Wrong < Unused
-        layout[c] = correct
-      }
+    alphabets.split("").forEach((a, idx) => {
+      layout[a] = CharState.NotUsed
     })
+
+    validations.forEach(({ correct, char }) => {
+      char.split("").forEach((c) => {
+        if (correct < layout[c]) {
+          // Correct < OutOfPlace < Wrong < Unused
+          layout[c] = correct
+        }
+      })
+    })
+
+    layoutRows.push(layout)
   })
 
-  return layout
+  return layoutRows
 }
 
 export function getShareResults(attempts: Array<Array<Partial<{ correct: CharState }>>>) {
