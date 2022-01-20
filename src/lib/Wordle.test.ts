@@ -100,7 +100,7 @@ describe("validateWord", () => {
 
     const expectedOutput = [
       { correct: CharState.Wrong, char: "x" },
-      { correct: CharState.OutOfPlace, char: "จ" },
+      { correct: CharState.OutOfPlace, char: "จั" }, // Auto add ั
       { correct: CharState.Wrong, char: "x" },
       { correct: CharState.Wrong, char: "x" },
       { correct: CharState.Wrong, char: "x" },
@@ -148,6 +148,21 @@ describe("validateWord", () => {
         { correct: CharState.OutOfPlace, char: "ร" },
         { correct: CharState.Wrong, char: "ร" },
         { correct: CharState.Wrong, char: "ย์" },
+      ]
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+
+    it("strips all upper-lower characters of out-of-place characters", () => {
+      const input = "นักเรียน"
+      const solution = "ประเทศ"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "นั" },
+        { correct: CharState.Wrong, char: "ก" },
+        { correct: CharState.OutOfPlace, char: "เ" },
+        { correct: CharState.OutOfPlace, char: "ร" }, // This one
+        { correct: CharState.Wrong, char: "ย" },
+        { correct: CharState.Wrong, char: "น" },
       ]
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
