@@ -42,12 +42,27 @@ export function validateWord(word: string, solution: string) {
     const sNormalized = solutionNormalizedSplitted[idx]
     const char = wordSplitted[idx]
     const cNormalized = wordNormalizedSplitted[idx]
+
+    // If matching character or normalized char, and in correct position
     if (char === s || char === sNormalized) {
       return { correct: CharState.Correct, char: s }
     } else if (
+      // If the solution has normalized char in other position, but only once
       solutionSplitted.includes(char) ||
       solutionNormalizedSplitted.includes(cNormalized)
     ) {
+      // Remove one matching char from solution, so that it cannot be matched again
+      const idx1 = solutionSplitted.indexOf(char)
+      const idx2 = solutionNormalizedSplitted.indexOf(cNormalized)
+
+      if (idx1 !== -1) {
+        solutionSplitted[idx1] = null
+      }
+
+      if (idx2 !== -1) {
+        solutionNormalizedSplitted[idx2] = null
+      }
+
       return { correct: CharState.OutOfPlace, char }
     } else {
       return { correct: CharState.Wrong, char }
