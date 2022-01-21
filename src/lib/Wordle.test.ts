@@ -211,6 +211,54 @@ describe("validateWord", () => {
       ]
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
+
+    it("checks the correct position first, then run another pass to check out-of-place characters", () => {
+      const input = "สมมาตร"
+      const solution = "สามารถ"
+
+      const expectedOutput = [
+        { correct: CharState.Correct, char: "ส" },
+        { correct: CharState.Wrong, char: "ม" },
+        { correct: CharState.Correct, char: "ม" },
+        { correct: CharState.Correct, char: "า" },
+        { correct: CharState.Wrong, char: "ต" },
+        { correct: CharState.OutOfPlace, char: "ร" },
+      ]
+
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+
+    it("checks the correct position first, then run another pass to check out-of-place characters (2)", () => {
+      const input = "อาถรรพ์"
+      const solution = "สามารถ"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "อ" },
+        { correct: CharState.Correct, char: "า" },
+        { correct: CharState.OutOfPlace, char: "ถ" },
+        { correct: CharState.Wrong, char: "ร" },
+        { correct: CharState.Correct, char: "ร" },
+        { correct: CharState.Wrong, char: "พ์" },
+      ]
+
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
+
+    it("checks the correct position first, then run another pass to check out-of-place characters (3)", () => {
+      const input = "ราดหน้า"
+      const solution = "สามารถ"
+
+      const expectedOutput = [
+        { correct: CharState.OutOfPlace, char: "ร" },
+        { correct: CharState.Correct, char: "า" },
+        { correct: CharState.Wrong, char: "ด" },
+        { correct: CharState.Wrong, char: "ห" },
+        { correct: CharState.Wrong, char: "น้" },
+        { correct: CharState.OutOfPlace, char: "า" },
+      ]
+
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
   })
 })
 
