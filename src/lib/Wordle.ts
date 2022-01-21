@@ -38,61 +38,64 @@ export function validateWord(word: string, solution: string) {
   const solutionSplitted = splitWord(solution)
   const solutionNormalizedSplitted = splitWord(normalizeWord(solution))
 
-  const output = solutionSplitted.map((sChar, idx) => {
+  // Falls back to wrong
+  const output = wordSplitted.map((char) => ({ correct: CharState.Wrong, char }))
+
+  // First Pass: Check correct character in correct place
+  solutionSplitted.forEach((sChar, idx) => {
     const sNormalized = solutionNormalizedSplitted[idx]
     const char = wordSplitted[idx]
     const cNormalized = wordNormalizedSplitted[idx]
-    // console.log("input", char, "solution", sChar)
 
     // If matching character or normalized char, and in correct position
     if (char === sChar || cNormalized === sNormalized) {
-      // console.log(char, "correct", { solutionSplitted, sChar })
       solutionSplitted[idx] = null
       solutionNormalizedSplitted[idx] = null
+      wordSplitted[idx] = null
+      wordNormalizedSplitted[idx] = null
 
-      return { correct: CharState.Correct, char: sChar }
-    } else if (
-      // If the solution has normalized char in other position, but only once
-      solutionSplitted.includes(char) ||
-      solutionNormalizedSplitted.includes(cNormalized)
-    ) {
-      // Remove one matching char from solution, so that it cannot be matched again
-      const idx1 = solutionSplitted.indexOf(char)
-      const idx2 = solutionNormalizedSplitted.indexOf(cNormalized)
-      let correctChar
-
-      if (idx1 !== -1) {
-        correctChar = solutionSplitted[idx1]
-        solutionSplitted[idx1] = null
-        solutionNormalizedSplitted[idx1] = null
-      } else if (idx2 !== -1) {
-        correctChar = solutionSplitted[idx2]
-
-        solutionSplitted[idx2] = null
-        solutionNormalizedSplitted[idx2] = null
-      }
-      // console.log(char, "oop", { solutionSplitted, sChar, idx1, idx2, correctChar })
-
-      return { correct: CharState.OutOfPlace, char: correctChar }
-    } else {
-      // console.log(char, "wrong", { solutionSplitted, sChar })
-      return { correct: CharState.Wrong, char }
+      output[idx] = { correct: CharState.Correct, char: sChar }
     }
   })
 
-  // output.forEach((sol1) => {
-  //   if (sol1.correct == CharState.Correct) {
-  //     // Find OutOfPlace characters and make it wrong
-  //     output.forEach((sol2, idx) => {
-  //       if (
-  //         (sol1.char == sol2.char || normalizeWord(sol1.char) == normalizeWord(sol2.char)) &&
-  //         sol2.correct == CharState.OutOfPlace
-  //       ) {
-  //         output[idx] = { correct: CharState.Wrong, char: sol2.char }
-  //       }
-  //     })
-  //   }
-  // })
+  // Second Pass: Check out-of-place characters
+  solutionSplitted.forEach((_sChar, idx) => {
+    const char = wordSplitted[idx]
+
+    if (char) {
+      const cNormalized = wordNormalizedSplitted[idx]
+
+      // If matching character or normalized char, and in correct position
+      if (
+        // If the solution has normalized char in other position, but only once
+        solutionSplitted.includes(char) ||
+        solutionNormalizedSplitted.includes(cNormalized)
+      ) {
+        // Remove one matching char from solution, so that it cannot be matched again
+        const idx1 = solutionSplitted.indexOf(char)
+        const idx2 = solutionNormalizedSplitted.indexOf(cNormalized)
+        let correctChar
+
+        if (idx1 !== -1) {
+          correctChar = solutionSplitted[idx1]
+
+          solutionSplitted[idx1] = null
+          solutionNormalizedSplitted[idx1] = null
+          wordSplitted[idx] = null
+          wordNormalizedSplitted[idx] = null
+        } else if (idx2 !== -1) {
+          correctChar = solutionSplitted[idx2]
+
+          solutionSplitted[idx2] = null
+          solutionNormalizedSplitted[idx2] = null
+          wordSplitted[idx] = null
+          wordNormalizedSplitted[idx] = null
+        }
+
+        output[idx] = { correct: CharState.OutOfPlace, char: correctChar }
+      }
+    }
+  })
 
   return output
 }
