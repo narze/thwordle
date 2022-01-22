@@ -301,6 +301,33 @@ describe("layout", () => {
       ง: CharState.NotUsed,
     })
   })
+
+  it("does not mark upper-lower characters as wrong, leave it not used", () => {
+    const input = "หนู"
+    const solution = "จูง"
+    const validation = validateWord(input, solution)
+
+    expect(layout([input], validation)[0]).toEqual({
+      ห: CharState.Wrong,
+      น: CharState.Wrong,
+      "ู": CharState.NotUsed,
+    })
+  })
+
+  it("does not mark upper-lower characters as wrong, leave it not used (2)", () => {
+    const input = "เสือดำ"
+    const solution = "เหมือน"
+    const validation = validateWord(input, solution)
+
+    expect(layout([input], validation)[0]).toEqual({
+      เ: CharState.Correct,
+      ส: CharState.Wrong,
+      "ื": CharState.NotUsed,
+      อ: CharState.OutOfPlace,
+      ด: CharState.Wrong,
+      ำ: CharState.Wrong,
+    })
+  })
 })
 
 describe("#getShareResults", () => {
