@@ -32,7 +32,7 @@
     { correct: CharState.Correct, char: "พิ่" },
     { correct: CharState.NotUsed, char: "ม" },
     { correct: CharState.NotUsed, char: "เ" },
-    { correct: CharState.NotUsed, char: "ติ" },
+    { correct: CharState.OutOfPlace, char: "ติ" },
     { correct: CharState.NotUsed, char: "ม" },
   ]
 
@@ -177,7 +177,7 @@
               </h3>
               <p class="text-sm text-gray-500">
                 เนื่องจากภาษาไทยมีตัวสระและวรรณยุกต์ในตำแหน่งเดียวกันได้<br />
-                ถ้าตัวอักษรตัวกลางอยู่ในตำแหน่งที่ถูกต้อง (สีเขียว) จะมีการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ
+                ถ้าตัวอักษรตัวกลางอยู่ในคำ (สีเขียว, สีเหลือง) จะมีการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ
               </p>
               <div class="flex justify-center my-1">
                 {#each example4 as { correct, char }}
@@ -194,6 +194,14 @@
               <p class="text-sm text-gray-500 mb-4">
                 มีตัวอักษร <strong>พ</strong> และอยู่ในตำแหน่งที่ถูกต้อง
                 จะทำการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ (<strong>พิ่</strong>)
+              </p>
+              <p class="text-sm text-gray-500 mb-4">
+                มีตัวอักษร <strong>ข</strong> อยู่ในคำ จะทำการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ (<strong
+                  >ติ</strong
+                >)
+              </p>
+              <p class="text-sm text-gray-500">
+                สระและวรรณยุกต์ตัวบน/ล่าง จะไม่ถูกทำเครื่องหมายว่าไม่อยู่ในคำนั้น หากใส่ผิดจุด
               </p>
 
               <hr class="my-2" />
