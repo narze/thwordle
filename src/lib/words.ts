@@ -267,6 +267,7 @@ const words = [
   "สำเร็จ",
   "ออกแบบ",
   "ลูกจ้าง",
+  "แพนด้า",
 ]
 
 export default words
