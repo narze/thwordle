@@ -28,6 +28,10 @@ export function splitWord(word: string) {
   return out
 }
 
+function isUpperOrLowerCharacter(char: string): boolean {
+  return !char.match(/[ก-ฮa-zA-Z]/) && !char.match(/[ใเแโไาำะๆฯฤา]/)
+}
+
 export function normalizeWord(word: string) {
   return word.replace(/[^ก-ฮใเแโไาำะๆฯฤาa-zA-Z]/g, "")
 }
@@ -118,6 +122,10 @@ export function layout(
         if (correct < layout[c]) {
           // Correct < OutOfPlace < Wrong < Unused
           layout[c] = correct
+        }
+
+        if (isUpperOrLowerCharacter(c) && layout[c] === CharState.Wrong) {
+          layout[c] = CharState.NotUsed
         }
       })
     })
