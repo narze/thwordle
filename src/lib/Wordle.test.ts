@@ -275,6 +275,22 @@ describe("validateWord", () => {
 
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
+
+    it("checks the correct position first, then run another pass to check out-of-place characters (5)", () => {
+      const input = "ดาวหาง"
+      const solution = "ระหว่าง"
+
+      const expectedOutput = [
+        { correct: CharState.Wrong, char: "ด" },
+        { correct: CharState.Wrong, char: "า" },
+        { correct: CharState.OutOfPlace, char: "ว่" },
+        { correct: CharState.OutOfPlace, char: "ห" },
+        { correct: CharState.Correct, char: "า" },
+        { correct: CharState.Correct, char: "ง" },
+      ]
+
+      expect(validateWord(input, solution)).toEqual(expectedOutput)
+    })
   })
 })
 
