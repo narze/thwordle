@@ -120,7 +120,8 @@
       submit()
     }
 
-    if (splittedInput.length >= solutionLength + 1) {
+    // ถ้าเป็นสระบนล่างหรือวรรณยุกต์ ให้ใส่ได้เลยไม่ต้องเช็คความยาว
+    if (!e.key.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) && splittedInput.length >= solutionLength) {
       e.preventDefault()
       return
     }
@@ -290,7 +291,12 @@
       <div class="w-full flex flex-row justify-center">
         {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
           <button
-            on:click={() => (input += alphabet)}
+            on:click={() => {
+              // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
+              // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
+              if (!gameEnded && (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) || splittedInput.length < solutionLength))
+                input += alphabet
+            }}
             class={colors[correctState] +
               " " +
               "flex-grow h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
