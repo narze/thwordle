@@ -52,6 +52,8 @@
   const msInDay = 86400000
   const dateIndex = Math.floor((now - epochMs) / msInDay)
 
+  const attemptLimit = 6
+
   let input = ""
   // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
   let solution = words5to7[dateIndex % words5to7.length]
@@ -61,7 +63,10 @@
   let attemptsContainer
   let modal = true
   let copied = false
+  let lose = false
+  let win = false
 
+  $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
 
   $: input = input.replace(/[^ก-๙]/g, "")
@@ -69,6 +74,29 @@
   $: alphabetsLayoutRows = layout(alphabetRows, validations.flat())
   $: {
     store.set({ data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } } })
+  }
+  $: {
+    const validation = validations.slice(-1)[0]
+
+    if (validation) {
+      // if all validation is correct
+      let allMatched = true
+      validation.forEach((v) => {
+        if (v.correct !== CharState.Correct) {
+          allMatched = false
+        }
+      })
+
+      if (allMatched) {
+        alert("คุณชนะแล้ว!")
+        gameEnded = true
+        win = true
+      } else if (attemptsLength >= attemptLimit) {
+        alert(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
+        gameEnded = true
+        lose = true
+      }
+    }
   }
 
   // $: console.log(alphabetsLayout)
@@ -117,19 +145,6 @@
     const validation = validateWord(input, solution)
     validations = [...validations, validation]
 
-    // if all validation is correct
-    let win = true
-    validation.forEach((v) => {
-      if (v.correct !== CharState.Correct) {
-        win = false
-      }
-    })
-
-    if (win) {
-      alert("คุณชนะแล้ว!")
-      gameEnded = true
-    }
-
     input = ""
 
     await tick()
@@ -139,9 +154,9 @@
   function copyResult() {
     const results = getShareResults(validations)
 
-    navigator.clipboard.writeText(
-      `#Thwordle ${dateIndex + 1} (${results.length} ครั้ง)\n\n${results.join("\n")}`
-    )
+    const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
+
+    navigator.clipboard.writeText(`#Thwordle ${dateIndex + 1} ${score}\n\n${results.join("\n")}`)
 
     copied = true
 
