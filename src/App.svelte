@@ -201,8 +201,12 @@
       duration,
       css: (t) => {
         const eased = sineInOut(t)
+        const bg = eased <= 0.5 ? "background-color: transparent;" : ""
+        const border = eased <= 0.5 ? "border-color: rgb(229, 231, 235);" : ""
 
         return `
+          ${bg}
+          ${border}
           transform: rotateX(${eased * 360}deg);
         `
       },
