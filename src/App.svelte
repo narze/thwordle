@@ -76,7 +76,7 @@
   $: {
     store.set({
       modalViewed,
-      data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } },
+      data: { ...$store.data, [`${dateIndex}`]: { attempts, win } },
     })
   }
   $: {
@@ -260,6 +260,7 @@
         {/each}
       </div>
     {/each}
+
     {#if !gameEnded}
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
