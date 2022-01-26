@@ -224,10 +224,19 @@
 </div>
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
-<main class="w-full h-screen py-4 flex flex-col items-center">
-  <h1 class="text-6xl text-green-400 flex flex-col mb-4">
-    <span>{title}<span class="text-sm text-gray-400 ml-2">Beta</span></span>
-  </h1>
+<main class="w-full h-screen flex flex-col items-center">
+  <header class="mb-4 w-full h-10 py-2">
+    <div class="flex justify-between w-full px-4 h-10">
+      <span class="flex justify-center h-full"
+        ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
+      >
+      <h1 class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2">
+        <span>{title}</span>
+      </h1>
+      <span>&nbsp;</span>
+    </div>
+    <hr />
+  </header>
 
   วันที่ {dateIndex + 1}
 
