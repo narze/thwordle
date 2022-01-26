@@ -1,7 +1,8 @@
 <script lang="ts">
   import "twind/shim"
-  import { tw } from "twind"
-  import logo from "./assets/svelte.png"
+
+  import { sineInOut } from "svelte/easing"
+
   import Head from "./lib/Head.svelte"
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
@@ -193,6 +194,20 @@
     }
     return group
   }
+
+  function spinAnimation(_node, { duration, delay }) {
+    return {
+      delay,
+      duration,
+      css: (t) => {
+        const eased = sineInOut(t)
+
+        return `
+          transform: rotateX(${eased * 360}deg);
+        `
+      },
+    }
+  }
 </script>
 
 <div class="footer-wrapper">
@@ -213,14 +228,15 @@
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
   <div class="attempts grow overflow-y-auto" bind:this={attemptsContainer}>
-    {#each attempts as input}
+    {#each attempts as input, n (n)}
       <div class="flex justify-center my-1">
-        {#each validateWord(input, solution) as { correct, char }}
+        {#each validateWord(input, solution) as { correct, char }, idx (idx)}
           <div
             class={`${
               colors[correct] || "bg-white"
             } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
       rounded`}
+            in:spinAnimation={{ duration: 500, delay: 150 * idx }}
           >
             {char ?? ""}
           </div>
