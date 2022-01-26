@@ -7,7 +7,7 @@ interface Day {
 
 const lsKey = "thwordle-attempts"
 
-export const store = writable<{ data: Record<string, Day> }>(
+export const store = writable<{ modalViewed: boolean; data: Record<string, Day> }>(
   JSON.parse(window.localStorage.getItem(lsKey) || '{"data": {}}')
 )
 
