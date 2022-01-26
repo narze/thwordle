@@ -62,7 +62,7 @@
   let validations = attempts.map((word) => validateWord(word, solution))
   let gameEnded = !!$store.data[dateIndex]?.win
   let attemptsContainer
-  let modal = true
+  let modalViewed = !!$store.modalViewed
   let copied = false
   let lose = false
   let win = false
@@ -74,7 +74,10 @@
   $: splittedInput = splitWord(input)
   $: alphabetsLayoutRows = layout(alphabetRows, validations.flat())
   $: {
-    store.set({ data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } } })
+    store.set({
+      modalViewed,
+      data: { ...$store.data, [`${dateIndex}`]: { attempts, win: gameEnded } },
+    })
   }
   $: {
     const validation = validations.slice(-1)[0]
@@ -324,10 +327,10 @@
     <div>DEBUG</div>
     {JSON.stringify(attempts)}
   </div> -->
-  {#if modal}
+  {#if !modalViewed}
     <Modal
       onClose={() => {
-        modal = false
+        modalViewed = true
       }}
     />
   {/if}
