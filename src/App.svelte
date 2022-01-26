@@ -121,7 +121,10 @@
     }
 
     // ถ้าเป็นสระบนล่างหรือวรรณยุกต์ ให้ใส่ได้เลยไม่ต้องเช็คความยาว
-    if (!e.key.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) && splittedInput.length >= solutionLength) {
+    if (
+      !e.key.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) &&
+      splittedInput.length >= solutionLength
+    ) {
       e.preventDefault()
       return
     }
@@ -239,7 +242,10 @@
     <hr />
   </header>
 
-  วันที่ {dateIndex + 1}
+  <span class="flex gap-4">
+    <span>วันที่ {dateIndex + 1}</span>
+    <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
+  </span>
 
   <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
@@ -295,7 +301,11 @@
             on:click={() => {
               // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
               // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
-              if (!gameEnded && (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) || splittedInput.length < solutionLength))
+              if (
+                !gameEnded &&
+                (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) ||
+                  splittedInput.length < solutionLength)
+              )
                 input += alphabet
             }}
             class={colors[correctState] +
