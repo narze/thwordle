@@ -234,7 +234,7 @@
       <span class="flex justify-center h-full"
         ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
       >
-      <h1 class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2">
+      <h1 class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none">
         <span>{title}</span>
       </h1>
       <span>&nbsp;</span>
