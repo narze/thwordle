@@ -7,6 +7,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
+  import Ads from "./lib/Ads.svelte"
   import { CharState, getShareResults, layout, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
@@ -360,6 +361,8 @@
       }}
     />
   {/if}
+
+  <Ads />
 </main>
 
 <style>
