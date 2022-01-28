@@ -4,5 +4,4 @@
 interface Window {
   kofiWidgetOverlay: any
   localStorage: any
-  adsbygoogle: any
 }
