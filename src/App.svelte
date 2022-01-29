@@ -7,7 +7,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, getShareResults, layout, splitWord, validateWord } from "./lib/Wordle"
+  import { CharState, generateAlphabetStateMap, getShareResults, splitWord, validateWord } from "./lib/Wordle"
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
@@ -31,21 +31,21 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
-  const alphabetRows = groupArr(
-    "กขคฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรลวศษสหฬอฮะัาิีึืุูเแโำใไฤ่้๊๋์็".split(""),
-    11
-  ).map((row) => row.join(""))
+  
+  const rows = [
+  ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+  ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
+  ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
+  ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
+  ]
 
-  // const alphabetRows = [
-  // ["ๅ", "/", "_", "ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช"].join(""),
-  // ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล", "ฃ"].join(""),
-  // ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"].join(""),
-  // ["ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ"].join(""),
-  // ["+", "๑", "๒", "๓", "๔", "ู", "฿", "๕", "๖", "๗", "๘", "๙"].join(""),
-  // ["๐", '"', "ฎ", "ฑ", "ธ", "ํ", "๊", "ณ", "ฯ", "ญ", "ฐ", ",", "ฅ"].join(""),
-  // ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "."].join(""),
-  // ["(", ")", "ฉ", "ฮ", "ฺ", "์", "?", "ฒ", "ฬ", "ฦ"].join(""),
-  // ]
+  const rowsShifted = [
+  ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+  ["ๆ", "ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
+  ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
+  ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
+  ]
+  
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -66,13 +66,15 @@
   let copied = false
   let lose = false
   let win = false
+  let shifted = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
-
+  $: currentRows = shifted ? rowsShifted : rows
+  $: inverseRows = shifted ? rows : rowsShifted
+  $: alphabetStateMap = generateAlphabetStateMap([...rows, ...rowsShifted].flat(), validations.flat())
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
-  $: alphabetsLayoutRows = layout(alphabetRows, validations.flat())
   $: {
     store.set({
       modalViewed,
@@ -108,10 +110,10 @@
   // $: validate = validateWord(input, solution)
 
   const colors = {
-    [CharState.Correct]: "bg-green-500 border-green-500",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
-    [CharState.Wrong]: "bg-gray-500 border-gray-500",
-    [CharState.NotUsed]: "bg-white",
+    [CharState.Correct]: "bg-green-500 border-green-500 text-white",
+    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 text-white",
+    [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white",
+    [CharState.NotUsed]: "bg-white text-black",
   }
 
   function onKeypress(e: KeyboardEvent) {
@@ -192,16 +194,6 @@
     return false
   }
 
-  function groupArr(data, n) {
-    var group = []
-    for (var i = 0, j = 0; i < data.length; i++) {
-      if (i >= n && i % n === 0) j++
-      group[j] = group[j] || []
-      group[j].push(data[i])
-    }
-    return group
-  }
-
   function spinAnimation(_node, { duration, delay }) {
     return {
       delay,
@@ -257,7 +249,7 @@
           <div
             class={`${
               colors[correct] || "bg-white"
-            } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold
+            } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
       rounded`}
             in:spinAnimation={{ duration: 500, delay: 150 * idx }}
           >
@@ -271,7 +263,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-lg font-bold rounded`}
+            class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
           >
             {splittedInput[i] || ""}
           </div>
@@ -294,26 +286,40 @@
 
   <!-- Layout -->
   <div class="layout my-4 w-full px-2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
-    {#each alphabetsLayoutRows as alphabetsLayout}
+    {#each currentRows as row, rowIndex}
       <div class="w-full flex flex-row justify-center">
-        {#each Object.entries(alphabetsLayout) as [alphabet, correctState]}
-          <button
-            on:click={() => {
-              // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
-              // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
-              if (
-                !gameEnded &&
-                (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) ||
-                  splittedInput.length < solutionLength)
-              )
-                input += alphabet
-            }}
-            class={colors[correctState] +
-              " " +
-              "flex-grow h-12 border-solid border-2 flex items-center justify-center m-0.5 text-lg font-bold rounded text-black"}
-          >
-            {alphabet}
-          </button>
+        {#each row as alphabet, alphabetIndex}
+          <div class="flex-grow h-14 flex m-0.5 relative">
+            <button
+              on:click={() => {
+                if(alphabet === "⇧") shifted = !shifted
+                else if(alphabet === "⬅") input = input.slice(0, -1)
+                else if(alphabet === "↵") submit()
+                // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
+                // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
+                else if (
+                  !gameEnded &&
+                  (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) ||
+                    splittedInput.length < solutionLength)
+                ) {
+                  input += alphabet
+                  shifted = false
+                }
+              }}
+              class={colors[alphabetStateMap[alphabet]] +
+                " " +
+                "flex-grow h-14 border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
+            >
+              {alphabet}
+              <!-- Inverse character -->
+              {#if currentRows[rowIndex][alphabetIndex] !== inverseRows[rowIndex][alphabetIndex]}
+                <div class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] + 
+                " absolute top-0.5 left-0.5 border-solid border-1 rounded text-sm leading-4 px-0.25 py-0.5 w-4"}>
+                  {inverseRows[rowIndex][alphabetIndex]}
+                </div>
+              {/if}
+            </button>
+          </div>
         {/each}
       </div>
     {/each}

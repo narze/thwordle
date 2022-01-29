@@ -1,7 +1,7 @@
 import {
   CharState,
   getShareResults,
-  layout,
+  generateAlphabetStateMap,
   normalizeWord,
   splitWord,
   validateWord,
@@ -296,12 +296,12 @@ describe("validateWord", () => {
 
 describe("layout", () => {
   it("returns sets of all possible alphabets as keys", () => {
-    const alphabets = "กขค"
-    expect(Object.keys(layout([alphabets])[0])).toEqual("กขค".split(""))
+    const alphabets = ["ก", "ข", "ค"]
+    expect(Object.keys(generateAlphabetStateMap(alphabets))).toEqual("กขค".split(""))
   })
 
   it("returns state of alphabet as values", () => {
-    const alphabets = "กขคง"
+    const alphabets = ["ก", "ข", "ค", "ง"]
     const validations = [
       { correct: CharState.Wrong, char: "ก" },
       { correct: CharState.OutOfPlace, char: "ข" },
@@ -309,8 +309,8 @@ describe("layout", () => {
       { correct: CharState.Correct, char: "ก" },
       { correct: CharState.Wrong, char: "ก" }, // Ignore if already at correct state
     ]
-
-    expect(layout([alphabets], validations)[0]).toEqual({
+    
+    expect(generateAlphabetStateMap(alphabets, validations)).toEqual({
       ก: CharState.Correct,
       ข: CharState.OutOfPlace,
       ค: CharState.Wrong,
@@ -323,7 +323,7 @@ describe("layout", () => {
     const solution = "จูง"
     const validation = validateWord(input, solution)
 
-    expect(layout([input], validation)[0]).toEqual({
+    expect(generateAlphabetStateMap(input.split(""), validation)).toEqual({
       ห: CharState.Wrong,
       น: CharState.Wrong,
       "ู": CharState.NotUsed,
@@ -335,7 +335,7 @@ describe("layout", () => {
     const solution = "เหมือน"
     const validation = validateWord(input, solution)
 
-    expect(layout([input], validation)[0]).toEqual({
+    expect(generateAlphabetStateMap(input.split(""), validation)).toEqual({
       เ: CharState.Correct,
       ส: CharState.Wrong,
       "ื": CharState.NotUsed,
