@@ -15,7 +15,7 @@
   import { store } from "./lib/store"
 
   const url = "https://thwordle.vercel.app"
-  const title = "Thwordle : เวอเดิ้ลภาษาไทย"
+  const title = "Thwordle"
 
   const menuItems = [
     { name: "เจอบั๊ก?", url: "https://twitter.com/narze/status/1483857313224355840" },
