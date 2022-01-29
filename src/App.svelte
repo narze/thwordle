@@ -272,18 +272,6 @@
     {/if}
   </div>
 
-  <!-- Word Input -->
-  <!-- svelte-ignore a11y-autofocus -->
-  <input
-    type="text"
-    class="border px-4 py-2 text-center w-64"
-    on:keypress={onKeypress}
-    bind:value={input}
-    disabled={gameEnded}
-    placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
-    autofocus
-  />
-
   <!-- Layout -->
   <div class="layout my-4 w-full px-2 md:w-2/3 lg:w-1/2 xl:w-1/3 2xl:w-1/4">
     {#each currentRows as row, rowIndex}
