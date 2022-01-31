@@ -104,36 +104,30 @@ export function validateWord(word: string, solution: string) {
   return output
 }
 
-export function layout(
-  alphabetRows: string[],
+export function generateAlphabetStateMap(
+  alphabets: string[],
   validations: Array<{ correct: CharState; char: string }> = []
-): Array<Record<string, CharState>> {
-  const layoutRows = []
+): Record<string, CharState> {
+  const map = {}
 
-  alphabetRows.forEach((alphabets) => {
-    const layout: Record<string, CharState> = {}
-
-    alphabets.split("").forEach((a, idx) => {
-      layout[a] = CharState.NotUsed
-    })
-
-    validations.forEach(({ correct, char }) => {
-      char.split("").forEach((c) => {
-        if (correct < layout[c]) {
-          // Correct < OutOfPlace < Wrong < Unused
-          layout[c] = correct
-        }
-
-        if (isUpperOrLowerCharacter(c) && layout[c] === CharState.Wrong) {
-          layout[c] = CharState.NotUsed
-        }
-      })
-    })
-
-    layoutRows.push(layout)
+  alphabets.forEach((a, idx) => {
+    map[a] = CharState.NotUsed
   })
 
-  return layoutRows
+  validations.forEach(({ correct, char }) => {
+    char.split("").forEach((c) => {
+      if (correct < map[c]) {
+        // Correct < OutOfPlace < Wrong < Unused
+        map[c] = correct
+      }
+
+      if (isUpperOrLowerCharacter(c) && map[c] === CharState.Wrong) {
+        map[c] = CharState.NotUsed
+      }
+    })
+  })
+
+  return map
 }
 
 export function getShareResults(attempts: Array<Array<Partial<{ correct: CharState }>>>) {
