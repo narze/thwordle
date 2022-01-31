@@ -296,7 +296,7 @@
     {#each currentRows as row, rowIndex}
       <div class="w-full flex flex-row justify-center">
         {#each row as alphabet, alphabetIndex}
-          <div class="flex-grow h-14 flex m-0.5 relative">
+          <div class="flex-grow flex m-0.5 relative">
             <button
               on:click={() => {
                 if (alphabet === "⇧") shifted = !shifted
@@ -315,7 +315,7 @@
               }}
               class={colors[alphabetStateMap[alphabet]] +
                 " " +
-                "flex-grow h-14 border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
+                "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
               {alphabet}
               <!-- Inverse character -->
@@ -335,7 +335,7 @@
   </div>
 
   <!-- Input word -->
-  <div class="mb-16 text-center">
+  <div class="share-button text-center">
     {#if gameEnded}
       <button
         on:click={copyResult}
@@ -379,9 +379,25 @@
     min-height: 96px;
   }
 
+  .share-button {
+    margin-bottom: 4rem;
+  }
+
+  .layout-key {
+    @apply h-14;
+  }
+
   @media (max-height: 750px) {
     .footer-wrapper {
       display: none;
+    }
+
+    .share-button {
+      margin-bottom: 1rem;
+    }
+
+    .layout-key {
+      @apply h-12;
     }
   }
 </style>
