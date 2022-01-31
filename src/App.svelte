@@ -258,6 +258,17 @@
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
+  <!-- DEBUG: Input box -->
+  <!-- <input
+    type="text"
+    class="border px-4 py-2 text-center w-64"
+    on:keypress={onKeypress}
+    bind:value={input}
+    disabled={gameEnded}
+    placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+    autofocus
+  /> -->
+
   <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
@@ -268,7 +279,7 @@
           <div
             class={`${
               colors[correct] || "bg-white"
-            } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
+            } attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
       rounded`}
             in:spinAnimation={{ duration: 500, delay: 150 * idx }}
           >
@@ -282,13 +293,24 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
+            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
           >
             {splittedInput[i] || ""}
           </div>
         {/each}
       </div>
     {/if}
+
+    {#each new Array(Math.max(0, attemptLimit - attempts.length - 1)) as _, n (n)}
+      <div class="flex justify-center my-1">
+        {#each new Array(solutionLength).fill(0) as _}
+          <div
+            class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
+      rounded`}
+          />
+        {/each}
+      </div>
+    {/each}
   </div>
 
   <!-- Layout -->
@@ -387,7 +409,11 @@
     @apply px-0.5 h-14;
   }
 
-  @media (max-height: 750px) {
+  .attempt-key {
+    @apply w-14 h-14;
+  }
+
+  @media (max-height: 800px) {
     .footer-wrapper {
       display: none;
     }
@@ -398,6 +424,17 @@
 
     .layout-key {
       @apply h-12;
+    }
+
+    .attempt-key {
+      /* @apply w-13 h-13; */
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+  }
+  @media (max-height: 680px) {
+    .attempt-key {
+      @apply w-12 h-12;
     }
   }
 </style>
