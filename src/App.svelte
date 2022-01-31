@@ -19,6 +19,7 @@
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
   import { store } from "./lib/store"
+  import AlertModal from "./lib/AlertModal.svelte"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -72,6 +73,8 @@
   let lose = false
   let win = false
   let shifted = false
+  let alertMessage = ""
+  let showAlert = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
@@ -102,11 +105,11 @@
       })
 
       if (allMatched) {
-        alert("คุณชนะแล้ว!")
+        showAlertMessage("คุณชนะแล้ว!")
         gameEnded = true
         win = true
       } else if (attemptsLength >= attemptLimit) {
-        alert(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
+        showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
         gameEnded = true
         lose = true
       }
@@ -147,13 +150,13 @@
 
     // Check if the length is valid
     if (splitWord(input).length != solutionLength) {
-      alert("กรุณากรอกคำตอบ")
+      showAlertMessage("กรุณากรอกคำตอบ")
       return
     }
 
     // Check if the word is in the dict
     if (!wordExists(input)) {
-      alert("คำนี้ไม่มีในพจนานุกรม")
+      showAlertMessage("คำนี้ไม่มีในพจนานุกรม")
       return
     }
 
@@ -218,6 +221,12 @@
         `
       },
     }
+  }
+
+  function showAlertMessage(message: string) {
+    alertMessage = message
+
+    showAlert = true
   }
 </script>
 
@@ -346,6 +355,15 @@
     <Modal
       onClose={() => {
         modalViewed = true
+      }}
+    />
+  {/if}
+
+  {#if showAlert}
+    <AlertModal
+      message={alertMessage}
+      onClose={() => {
+        showAlert = false
       }}
     />
   {/if}
