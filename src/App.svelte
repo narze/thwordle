@@ -322,7 +322,7 @@
               {#if currentRows[rowIndex][alphabetIndex] !== inverseRows[rowIndex][alphabetIndex]}
                 <div
                   class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] +
-                    " absolute top-0.5 left-0.5 border-solid border-1 rounded text-sm leading-4 px-0.25 py-0.5 w-4"}
+                    " absolute top-1 left-1 border-solid border-1 rounded text-sm leading-4 p-0.5 w-4"}
                 >
                   {inverseRows[rowIndex][alphabetIndex]}
                 </div>
@@ -384,7 +384,7 @@
   }
 
   .layout-key {
-    @apply h-14;
+    @apply px-0.5 h-14;
   }
 
   @media (max-height: 750px) {
