@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "twind/shim"
+  // import "twind/shim"
 
   import { sineInOut } from "svelte/easing"
 
@@ -7,12 +7,19 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, generateAlphabetStateMap, getShareResults, splitWord, validateWord } from "./lib/Wordle"
+  import {
+    CharState,
+    generateAlphabetStateMap,
+    getShareResults,
+    splitWord,
+    validateWord,
+  } from "./lib/Wordle"
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
   import { store } from "./lib/store"
+  import AlertModal from "./lib/AlertModal.svelte"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -31,21 +38,20 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
-  
+
   const rows = [
-  ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-  ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
-  ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
-  ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
+    ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+    ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
+    ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
+    ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
   ]
 
   const rowsShifted = [
-  ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-  ["ๆ", "ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
-  ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
-  ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
+    ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+    ["ๆ", "ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
+    ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
+    ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
   ]
-  
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -67,12 +73,17 @@
   let lose = false
   let win = false
   let shifted = false
+  let alertMessage = ""
+  let showAlert = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
   $: currentRows = shifted ? rowsShifted : rows
   $: inverseRows = shifted ? rows : rowsShifted
-  $: alphabetStateMap = generateAlphabetStateMap([...rows, ...rowsShifted].flat(), validations.flat())
+  $: alphabetStateMap = generateAlphabetStateMap(
+    [...rows, ...rowsShifted].flat(),
+    validations.flat()
+  )
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
@@ -94,11 +105,11 @@
       })
 
       if (allMatched) {
-        alert("คุณชนะแล้ว!")
+        showAlertMessage("คุณชนะแล้ว!")
         gameEnded = true
         win = true
       } else if (attemptsLength >= attemptLimit) {
-        alert(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
+        showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
         gameEnded = true
         lose = true
       }
@@ -139,13 +150,13 @@
 
     // Check if the length is valid
     if (splitWord(input).length != solutionLength) {
-      alert("กรุณากรอกคำตอบ")
+      showAlertMessage("กรุณากรอกคำตอบ")
       return
     }
 
     // Check if the word is in the dict
     if (!wordExists(input)) {
-      alert("คำนี้ไม่มีในพจนานุกรม")
+      showAlertMessage("คำนี้ไม่มีในพจนานุกรม")
       return
     }
 
@@ -211,6 +222,12 @@
       },
     }
   }
+
+  function showAlertMessage(message: string) {
+    alertMessage = message
+
+    showAlert = true
+  }
 </script>
 
 <div class="footer-wrapper">
@@ -226,7 +243,9 @@
       <span class="flex justify-center h-full"
         ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
       >
-      <h1 class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none">
+      <h1
+        class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
+      >
         <span>{title}</span>
       </h1>
       <span>&nbsp;</span>
@@ -239,6 +258,17 @@
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
+  <!-- DEBUG: Input box -->
+  <!-- <input
+    type="text"
+    class="border px-4 py-2 text-center w-64"
+    on:keypress={onKeypress}
+    bind:value={input}
+    disabled={gameEnded}
+    placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+    autofocus
+  /> -->
+
   <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
@@ -249,7 +279,7 @@
           <div
             class={`${
               colors[correct] || "bg-white"
-            } w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
+            } attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
       rounded`}
             in:spinAnimation={{ duration: 500, delay: 150 * idx }}
           >
@@ -263,13 +293,24 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
+            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
           >
             {splittedInput[i] || ""}
           </div>
         {/each}
       </div>
     {/if}
+
+    {#each new Array(Math.max(0, attemptLimit - attempts.length - 1)) as _, n (n)}
+      <div class="flex justify-center my-1">
+        {#each new Array(solutionLength).fill(0) as _}
+          <div
+            class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
+      rounded`}
+          />
+        {/each}
+      </div>
+    {/each}
   </div>
 
   <!-- Layout -->
@@ -277,12 +318,12 @@
     {#each currentRows as row, rowIndex}
       <div class="w-full flex flex-row justify-center">
         {#each row as alphabet, alphabetIndex}
-          <div class="flex-grow h-14 flex m-0.5 relative">
+          <div class="flex-grow flex m-0.5 relative">
             <button
               on:click={() => {
-                if(alphabet === "⇧") shifted = !shifted
-                else if(alphabet === "⬅") input = input.slice(0, -1)
-                else if(alphabet === "↵") submit()
+                if (alphabet === "⇧") shifted = !shifted
+                else if (alphabet === "⬅") input = input.slice(0, -1)
+                else if (alphabet === "↵") submit()
                 // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
                 // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
                 else if (
@@ -296,13 +337,15 @@
               }}
               class={colors[alphabetStateMap[alphabet]] +
                 " " +
-                "flex-grow h-14 border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
+                "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
               {alphabet}
               <!-- Inverse character -->
               {#if currentRows[rowIndex][alphabetIndex] !== inverseRows[rowIndex][alphabetIndex]}
-                <div class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] + 
-                " absolute top-0.5 left-0.5 border-solid border-1 rounded text-sm leading-4 px-0.25 py-0.5 w-4"}>
+                <div
+                  class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] +
+                    " absolute top-1 left-1 border-solid border-1 rounded text-sm leading-4 p-0.5 w-4"}
+                >
                   {inverseRows[rowIndex][alphabetIndex]}
                 </div>
               {/if}
@@ -314,7 +357,7 @@
   </div>
 
   <!-- Input word -->
-  <div class="mb-16 text-center">
+  <div class="share-button text-center">
     {#if gameEnded}
       <button
         on:click={copyResult}
@@ -337,6 +380,15 @@
       }}
     />
   {/if}
+
+  {#if showAlert}
+    <AlertModal
+      message={alertMessage}
+      onClose={() => {
+        showAlert = false
+      }}
+    />
+  {/if}
 </main>
 
 <style>
@@ -349,9 +401,40 @@
     min-height: 96px;
   }
 
-  @media (max-height: 750px) {
+  .share-button {
+    margin-bottom: 4rem;
+  }
+
+  .layout-key {
+    @apply px-0.5 h-14;
+  }
+
+  .attempt-key {
+    @apply w-14 h-14;
+  }
+
+  @media (max-height: 800px) {
     .footer-wrapper {
       display: none;
+    }
+
+    .share-button {
+      margin-bottom: 1rem;
+    }
+
+    .layout-key {
+      @apply h-12;
+    }
+
+    .attempt-key {
+      /* @apply w-13 h-13; */
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+  }
+  @media (max-height: 680px) {
+    .attempt-key {
+      @apply w-12 h-12;
     }
   }
 </style>
