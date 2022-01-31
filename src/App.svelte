@@ -7,7 +7,13 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import { CharState, generateAlphabetStateMap, getShareResults, splitWord, validateWord } from "./lib/Wordle"
+  import {
+    CharState,
+    generateAlphabetStateMap,
+    getShareResults,
+    splitWord,
+    validateWord,
+  } from "./lib/Wordle"
   import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
@@ -31,21 +37,20 @@
     const w = splitWord(word)
     return w.length >= 5 && w.length <= 7
   })
-  
+
   const rows = [
-  ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-  ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
-  ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
-  ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
+    ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+    ["ๆ", "ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
+    ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
+    ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
   ]
 
   const rowsShifted = [
-  ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-  ["ๆ", "ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
-  ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
-  ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
+    ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
+    ["ๆ", "ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
+    ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
+    ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
   ]
-  
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -72,7 +77,10 @@
   $: solutionLength = splitWord(solution).length
   $: currentRows = shifted ? rowsShifted : rows
   $: inverseRows = shifted ? rows : rowsShifted
-  $: alphabetStateMap = generateAlphabetStateMap([...rows, ...rowsShifted].flat(), validations.flat())
+  $: alphabetStateMap = generateAlphabetStateMap(
+    [...rows, ...rowsShifted].flat(),
+    validations.flat()
+  )
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
@@ -226,7 +234,9 @@
       <span class="flex justify-center h-full"
         ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
       >
-      <h1 class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none">
+      <h1
+        class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
+      >
         <span>{title}</span>
       </h1>
       <span>&nbsp;</span>
@@ -280,9 +290,9 @@
           <div class="flex-grow h-14 flex m-0.5 relative">
             <button
               on:click={() => {
-                if(alphabet === "⇧") shifted = !shifted
-                else if(alphabet === "⬅") input = input.slice(0, -1)
-                else if(alphabet === "↵") submit()
+                if (alphabet === "⇧") shifted = !shifted
+                else if (alphabet === "⬅") input = input.slice(0, -1)
+                else if (alphabet === "↵") submit()
                 // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
                 // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
                 else if (
@@ -301,8 +311,10 @@
               {alphabet}
               <!-- Inverse character -->
               {#if currentRows[rowIndex][alphabetIndex] !== inverseRows[rowIndex][alphabetIndex]}
-                <div class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] + 
-                " absolute top-0.5 left-0.5 border-solid border-1 rounded text-sm leading-4 px-0.25 py-0.5 w-4"}>
+                <div
+                  class={colors[alphabetStateMap[inverseRows[rowIndex][alphabetIndex]]] +
+                    " absolute top-0.5 left-0.5 border-solid border-1 rounded text-sm leading-4 px-0.25 py-0.5 w-4"}
+                >
                   {inverseRows[rowIndex][alphabetIndex]}
                 </div>
               {/if}
