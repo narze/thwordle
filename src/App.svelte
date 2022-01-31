@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "twind/shim"
+  // import "twind/shim"
 
   import { sineInOut } from "svelte/easing"
 
