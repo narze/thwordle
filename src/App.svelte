@@ -66,7 +66,7 @@
   let solution = words5to7[dateIndex % words5to7.length]
   let attempts: string[] = $store.data[dateIndex]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$store.data[dateIndex]?.win
+  let gameEnded = !!$store.data[dateIndex]?.win || !!$store.data[dateIndex]?.lose
   let attemptsContainer
   let modalViewed = !!$store.modalViewed
   let copied = false
@@ -89,7 +89,7 @@
   $: {
     store.set({
       modalViewed,
-      data: { ...$store.data, [`${dateIndex}`]: { attempts, win } },
+      data: { ...$store.data, [`${dateIndex}`]: { attempts, win, lose } },
     })
   }
   $: {
