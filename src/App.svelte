@@ -127,34 +127,6 @@
     [CharState.NotUsed]: "bg-white text-black",
   }
 
-  
-  // Enable global keyboard event listener
-  document.addEventListener('keydown', onKeyDown);
-  
-  function onKeyDown(e: KeyboardEvent) {
-    console.log(e.key);
-    if (e.key === "Enter") {
-      e.preventDefault()
-      submit()
-    }
-    if (e.key === 'Backspace') {
-      e.preventDefault()
-      input = input.slice(0, -1)
-      return
-    }
-    input += e.key;  
-    
-    // ถ้าเป็นสระบนล่างหรือวรรณยุกต์ ให้ใส่ได้เลยไม่ต้องเช็คความยาว
-    if (
-      !e.key.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) &&
-      splittedInput.length >= solutionLength
-      ) {
-      input = input.slice(0, -1)
-      e.preventDefault();
-      return
-    }
-  }
-
   async function submit() {
     if (gameEnded) {
       return
@@ -240,6 +212,38 @@
 
     showAlert = true
   }
+
+  function inputKey(alphabet: string) {
+    if (gameEnded) {
+      return
+    }
+
+    if (alphabet === "⇧") {
+      shifted = !shifted
+    } else if (alphabet === "⬅") {
+      input = input.slice(0, -1)
+    } else if (alphabet === "↵") {
+      submit()
+    } else if (
+      // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
+      // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
+      alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) ||
+      splittedInput.length < solutionLength
+    ) {
+      input += alphabet
+      shifted = false
+    }
+  }
+
+  document.addEventListener("keydown", ({ key }) => {
+    if (key == "Backspace") {
+      inputKey("⬅")
+    } else if (key == "Enter") {
+      inputKey("↵")
+    } else {
+      inputKey(key)
+    }
+  })
 </script>
 
 <div class="footer-wrapper">
@@ -269,17 +273,6 @@
     <span>วันที่ {dateIndex + 1}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
-
-  <!-- DEBUG: Input box -->
-  <!-- <input
-    type="text"
-    class="border px-4 py-2 text-center w-64"
-    on:keypress={onKeypress}
-    bind:value={input}
-    disabled={gameEnded}
-    placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
-    autofocus
-  /> -->
 
   <!-- DEBUG: Solution word -->
   <!-- <input type="text" class="border" bind:value={solution} /> -->
@@ -332,21 +325,7 @@
         {#each row as alphabet, alphabetIndex}
           <div class="flex-grow flex m-0.5 relative">
             <button
-              on:click={() => {
-                if (alphabet === "⇧") shifted = !shifted
-                else if (alphabet === "⬅") input = input.slice(0, -1)
-                else if (alphabet === "↵") submit()
-                // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
-                // \u0E31\u0E34-\u0E3A\u0E47-\u0EC4 คือพวกนสระบนล่างหรือวรรณยุกต์
-                else if (
-                  !gameEnded &&
-                  (alphabet.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) ||
-                    splittedInput.length < solutionLength)
-                ) {
-                  input += alphabet
-                  shifted = false
-                }
-              }}
+              on:click={() => inputKey(alphabet)}
               class={colors[alphabetStateMap[alphabet]] +
                 " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
