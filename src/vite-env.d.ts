@@ -4,4 +4,5 @@
 interface Window {
   kofiWidgetOverlay: any
   localStorage: any
+  gtag: any
 }

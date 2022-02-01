@@ -105,10 +105,20 @@
       })
 
       if (allMatched) {
+        if (!gameEnded) {
+          const score = attemptLimit + 1 - validations.length
+          console.log({ score })
+          window.gtag("event", "post_score", { score })
+        }
         showAlertMessage("คุณชนะแล้ว!")
         gameEnded = true
         win = true
       } else if (attemptsLength >= attemptLimit) {
+        if (!gameEnded) {
+          const score = 0
+          console.log({ score })
+          window.gtag("event", "post_score", { score })
+        }
         showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
         gameEnded = true
         lose = true
