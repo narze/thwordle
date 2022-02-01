@@ -160,6 +160,13 @@
     const validation = validateWord(input, solution)
     validations = [...validations, validation]
 
+    if (validations.length == 1) {
+      window.gtag("event", "first_guess", {
+        event_category: "general",
+        event_label: input,
+      })
+    }
+
     input = ""
 
     await tick()
