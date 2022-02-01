@@ -127,18 +127,30 @@
     [CharState.NotUsed]: "bg-white text-black",
   }
 
-  function onKeypress(e: KeyboardEvent) {
+  
+  // Enable global keyboard event listener
+  document.addEventListener('keydown', onKeyDown);
+  
+  function onKeyDown(e: KeyboardEvent) {
+    console.log(e.key);
     if (e.key === "Enter") {
       e.preventDefault()
       submit()
     }
-
+    if (e.key === 'Backspace') {
+      e.preventDefault()
+      input = input.slice(0, -1)
+      return
+    }
+    input += e.key;  
+    
     // ถ้าเป็นสระบนล่างหรือวรรณยุกต์ ให้ใส่ได้เลยไม่ต้องเช็คความยาว
     if (
       !e.key.match(/[\u0E31\u0E34-\u0E3A\u0E47-\u0EC4]/) &&
       splittedInput.length >= solutionLength
-    ) {
-      e.preventDefault()
+      ) {
+      input = input.slice(0, -1)
+      e.preventDefault();
       return
     }
   }
