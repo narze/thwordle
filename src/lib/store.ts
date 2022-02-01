@@ -3,6 +3,7 @@ import { writable } from "svelte/store"
 interface Day {
   attempts: any[]
   win?: boolean
+  lose?: boolean
 }
 
 const lsKey = "thwordle-attempts"
