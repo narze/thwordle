@@ -35,6 +35,7 @@
             <span>
               <select class="border" bind:value={$settings.layout}>
                 <option value="Kedmanee">Kedmanee (ค่าเริ่มต้น)</option>
+                <option value="Manoonchai">Manoonchai</option>
                 <option value="ก-ฮ">ก-ฮ</option>
               </select>
             </span>
