@@ -24,7 +24,7 @@
   import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
-  const title = "Thwordle"
+  const title = "Thwordle : Thai Wordle เวอเดิ้ลภาษาไทย"
 
   const menuItems = [
     { name: "เจอบั๊ก?", url: "https://twitter.com/narze/status/1483857313224355840" },
@@ -272,7 +272,7 @@
       <h1
         class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
       >
-        <span>{title}</span>
+        Thwordle
       </h1>
       <span class="flex justify-center h-full"
         ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
