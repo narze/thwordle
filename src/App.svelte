@@ -15,11 +15,13 @@
     validateWord,
   } from "./lib/Wordle"
   import words from "./lib/words"
-  import { onMount, tick } from "svelte"
+  import { tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
-  import { store } from "./lib/store"
+  import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
+  import SettingModal from "./lib/SettingModal.svelte"
+  import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -39,19 +41,8 @@
     return w.length >= 5 && w.length <= 7
   })
 
-  const rows = [
-    ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-    ["ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
-    ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
-    ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
-  ]
-
-  const rowsShifted = [
-    ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-    ["ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
-    ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
-    ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
-  ]
+  $: rows = layouts[$settings.layout].rows
+  $: rowsShifted = layouts[$settings.layout].rowsShifted
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -64,17 +55,18 @@
   let input = ""
   // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
   let solution = words5to7[dateIndex % words5to7.length]
-  let attempts: string[] = $store.data[dateIndex]?.attempts || []
+  let attempts: string[] = $data[dateIndex]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$store.data[dateIndex]?.win || !!$store.data[dateIndex]?.lose
+  let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
   let attemptsContainer
-  let modalViewed = !!$store.modalViewed
   let copied = false
   let lose = false
   let win = false
   let shifted = false
   let alertMessage = ""
   let showAlert = false
+  let settingModal = false
+  let focusOnTextInput = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
@@ -87,10 +79,7 @@
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
-    store.set({
-      modalViewed,
-      data: { ...$store.data, [`${dateIndex}`]: { attempts, win, lose } },
-    })
+    data.set({ ...$data, [`${dateIndex}`]: { attempts, win, lose } })
   }
   $: {
     const validation = validations.slice(-1)[0]
@@ -239,7 +228,7 @@
       shifted = !shifted
     } else if (alphabet === "⬅") {
       input = input.slice(0, -1)
-    } else if (alphabet === "↵") {
+    } else if (alphabet === "↵" || alphabet === "Enter") {
       submit()
     } else if (
       // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
@@ -253,6 +242,10 @@
   }
 
   document.addEventListener("keydown", ({ key }) => {
+    if (focusOnTextInput) {
+      return
+    }
+
     if (key == "Backspace") {
       inputKey("⬅")
     } else if (key == "Enter") {
@@ -274,14 +267,16 @@
   <header class="mb-4 w-full h-10 py-2">
     <div class="flex justify-between w-full px-4 h-10">
       <span class="flex justify-center h-full"
-        ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
+        ><button on:click={() => modalViewed.set(false)}>วิธีเล่น</button></span
       >
       <h1
         class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
       >
         <span>{title}</span>
       </h1>
-      <span>&nbsp;</span>
+      <span class="flex justify-center h-full"
+        ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
+      >
     </div>
     <hr />
   </header>
@@ -337,6 +332,22 @@
 
   <!-- Layout -->
   <div class="layout my-4 w-full px-1 max-w-2xl">
+    <input
+      type="text"
+      class="block border mb-1 px-4 mx-auto text-center"
+      on:keypress|preventDefault={(e) => {
+        inputKey(e.key)
+      }}
+      on:blur={() => {
+        focusOnTextInput = false
+      }}
+      on:focus={() => {
+        focusOnTextInput = true
+      }}
+      bind:value={input}
+      disabled={gameEnded}
+      placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+    />
     {#each currentRows as row, rowIndex}
       <div class="w-full flex flex-row justify-center touch-manipulation">
         {#each row as alphabet, alphabetIndex}
@@ -344,6 +355,8 @@
             <button
               on:click={() => inputKey(alphabet)}
               class={colors[alphabetStateMap[alphabet]] +
+                " " +
+                `${"⇧↵⬅".includes(alphabet) ? "border-gray-500" : ""}` +
                 " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
@@ -381,10 +394,10 @@
     <div>DEBUG</div>
     {JSON.stringify(attempts)}
   </div> -->
-  {#if !modalViewed}
+  {#if !$modalViewed}
     <Modal
       onClose={() => {
-        modalViewed = true
+        modalViewed.set(true)
       }}
     />
   {/if}
@@ -394,6 +407,14 @@
       message={alertMessage}
       onClose={() => {
         showAlert = false
+      }}
+    />
+  {/if}
+
+  {#if settingModal}
+    <SettingModal
+      onClose={() => {
+        settingModal = false
       }}
     />
   {/if}
