@@ -18,9 +18,10 @@
   import { tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
-  import { data, modalViewed } from "./lib/store"
+  import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
   import SettingModal from "./lib/SettingModal.svelte"
+  import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -40,19 +41,8 @@
     return w.length >= 5 && w.length <= 7
   })
 
-  const rows = [
-    ["ภ", "ถ", "ุ", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-    ["ไ", "ำ", "พ", "ะ", "ั", "ี", "ร", "น", "ย", "บ", "ล"],
-    ["ฟ", "ห", "ก", "ด", "เ", "้", "่", "า", "ส", "ว", "ง"],
-    ["⇧", "ผ", "ป", "แ", "อ", "ิ", "ื", "ท", "ม", "ใ", "ฝ", "↵"],
-  ]
-
-  const rowsShifted = [
-    ["ภ", "ถ", "ู", "ึ", "ค", "ต", "จ", "ข", "ช", "⬅"],
-    ["ไ", "ฎ", "ฑ", "ธ", "ั", "๊", "ณ", "น", "ญ", "ฐ", "ล"],
-    ["ฤ", "ฆ", "ฏ", "โ", "ฌ", "็", "๋", "ษ", "ศ", "ซ", "ง"],
-    ["⇧", "ผ", "ป", "ฉ", "ฮ", "ิ", "์", "ท", "ฒ", "ฬ", "ฝ", "↵"],
-  ]
+  $: rows = layouts[$settings.layout].rows
+  $: rowsShifted = layouts[$settings.layout].rowsShifted
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -75,7 +65,7 @@
   let shifted = false
   let alertMessage = ""
   let showAlert = false
-  let settingModal = true // DEBUG
+  let settingModal = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length

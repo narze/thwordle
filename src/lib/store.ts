@@ -26,27 +26,21 @@ const DEFAULT: IStore = {
   settings: defaultSettings,
 }
 
-const lsKey = "thwordle-attempts"
+const LOCALSTORAGE_KEY = "thwordle-attempts"
 
-// export const store = writable<IStore>(
-//   JSON.parse(
-//     window.localStorage.getItem(lsKey) || JSON.stringify(DEFAULT)
-//   )
-// )
-
-const storage: IStore = JSON.parse(window.localStorage.getItem(lsKey) || JSON.stringify(DEFAULT))
-
-// store.subscribe((value) => {
-//   window.localStorage[lsKey] = JSON.stringify(value)
-// })
+const storage: IStore = JSON.parse(
+  window.localStorage.getItem(LOCALSTORAGE_KEY) || JSON.stringify(DEFAULT)
+)
 
 function storeSettings() {
-  window.localStorage[lsKey] = JSON.stringify(storage)
+  window.localStorage[LOCALSTORAGE_KEY] = JSON.stringify(storage)
 }
 
-export const modalViewed = writable<IStore["modalViewed"]>(storage.modalViewed)
-export const data = writable<IStore["data"]>(storage.data)
-export const settings = writable<IStore["settings"]>(storage.settings)
+export const modalViewed = writable<IStore["modalViewed"]>(
+  storage.modalViewed || DEFAULT["modalViewed"]
+)
+export const data = writable<IStore["data"]>(storage.data || DEFAULT["data"])
+export const settings = writable<IStore["settings"]>(storage.settings || DEFAULT["settings"])
 
 modalViewed.subscribe((value) => {
   storage.modalViewed = value
