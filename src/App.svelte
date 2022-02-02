@@ -66,6 +66,7 @@
   let alertMessage = ""
   let showAlert = false
   let settingModal = false
+  let focusOnTextInput = false
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
@@ -227,7 +228,7 @@
       shifted = !shifted
     } else if (alphabet === "⬅") {
       input = input.slice(0, -1)
-    } else if (alphabet === "↵") {
+    } else if (alphabet === "↵" || alphabet === "Enter") {
       submit()
     } else if (
       // ตรวจสอบก่อนด้วยว่าสามารถใส่ตัวอักษรเพิ่มได้หรือไม่
@@ -241,6 +242,10 @@
   }
 
   document.addEventListener("keydown", ({ key }) => {
+    if (focusOnTextInput) {
+      return
+    }
+
     if (key == "Backspace") {
       inputKey("⬅")
     } else if (key == "Enter") {
@@ -327,6 +332,22 @@
 
   <!-- Layout -->
   <div class="layout my-4 w-full px-1 max-w-2xl">
+    <input
+      type="text"
+      class="block border mb-1 px-4 mx-auto text-center"
+      on:keypress|preventDefault={(e) => {
+        inputKey(e.key)
+      }}
+      on:blur={() => {
+        focusOnTextInput = false
+      }}
+      on:focus={() => {
+        focusOnTextInput = true
+      }}
+      bind:value={input}
+      disabled={gameEnded}
+      placeholder="คลิกที่นี่เพื่อใช้คีย์บอร์ด"
+    />
     {#each currentRows as row, rowIndex}
       <div class="w-full flex flex-row justify-center touch-manipulation">
         {#each row as alphabet, alphabetIndex}
