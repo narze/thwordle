@@ -356,6 +356,8 @@
               on:click={() => inputKey(alphabet)}
               class={colors[alphabetStateMap[alphabet]] +
                 " " +
+                `${"⇧↵⬅".includes(alphabet) ? "border-gray-500" : ""}` +
+                " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
               {alphabet}
