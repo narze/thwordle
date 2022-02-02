@@ -338,7 +338,7 @@
   <!-- Layout -->
   <div class="layout my-4 w-full px-1 max-w-2xl">
     {#each currentRows as row, rowIndex}
-      <div class="w-full flex flex-row justify-center">
+      <div class="w-full flex flex-row justify-center touch-manipulation">
         {#each row as alphabet, alphabetIndex}
           <div class="flex-grow flex m-0.5 relative">
             <button
