@@ -12,7 +12,7 @@
 >
   >
   <div
-    class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
   >
     <div
       class="fixed fadein inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
@@ -25,10 +25,10 @@
     >
 
     <div
-      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-lg w-full"
     >
       <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="mt-3 text-center sm:text-left">
+        <div class="mt-3 text-left">
           <h3 class="text-xl leading-4 font-medium text-gray-900" id="modal-title">ตั้งค่า</h3>
           <div class="mt-4 flex w-full">
             <span class="grow font-bold">เลย์เอาท์</span>
@@ -42,10 +42,10 @@
           </div>
         </div>
 
-        <div class="py-3  sm:flex sm:flex-row-reverse">
+        <div class="py-3 flex flex-row-reverse">
           <button
             type="button"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:w-auto sm:text-sm"
+            class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:text-sm"
             on:click={() => {
               onClose()
             }}
