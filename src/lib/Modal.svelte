@@ -206,9 +206,8 @@
 
               <hr class="my-2" />
 
-              <a
-                class="text-gray-500 text-sm underline"
-                href="https://twitter.com/narze/status/1483857313224355840">แจ้งบั๊ก / ข้อเสนอแนะ</a
+              <a class="text-gray-500 text-sm underline" href="https://twitter.com/thwordle"
+                >แจ้งบั๊ก / ข้อเสนอแนะ</a
               >
             </div>
           </div>
