@@ -275,7 +275,7 @@
         <span>{title}</span>
       </h1>
       <span class="flex justify-center h-full"
-        ><button on:click={() => (settingModal = true)}>Settings</button></span
+        ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
       >
     </div>
     <hr />
