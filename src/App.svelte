@@ -15,11 +15,12 @@
     validateWord,
   } from "./lib/Wordle"
   import words from "./lib/words"
-  import { onMount, tick } from "svelte"
+  import { tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import dict from "./lib/dict.json"
-  import { store } from "./lib/store"
+  import { data, modalViewed } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
+  import SettingModal from "./lib/SettingModal.svelte"
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle"
@@ -64,17 +65,17 @@
   let input = ""
   // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
   let solution = words5to7[dateIndex % words5to7.length]
-  let attempts: string[] = $store.data[dateIndex]?.attempts || []
+  let attempts: string[] = $data[dateIndex]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$store.data[dateIndex]?.win || !!$store.data[dateIndex]?.lose
+  let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
   let attemptsContainer
-  let modalViewed = !!$store.modalViewed
   let copied = false
   let lose = false
   let win = false
   let shifted = false
   let alertMessage = ""
   let showAlert = false
+  let settingModal = true // DEBUG
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
@@ -87,10 +88,7 @@
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
-    store.set({
-      modalViewed,
-      data: { ...$store.data, [`${dateIndex}`]: { attempts, win, lose } },
-    })
+    data.set({ ...$data, [`${dateIndex}`]: { attempts, win, lose } })
   }
   $: {
     const validation = validations.slice(-1)[0]
@@ -274,14 +272,16 @@
   <header class="mb-4 w-full h-10 py-2">
     <div class="flex justify-between w-full px-4 h-10">
       <span class="flex justify-center h-full"
-        ><button on:click={() => (modalViewed = false)}>วิธีเล่น</button></span
+        ><button on:click={() => modalViewed.set(false)}>วิธีเล่น</button></span
       >
       <h1
         class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
       >
         <span>{title}</span>
       </h1>
-      <span>&nbsp;</span>
+      <span class="flex justify-center h-full"
+        ><button on:click={() => (settingModal = true)}>Settings</button></span
+      >
     </div>
     <hr />
   </header>
@@ -381,10 +381,10 @@
     <div>DEBUG</div>
     {JSON.stringify(attempts)}
   </div> -->
-  {#if !modalViewed}
+  {#if !$modalViewed}
     <Modal
       onClose={() => {
-        modalViewed = true
+        modalViewed.set(true)
       }}
     />
   {/if}
@@ -394,6 +394,14 @@
       message={alertMessage}
       onClose={() => {
         showAlert = false
+      }}
+    />
+  {/if}
+
+  {#if settingModal}
+    <SettingModal
+      onClose={() => {
+        settingModal = false
       }}
     />
   {/if}
