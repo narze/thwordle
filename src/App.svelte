@@ -334,7 +334,7 @@
   <div class="layout my-4 w-full px-1 max-w-2xl">
     <input
       type="text"
-      class="block border mb-1 px-4 mx-auto text-center"
+      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center"
       on:keypress|preventDefault={(e) => {
         inputKey(e.key)
       }}
@@ -422,8 +422,8 @@
 
 <style>
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-      "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
   .attempts {
