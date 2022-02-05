@@ -21,6 +21,13 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content={imageUrl} />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+
   {#if gtagId}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={gtagId}"></script>
