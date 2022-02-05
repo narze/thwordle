@@ -358,6 +358,8 @@
                 " " +
                 `${"⇧↵⬅".includes(alphabet) ? "border-gray-500" : ""}` +
                 " " +
+                `${$settings.layout === "ก-ฮ" ? "layout-no-shift" : ""}` +
+                " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
               {alphabet}
@@ -434,6 +436,10 @@
     margin-bottom: 4rem;
   }
 
+  .layout-key.layout-no-shift {
+    @apply h-10;
+  }
+
   .layout-key {
     @apply px-0.5 h-14;
   }
@@ -453,6 +459,10 @@
 
     .layout-key {
       @apply h-12;
+    }
+
+    .layout-key.layout-no-shift {
+      @apply h-8;
     }
 
     .attempt-key {
