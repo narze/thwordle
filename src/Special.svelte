@@ -172,9 +172,7 @@
     const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
 
     navigator.clipboard.writeText(
-      `#Thwordle Special ${specialDay} ${score}\n\n${results.join(
-        "\n"
-      )}\n${"https://twitter.com/thwordle"}`
+      `#Thwordle Special ${specialDay} ${score}\n\n${results.join("\n")}\n${window.location.href}`
     )
 
     copied = true
