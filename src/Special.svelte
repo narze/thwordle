@@ -1,8 +1,6 @@
 <script lang="ts">
-  // import "twind/shim"
-
   import { sineInOut } from "svelte/easing"
-  import { Router, Link, Route } from "svelte-routing"
+  import { Link } from "svelte-routing"
 
   import Head from "./lib/Head.svelte"
   import Kofi from "./lib/Kofi.svelte"
@@ -24,6 +22,8 @@
   import SettingModal from "./lib/SettingModal.svelte"
   import { layouts } from "./lib/layouts"
 
+  export let specialId
+
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle : Thai Wordle เวอเดิ้ลภาษาไทย"
 
@@ -37,28 +37,31 @@
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/thwordle_home.png"
 
   const gtagId = "G-F2Q37REQE6"
-  const words5to7 = words.filter((word) => {
-    const w = splitWord(word)
-    return w.length >= 5 && w.length <= 7
-  })
+
+  const specialEntries = {
+    special1: {
+      day: "S1",
+      word: "คำพิเศษ",
+    },
+  }
+
+  if (!specialEntries[specialId]) {
+    alert("รหัสลับผิด กรุณาลองใหม่อีกครั้ง")
+    window.location.href = "/"
+  }
 
   $: rows = layouts[$settings.layout].rows
   $: rowsShifted = layouts[$settings.layout].rowsShifted
 
-  // January 19, 2022 Game Epoch
-  const epochMs = 1642525200000
-  const now = Date.now()
-  const msInDay = 86400000
-  const dateIndex = Math.floor((now - epochMs) / msInDay)
+  const specialIndex = specialEntries[specialId]?.day
 
   const attemptLimit = 6
 
   let input = ""
-  // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
-  let solution = words5to7[dateIndex % words5to7.length]
-  let attempts: string[] = $data[dateIndex]?.attempts || []
+  let solution = specialEntries[specialId]?.word
+  let attempts: string[] = $data[specialIndex]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
+  let gameEnded = !!$data[specialIndex]?.win || !!$data[specialIndex]?.lose
   let attemptsContainer
   let copied = false
   let lose = false
@@ -80,7 +83,7 @@
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
-    data.set({ ...$data, [`${dateIndex}`]: { attempts, win, lose } })
+    data.set({ ...$data, [`${specialIndex}`]: { attempts, win, lose } })
   }
   $: {
     const validation = validations.slice(-1)[0]
@@ -138,7 +141,7 @@
       return
     }
 
-    // Check if the word is in the dict
+    // Check if the word is in the dict or correct
     if (!wordExists(input)) {
       showAlertMessage("คำนี้ไม่มีในพจนานุกรม")
       return
@@ -168,7 +171,11 @@
 
     const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
 
-    navigator.clipboard.writeText(`#Thwordle ${dateIndex + 1} ${score}\n\n${results.join("\n")}`)
+    navigator.clipboard.writeText(
+      `#Thwordle Special ${specialIndex} ${score}\n\n${results.join(
+        "\n"
+      )}\n${"https://twitter.com/thwordle"}`
+    )
 
     copied = true
 
@@ -178,6 +185,9 @@
   }
 
   function wordExists(input: string) {
+    if (solution === input) {
+      return true
+    }
     if (words.includes(input)) {
       return true
     }
@@ -273,7 +283,7 @@
       <h1
         class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
       >
-        Thwordle
+        Thwordle <span class="text-teal-800 underline">Special</span>
       </h1>
       <span class="flex justify-center h-full"
         ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
@@ -283,7 +293,7 @@
   </header>
 
   <span class="flex gap-4">
-    <span>วันที่ {dateIndex + 1}</span>
+    <span>Special {specialId}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
@@ -389,13 +399,11 @@
       >
         {copied ? "Copied" : "Share"}
       </button>
-
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href="https://twitter.com/thwordle"
-        class="flex items-center justify-center rounded border mx-2 p-3  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
-        >Special</a
+      <Link to="/"
+        ><button
+          class="flex items-center justify-center rounded border mx-2 p-3  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+          >หน้าหลัก</button
+        ></Link
       >
     {/if}
   </div>
