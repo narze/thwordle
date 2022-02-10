@@ -492,4 +492,28 @@
       @apply w-12 h-12;
     }
   }
+
+  @media (max-width: 480px) {
+    .attempt-key {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+  @media (max-width: 440px) {
+    .attempt-key {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+  }
+  @media (max-width: 400px) {
+    .attempt-key {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  @media (max-width: 400px) {
+    .attempt-key {
+      width: 2rem;
+    }
+  }
 </style>
