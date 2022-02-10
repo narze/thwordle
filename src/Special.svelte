@@ -41,7 +41,7 @@
   const specialEntries = {
     special1: {
       day: "S1",
-      word: "คำพิเศษ",
+      word: "ชุดโกโกวา",
     },
   }
 
