@@ -1,9 +1,10 @@
 import "./app.css"
-import App from "./App.svelte"
+import Main from "./Main.svelte"
 
-const app = new App({
+const app = new Main({
   target: document.getElementById("app"),
   intro: true,
+  // hydrate: true,
 })
 
 export default app
