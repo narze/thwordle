@@ -43,6 +43,10 @@
       day: "S1",
       word: "ชุดโกโกวา",
     },
+    s2: {
+      day: "S2",
+      word: "ยาก",
+    },
   }
 
   if (!specialEntries[specialId]) {
