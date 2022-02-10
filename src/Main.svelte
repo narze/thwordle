@@ -1,13 +1,12 @@
 <!-- Main.svelte -->
 <script>
-  import { Router, Link, Route } from "svelte-routing"
+  import url from "./lib/url"
   import App from "./App.svelte"
   import Special from "./Special.svelte"
-
-  export let url = ""
 </script>
 
-<Router {url}>
-  <Route path="s/:specialId" component={Special} />
-  <Route path="/"><App /></Route>
-</Router>
+{#if $url.hash.indexOf("#/s/") === 0 || $url.hash === "#/"}
+  <Special specialId={$url.hash.split(["#/s/"])[1]} />
+{:else}
+  <App />
+{/if}

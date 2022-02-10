@@ -1,6 +1,5 @@
 <script lang="ts">
   import { sineInOut } from "svelte/easing"
-  import { Link } from "svelte-routing"
 
   import Head from "./lib/Head.svelte"
   import Kofi from "./lib/Kofi.svelte"
@@ -53,15 +52,15 @@
   $: rows = layouts[$settings.layout].rows
   $: rowsShifted = layouts[$settings.layout].rowsShifted
 
-  const specialIndex = specialEntries[specialId]?.day
+  const specialDay = specialEntries[specialId]?.day
 
   const attemptLimit = 6
 
   let input = ""
   let solution = specialEntries[specialId]?.word
-  let attempts: string[] = $data[specialIndex]?.attempts || []
+  let attempts: string[] = $data[specialDay]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$data[specialIndex]?.win || !!$data[specialIndex]?.lose
+  let gameEnded = !!$data[specialDay]?.win || !!$data[specialDay]?.lose
   let attemptsContainer
   let copied = false
   let lose = false
@@ -83,7 +82,7 @@
   $: input = input.replace(/[^ก-๙]/g, "")
   $: splittedInput = splitWord(input)
   $: {
-    data.set({ ...$data, [`${specialIndex}`]: { attempts, win, lose } })
+    data.set({ ...$data, [`${specialDay}`]: { attempts, win, lose } })
   }
   $: {
     const validation = validations.slice(-1)[0]
@@ -172,7 +171,7 @@
     const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
 
     navigator.clipboard.writeText(
-      `#Thwordle Special ${specialIndex} ${score}\n\n${results.join(
+      `#Thwordle Special ${specialDay} ${score}\n\n${results.join(
         "\n"
       )}\n${"https://twitter.com/thwordle"}`
     )
@@ -292,8 +291,8 @@
     <hr />
   </header>
 
-  <span class="flex gap-4">
-    <span>Special {specialId}</span>
+  <span class="flex gap-2">
+    <span class="bg-gray-200 rounded px-2">{specialDay}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
@@ -399,11 +398,10 @@
       >
         {copied ? "Copied" : "Share"}
       </button>
-      <Link to="/"
-        ><button
-          class="flex items-center justify-center rounded border mx-2 p-3  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
-          >หน้าหลัก</button
-        ></Link
+      <a
+        href="/"
+        class="flex items-center justify-center rounded border mx-2 p-3  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+        >หน้าหลัก</a
       >
     {/if}
   </div>

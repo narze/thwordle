@@ -1,8 +1,5 @@
 <script lang="ts">
-  // import "twind/shim"
-
   import { sineInOut } from "svelte/easing"
-  import { Router, Link, Route } from "svelte-routing"
 
   import Head from "./lib/Head.svelte"
   import Kofi from "./lib/Kofi.svelte"
