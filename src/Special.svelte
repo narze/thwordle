@@ -47,6 +47,10 @@
       day: "S2",
       word: "ยาก",
     },
+    s3b3a35b99: {
+      day: "S3",
+      word: "ขะมันเขม้น",
+    },
   }
 
   if (!specialEntries[specialId]) {
