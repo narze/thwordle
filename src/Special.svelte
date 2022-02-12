@@ -51,6 +51,10 @@
       day: "S3",
       word: "ขะมักเขม้น",
     },
+    s4_7d7f803a: {
+      day: "S4",
+      word: "โฆษณา",
+    },
   }
 
   if (!specialEntries[specialId]) {
