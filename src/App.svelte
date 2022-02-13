@@ -253,6 +253,17 @@
       inputKey(key)
     }
   })
+
+  window.addEventListener("load", () => {
+    const thwordleStorage = localStorage.getItem("thwordle-attempts")
+    const theme = JSON.parse(thwordleStorage)?.settings.darkMode
+
+    if (theme) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  })
 </script>
 
 <div class="footer-wrapper">
@@ -262,10 +273,10 @@
 </div>
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
-<main class="container h-screen flex flex-col items-center">
+<main class="container h-screen flex flex-col items-center dark:bg-gray-900">
   <header class="mb-4 w-full h-10 py-2">
     <div class="flex justify-between w-full px-4 h-10">
-      <span class="flex justify-center h-full"
+      <span class="flex justify-center h-full dark:text-white"
         ><button on:click={() => modalViewed.set(false)}>วิธีเล่น</button></span
       >
       <h1
@@ -273,7 +284,7 @@
       >
         Thwordle
       </h1>
-      <span class="flex justify-center h-full"
+      <span class="flex justify-center h-full dark:text-white"
         ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
       >
     </div>
