@@ -55,6 +55,10 @@
       day: "S4",
       word: "โฆษณา",
     },
+    s5_34c6e86d: {
+      day: "S5",
+      word: "แพนด้า",
+    },
   }
 
   if (!specialEntries[specialId]) {
