@@ -2,6 +2,7 @@
   import { settings } from "./store"
 
   export let onClose = () => {}
+  console.log("$settings.layout", $settings.darkMode)
 </script>
 
 <div
@@ -40,6 +41,23 @@
               </select>
             </span>
           </div>
+          <div class="mt-4 flex w-full">
+            <span class="grow font-bold self-center">โหมดมืด</span>
+            <button>
+              <section>
+                <label for="toggle-1" class="toggle-1">
+                  <input
+                    type="checkbox"
+                    name="toggle-1"
+                    id="toggle-1"
+                    class="toggle-1__input"
+                    bind:checked={$settings.darkMode}
+                  />
+                  <span class="toggle-1__button" />
+                </label>
+              </section>
+            </button>
+          </div>
         </div>
 
         <div class="py-3 flex flex-row-reverse">
@@ -57,3 +75,55 @@
     </div>
   </div>
 </div>
+
+<style>
+  .toggle-1__input {
+    display: none;
+  }
+
+  .toggle-1__button {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+
+    font-size: 1rem;
+    line-height: 20px;
+
+    width: 120px;
+    height: 35px;
+    color: white;
+    background-color: white;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+
+    transition: all 0.3 ease;
+  }
+
+  .toggle-1__button::before {
+    content: "ปิด";
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    top: 4px;
+    left: 5px;
+    height: 25px;
+    padding: 0 10px;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  .toggle-1__input:checked + .toggle-1__button {
+    color: black;
+    background: rgba(0, 0, 0, 0.7);
+    border: solid 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .toggle-1__input:checked + .toggle-1__button::before {
+    content: "เปิด";
+    left: 67px;
+    color: black;
+    background: white;
+  }
+</style>
