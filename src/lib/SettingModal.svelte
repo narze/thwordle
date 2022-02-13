@@ -37,13 +37,15 @@
     <div
       class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-lg w-full"
     >
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-black">
         <div class="mt-3 text-left">
-          <h3 class="text-xl leading-4 font-medium text-gray-900" id="modal-title">ตั้งค่า</h3>
-          <div class="mt-4 flex w-full">
+          <h3 class="text-xl leading-4 font-medium text-gray-900 dark:text-white" id="modal-title">
+            ตั้งค่า
+          </h3>
+          <div class="mt-4 flex w-full dark:text-white">
             <span class="grow font-bold">เลย์เอาท์</span>
             <span>
-              <select class="border" bind:value={$settings.layout}>
+              <select class="border dark:bg-black" bind:value={$settings.layout}>
                 <option value="Kedmanee">Kedmanee (ค่าเริ่มต้น)</option>
                 <option value="Manoonchai">Manoonchai</option>
                 <option value="ก-ฮ">ก-ฮ</option>
@@ -51,7 +53,7 @@
             </span>
           </div>
           <div class="mt-4 flex w-full">
-            <span class="grow font-bold self-center">โหมดมืด</span>
+            <span class="grow font-bold self-center dark:text-white">โหมดมืด</span>
             <button>
               <section>
                 <label for="toggle-theme" class="toggle-theme">
@@ -126,8 +128,8 @@
 
   .toggle-theme__input:checked + .toggle-theme__button {
     color: black;
-    background: rgba(0, 0, 0, 0.7);
-    border: solid 1px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    border: solid 1px rgba(255, 255, 255, 1);
   }
 
   .toggle-theme__input:checked + .toggle-theme__button::before {
