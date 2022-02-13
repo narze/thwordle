@@ -2,7 +2,16 @@
   import { settings } from "./store"
 
   export let onClose = () => {}
-  console.log("$settings.layout", $settings.darkMode)
+
+  const onToggleChange = () => {
+    const darkMode = JSON.parse(localStorage.getItem("thwordle-attempts"))?.settings.darkMode
+
+    if (Boolean(darkMode)) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }
 </script>
 
 <div
@@ -45,15 +54,16 @@
             <span class="grow font-bold self-center">โหมดมืด</span>
             <button>
               <section>
-                <label for="toggle-1" class="toggle-1">
+                <label for="toggle-theme" class="toggle-theme">
                   <input
                     type="checkbox"
-                    name="toggle-1"
-                    id="toggle-1"
-                    class="toggle-1__input"
+                    name="toggle-theme"
+                    id="toggle-theme"
+                    class="toggle-theme__input"
                     bind:checked={$settings.darkMode}
+                    on:change={onToggleChange}
                   />
-                  <span class="toggle-1__button" />
+                  <span class="toggle-theme__button" />
                 </label>
               </section>
             </button>
@@ -77,11 +87,11 @@
 </div>
 
 <style>
-  .toggle-1__input {
+  .toggle-theme__input {
     display: none;
   }
 
-  .toggle-1__button {
+  .toggle-theme__button {
     position: relative;
     cursor: pointer;
     display: inline-block;
@@ -98,7 +108,7 @@
     transition: all 0.3 ease;
   }
 
-  .toggle-1__button::before {
+  .toggle-theme__button::before {
     content: "ปิด";
     position: absolute;
     display: flex;
@@ -114,13 +124,13 @@
     transition: all 0.3s ease;
   }
 
-  .toggle-1__input:checked + .toggle-1__button {
+  .toggle-theme__input:checked + .toggle-theme__button {
     color: black;
     background: rgba(0, 0, 0, 0.7);
     border: solid 1px rgba(0, 0, 0, 0.2);
   }
 
-  .toggle-1__input:checked + .toggle-1__button::before {
+  .toggle-theme__input:checked + .toggle-theme__button::before {
     content: "เปิด";
     left: 67px;
     color: black;
