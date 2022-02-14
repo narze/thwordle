@@ -291,7 +291,7 @@
     <hr />
   </header>
 
-  <span class="flex gap-4">
+  <span class="flex gap-4 dark:text-white">
     <span>วันที่ {dateIndex + 1}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
