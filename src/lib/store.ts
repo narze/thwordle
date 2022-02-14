@@ -9,6 +9,7 @@ interface IStore {
 
 export interface ISettings {
   layout: "ก-ฮ" | "Kedmanee"
+  darkMode: boolean
   [key: string]: any
 }
 
@@ -18,7 +19,7 @@ interface Day {
   lose?: boolean
 }
 
-const defaultSettings: ISettings = { layout: "Kedmanee" }
+const defaultSettings: ISettings = { layout: "Kedmanee", darkMode: false }
 
 const DEFAULT: IStore = {
   modalViewed: false,

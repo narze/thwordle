@@ -291,7 +291,7 @@
 <main class="container h-screen flex flex-col items-center">
   <header class="mb-4 w-full h-10 py-2">
     <div class="flex justify-between w-full px-4 h-10">
-      <span class="flex justify-center h-full"
+      <span class="flex justify-center h-full dark:text-white"
         ><button on:click={() => modalViewed.set(false)}>วิธีเล่น</button></span
       >
       <h1
@@ -299,14 +299,14 @@
       >
         Thwordle <span class="text-teal-800 underline">Special</span>
       </h1>
-      <span class="flex justify-center h-full"
+      <span class="flex justify-center h-full dark:text-white"
         ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
       >
     </div>
     <hr />
   </header>
 
-  <span class="flex gap-2">
+  <span class="flex gap-2 dark:text-white">
     <span class="bg-gray-200 rounded px-2">{specialDay}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
