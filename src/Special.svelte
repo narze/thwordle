@@ -59,6 +59,10 @@
       day: "S5",
       word: "แพนด้า",
     },
+    s6_dfbe2baa: {
+      day: "S6",
+      word: "ปาเลสไตน์",
+    },
   }
 
   if (!specialEntries[specialId]) {
