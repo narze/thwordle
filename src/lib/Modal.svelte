@@ -40,7 +40,7 @@
     [CharState.Correct]: "bg-green-500 border-green-500",
     [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
     [CharState.Wrong]: "bg-gray-500 border-gray-500",
-    [CharState.NotUsed]: "bg-white",
+    [CharState.NotUsed]: "bg-white dark:bg-black",
   }
 
   export let onClose = () => {}
@@ -86,7 +86,7 @@
     <div
       class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
     >
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-black">
         <div class="sm:flex sm:items-start">
           <!-- <div
             class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
@@ -108,12 +108,15 @@
               />
             </svg>
           </div> -->
-          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-base leading-6 font-medium text-gray-900" id="modal-title">
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left dark:text-white">
+            <h3
+              class="text-base leading-6 font-medium text-gray-900 dark:text-white"
+              id="modal-title"
+            >
               เกม Thwordle
             </h3>
             <div class="mt-2">
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-500 dark:text-gray-300">
                 ทายคำปริศนาประจำวัน โดยการทายแต่ละครั้งจะได้ผลลัพท์เป็นสีต่างๆ<br />
                 (เหมือนกับ
                 <a target="_blank" href="https://www.powerlanguage.co.uk/wordle" class="underline"
@@ -122,7 +125,7 @@
               </p>
             </div>
             <hr class="my-2" />
-            <div class="mt-2">
+            <div class="mt-2 ">
               <h3 class="text-base font-medium">ตัวอย่าง</h3>
               <div class="flex justify-center my-1">
                 {#each example1 as { correct, char }}
@@ -136,7 +139,7 @@
                   </div>
                 {/each}
               </div>
-              <p class="text-sm text-gray-500 mb-4">
+              <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
                 มีตัวอักษร <strong>อ</strong> อยู่ในคำ และอยู่ในตำแหน่งที่ถูกต้อง
               </p>
               <div class="flex justify-center my-1">
@@ -151,7 +154,7 @@
                   </div>
                 {/each}
               </div>
-              <p class="text-sm text-gray-500 mb-4">
+              <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
                 มีตัวอักษร <strong>ร</strong> อยู่ในคำ แต่อยู่ในตำแหน่งที่ผิด
               </p>
               <div class="flex justify-center my-1">
@@ -166,7 +169,7 @@
                   </div>
                 {/each}
               </div>
-              <p class="text-sm text-gray-500 mb-4">
+              <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
                 ไม่มีตัวอักษร <strong>บ</strong> อยู่ในคำปริศนา
               </p>
             </div>
@@ -175,7 +178,7 @@
               <h3 class="text-base leading-6 font-medium text-gray-900" id="modal-title">
                 กฎพิเศษ
               </h3>
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-500 dark:text-gray-300">
                 เนื่องจากภาษาไทยมีตัวสระและวรรณยุกต์ในตำแหน่งเดียวกันได้<br />
                 ถ้าตัวอักษรตัวกลางอยู่ในคำ (สีเขียว, สีเหลือง) จะมีการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ
               </p>
@@ -191,24 +194,27 @@
                   </div>
                 {/each}
               </div>
-              <p class="text-sm text-gray-500 mb-4">
+              <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
                 มีตัวอักษร <strong>พ</strong> และอยู่ในตำแหน่งที่ถูกต้อง
                 จะทำการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ (<strong>พิ่</strong>)
               </p>
-              <p class="text-sm text-gray-500 mb-4">
+              <p class="text-sm text-gray-500 mb-4 dark:text-gray-300">
                 มีตัวอักษร <strong>ต</strong> อยู่ในคำ จะทำการเติมสระ/วรรณยุกต์ให้โดยอัตโนมัติ (<strong
                   >ติ</strong
                 >)
               </p>
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-500 dark:text-gray-300">
                 สระและวรรณยุกต์ตัวบน/ล่าง จะไม่ถูกทำเครื่องหมายว่าไม่อยู่ในคำนั้น หากใส่ผิดจุด
               </p>
 
               <hr class="my-2" />
 
-              <a class="text-gray-500 text-sm underline" href="https://twitter.com/thwordle"
-                >แจ้งบั๊ก / ข้อเสนอแนะ</a
+              <a
+                class="text-gray-500 text-sm underline dark:text-gray-300"
+                href="https://twitter.com/thwordle"
               >
+                แจ้งบั๊ก / ข้อเสนอแนะ
+              </a>
             </div>
           </div>
         </div>
