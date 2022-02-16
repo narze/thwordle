@@ -63,6 +63,10 @@
       day: "S6",
       word: "ปาเลสไตน์",
     },
+    s7_761d3701: {
+      day: "S7",
+      word: "บางกอก",
+    },
   }
 
   if (!specialEntries[specialId]) {
