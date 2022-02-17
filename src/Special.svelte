@@ -67,6 +67,10 @@
       day: "S7",
       word: "บางกอก",
     },
+    s8_cf3db809: {
+      day: "S8",
+      word: "สั้น",
+    },
   }
 
   if (!specialEntries[specialId]) {
