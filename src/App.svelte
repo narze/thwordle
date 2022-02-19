@@ -35,10 +35,6 @@
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/thwordle_home.png"
 
   const gtagId = "G-F2Q37REQE6"
-  const words5to7 = words.filter((word) => {
-    const w = splitWord(word)
-    return w.length >= 5 && w.length <= 7
-  })
 
   $: rows = layouts[$settings.layout].rows
   $: rowsShifted = layouts[$settings.layout].rowsShifted
@@ -52,8 +48,7 @@
   const attemptLimit = 6
 
   let input = ""
-  // let solution = words5to7[Math.floor(Math.random() * words5to7.length)]
-  let solution = words5to7[dateIndex % words5to7.length]
+  let solution = words[dateIndex % words.length]
   let attempts: string[] = $data[dateIndex]?.attempts || []
   let validations = attempts.map((word) => validateWord(word, solution))
   let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
