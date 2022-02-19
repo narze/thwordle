@@ -78,6 +78,10 @@
       day: "S11",
       word: "ประสิทธิภาพ",
     },
+    s12_9c55: {
+      day: "S12",
+      word: "ศฤงคาร",
+    },
   }
 
   if (!specialEntries[specialId]) {
