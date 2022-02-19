@@ -74,6 +74,10 @@
       day: "S9",
       word: "มนุษย์",
     },
+    s11_e846: {
+      day: "S11",
+      word: "ประสิทธิภาพ",
+    },
   }
 
   if (!specialEntries[specialId]) {
