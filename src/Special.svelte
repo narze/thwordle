@@ -71,6 +71,10 @@
       day: "S8",
       word: "สั้น",
     },
+    s9_03db: {
+      day: "S9",
+      word: "มนุษย์",
+    },
   }
 
   if (!specialEntries[specialId]) {
