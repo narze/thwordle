@@ -61,9 +61,11 @@
   let settingModal = false
   let focusOnTextInput = false
   let dict: string[] = []
+  let alertDelay = 1500
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
+  $: alertDelay = 500 + 150 * solutionLength
   $: currentRows = shifted ? rowsShifted : rows
   $: inverseRows = shifted ? rows : rowsShifted
   $: alphabetStateMap = generateAlphabetStateMap(
@@ -91,20 +93,26 @@
         if (!gameEnded) {
           const score = attemptLimit + 1 - validations.length
           console.log({ score })
-          window.gtag("event", "post_score", { score })
+          window?.gtag("event", "post_score", { score })
         }
-        showAlertMessage("คุณชนะแล้ว!")
-        gameEnded = true
-        win = true
+
+        setTimeout(() => {
+          showAlertMessage("คุณชนะแล้ว!")
+          gameEnded = true
+          win = true
+        }, alertDelay)
       } else if (attemptsLength >= attemptLimit) {
         if (!gameEnded) {
           const score = 0
           console.log({ score })
-          window.gtag("event", "post_score", { score })
+          window?.gtag("event", "post_score", { score })
         }
-        showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
-        gameEnded = true
-        lose = true
+
+        setTimeout(() => {
+          showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
+          gameEnded = true
+          lose = true
+        }, alertDelay)
       }
     }
   }
@@ -148,7 +156,7 @@
     validations = [...validations, validation]
 
     if (validations.length == 1) {
-      window.gtag("event", "first_guess", {
+      window?.gtag("event", "first_guess", {
         event_category: "general",
         event_label: input,
       })
