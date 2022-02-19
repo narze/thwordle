@@ -13,9 +13,8 @@
     validateWord,
   } from "./lib/Wordle"
   import words from "./lib/words"
-  import { tick } from "svelte"
+  import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
-  import dict from "./lib/dict.json"
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
   import SettingModal from "./lib/SettingModal.svelte"
@@ -103,6 +102,7 @@
   let showAlert = false
   let settingModal = false
   let focusOnTextInput = false
+  let dict: string[] = []
 
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
@@ -161,6 +161,10 @@
     [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white",
     [CharState.NotUsed]: "bg-white text-black",
   }
+
+  onMount(async () => {
+    dict = (await import("./lib/dict.json")).default
+  })
 
   async function submit() {
     if (gameEnded) {
