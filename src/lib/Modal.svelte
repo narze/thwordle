@@ -38,7 +38,7 @@
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
+    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500",
     [CharState.Wrong]: "bg-gray-500 border-gray-500",
     [CharState.NotUsed]: "bg-white dark:bg-slate-800",
   }
