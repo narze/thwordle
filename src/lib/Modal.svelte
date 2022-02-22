@@ -40,7 +40,7 @@
     [CharState.Correct]: "bg-green-500 border-green-500",
     [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500",
     [CharState.Wrong]: "bg-gray-500 border-gray-500",
-    [CharState.NotUsed]: "bg-white dark:bg-black",
+    [CharState.NotUsed]: "bg-white dark:bg-slate-800",
   }
 
   export let onClose = () => {}
@@ -86,7 +86,7 @@
     <div
       class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
     >
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-black">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-800">
         <div class="sm:flex sm:items-start">
           <!-- <div
             class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
@@ -175,7 +175,7 @@
             </div>
             <hr class="my-2" />
             <div class="mt-2">
-              <h3 class="text-base leading-6 font-medium text-gray-900" id="modal-title">
+              <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
                 กฎพิเศษ
               </h3>
               <p class="text-sm text-gray-500 dark:text-gray-300">
