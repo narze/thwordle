@@ -86,6 +86,10 @@
       day: "S12",
       word: "ศฤงคาร",
     },
+    s13_68a6: {
+      day: "S13",
+      word: "องคาพยพ",
+    },
   }
 
   if (!specialEntries[specialId]) {
