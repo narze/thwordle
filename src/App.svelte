@@ -123,7 +123,7 @@
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500 text-white",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 text-white",
+    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500 text-white",
     [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white dark:bg-gray-700 dark:text-white",
     [CharState.NotUsed]: "bg-white text-black dark:bg-gray-500 dark:text-white",
   }
@@ -280,7 +280,7 @@
 </div>
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
-<main class="container h-screen flex flex-col items-center dark:bg-black">
+<main class="container h-screen flex flex-col items-center dark:bg-slate-800">
   <header class="mb-4 w-full h-10 py-2">
     <div class="flex justify-between w-full px-4 h-10">
       <span class="flex justify-center h-full dark:text-white"
@@ -326,7 +326,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded dark:bg-black dark:text-white`}
+            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded dark:bg-slate-800 dark:text-white`}
           >
             {splittedInput[i] || ""}
           </div>
@@ -338,7 +338,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _}
           <div
-            class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white rounded dark:bg-black dark:text-white`}
+            class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white rounded dark:bg-slate-800 dark:text-white`}
           />
         {/each}
       </div>
@@ -349,7 +349,7 @@
   <div class="layout my-4 w-full px-1 max-w-2xl">
     <input
       type="text"
-      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center dark:bg-gray-500 dark:text-white dark:placeholder:text-white"
+      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center dark:bg-gray-600 dark:text-white dark:placeholder:text-white"
       on:keypress|preventDefault={(e) => {
         inputKey(e.key)
       }}

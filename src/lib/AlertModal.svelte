@@ -30,7 +30,7 @@
       class="h-32 inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
     >
       <div
-        class="bg-white p-4 flex h-full justify-center items-center dark:bg-black dark:text-white"
+        class="bg-white p-4 flex h-full justify-center items-center dark:bg-slate-800 dark:text-white"
       >
         <p>
           {message}

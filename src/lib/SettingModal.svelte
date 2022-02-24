@@ -37,7 +37,7 @@
     <div
       class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-lg w-full"
     >
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-black">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-800">
         <div class="mt-3 text-left">
           <h3 class="text-xl leading-4 font-medium text-gray-900 dark:text-white" id="modal-title">
             ตั้งค่า
@@ -45,7 +45,7 @@
           <div class="mt-4 flex w-full dark:text-white">
             <span class="grow font-bold">เลย์เอาท์</span>
             <span>
-              <select class="border dark:bg-black" bind:value={$settings.layout}>
+              <select class="border dark:bg-slate-800" bind:value={$settings.layout}>
                 <option value="Kedmanee">Kedmanee (ค่าเริ่มต้น)</option>
                 <option value="Manoonchai">Manoonchai</option>
                 <option value="ก-ฮ">ก-ฮ</option>
