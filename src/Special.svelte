@@ -90,6 +90,10 @@
       day: "S13",
       word: "องคาพยพ",
     },
+    s14_193f: {
+      day: "S14",
+      word: "มิจฉาทิฐิ",
+    },
   }
 
   if (!specialEntries[specialId]) {
