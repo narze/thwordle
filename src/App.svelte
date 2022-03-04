@@ -12,7 +12,6 @@
     splitWord,
     validateWord,
   } from "./lib/Wordle"
-  import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
@@ -34,6 +33,7 @@
     "https://raw.githubusercontent.com/narze/timelapse/master/projects/thwordle_home.png"
 
   const gtagId = "G-F2Q37REQE6"
+  let words = []
 
   $: rows = layouts[$settings.layout].rows
   $: rowsShifted = layouts[$settings.layout].rowsShifted
@@ -47,9 +47,9 @@
   const attemptLimit = 6
 
   let input = ""
-  let solution = words[dateIndex % words.length]
+  $: solution = words[dateIndex % words.length] || ""
   let attempts: string[] = $data[dateIndex]?.attempts || []
-  let validations = attempts.map((word) => validateWord(word, solution))
+  $: validations = attempts.map((word) => validateWord(word, solution))
   let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
   let attemptsContainer
   let copied = false
@@ -123,14 +123,31 @@
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500 text-white",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500 text-white",
+    [CharState.OutOfPlace]:
+      "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500 text-white",
     [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white dark:bg-gray-700 dark:text-white",
     [CharState.NotUsed]: "bg-white text-black dark:bg-gray-500 dark:text-white",
   }
 
   onMount(async () => {
     dict = (await import("./lib/dict.json")).default
+    words = await getWords()
   })
+
+  async function getWords() {
+    const res = await fetch(`/words.json`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    const json = await res.json()
+
+    if (res.ok) {
+      return json.words
+    } else {
+      throw new Error(await res.text())
+    }
+  }
 
   async function submit() {
     if (gameEnded) {
