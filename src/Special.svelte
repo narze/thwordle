@@ -12,7 +12,6 @@
     splitWord,
     validateWord,
   } from "./lib/Wordle"
-  import words from "./lib/words"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
@@ -24,6 +23,7 @@
 
   const url = "https://thwordle.vercel.app"
   const title = "Thwordle : Thai Wordle เวอเดิ้ลภาษาไทย"
+  let words = []
 
   const menuItems = [
     { name: "เจอบั๊ก?", url: "https://twitter.com/narze/status/1483857313224355840" },
@@ -109,9 +109,9 @@
   const attemptLimit = 6
 
   let input = ""
-  let solution = specialEntries[specialId]?.word
+  $: solution = specialEntries[specialId]?.word
   let attempts: string[] = $data[specialDay]?.attempts || []
-  let validations = attempts.map((word) => validateWord(word, solution))
+  $: validations = attempts.map((word) => validateWord(word, solution))
   let gameEnded = !!$data[specialDay]?.win || !!$data[specialDay]?.lose
   let attemptsContainer
   let copied = false
@@ -192,7 +192,23 @@
 
   onMount(async () => {
     dict = (await import("./lib/dict.json")).default
+    words = await getWords()
   })
+
+  async function getWords() {
+    const res = await fetch(`/words.json`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    const json = await res.json()
+
+    if (res.ok) {
+      return json.words
+    } else {
+      throw new Error(await res.text())
+    }
+  }
 
   async function submit() {
     if (gameEnded) {
