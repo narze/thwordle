@@ -94,6 +94,10 @@
       day: "S14",
       word: "มิจฉาทิฐิ",
     },
+    s15_472e: {
+      day: "S15",
+      word: "คว่ำบาตร",
+    },
   }
 
   if (!specialEntries[specialId]) {
