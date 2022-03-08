@@ -98,6 +98,10 @@
       day: "S15",
       word: "คว่ำบาตร",
     },
+    s16_e481: {
+      day: "S16",
+      word: "หงสาวดี",
+    },
   }
 
   if (!specialEntries[specialId]) {
