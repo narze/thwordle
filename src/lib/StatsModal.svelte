@@ -33,7 +33,7 @@
           <Stats isSpecialStats={special} />
         </div>
 
-        <div class="py-3 flex flex-row-reverse">
+        <div class="mt-4 flex flex-row-reverse">
           <button
             type="button"
             class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:text-sm"
