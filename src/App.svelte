@@ -2,6 +2,7 @@
   import { sineInOut } from "svelte/easing"
 
   import Head from "./lib/Head.svelte"
+  import Stats from "./lib/Stats.svelte"
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
@@ -17,6 +18,7 @@
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
   import SettingModal from "./lib/SettingModal.svelte"
+  import StatsModal from "./lib/StatsModal.svelte"
   import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
@@ -59,6 +61,7 @@
   let alertMessage = ""
   let showAlert = false
   let settingModal = false
+  let statsModal = false
   let focusOnTextInput = false
   let dict: string[] = []
   let alertDelay = 1500
@@ -308,9 +311,10 @@
       >
         Thwordle
       </h1>
-      <span class="flex justify-center h-full dark:text-white"
-        ><button on:click={() => (settingModal = true)}>ตั้งค่า</button></span
-      >
+      <span class="flex gap-4 justify-center h-full dark:text-white">
+        <button on:click={() => (statsModal = true)}>สถิติ</button>
+        <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
+      </span>
     </div>
     <hr />
   </header>
@@ -458,6 +462,15 @@
       onClose={() => {
         settingModal = false
       }}
+    />
+  {/if}
+
+  {#if statsModal}
+    <StatsModal
+      onClose={() => {
+        statsModal = false
+      }}
+      special={false}
     />
   {/if}
 </main>
