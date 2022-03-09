@@ -2,6 +2,7 @@
   import { sineInOut } from "svelte/easing"
 
   import Head from "./lib/Head.svelte"
+  import Stats from "./lib/Stats.svelte"
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
@@ -314,6 +315,8 @@
     </div>
     <hr />
   </header>
+
+  <Stats />
 
   <span class="flex gap-4 dark:text-white">
     <span>วันที่ {dateIndex + 1}</span>
