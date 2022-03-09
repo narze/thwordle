@@ -1,12 +1,19 @@
 <script lang="ts">
+  import {
+    calculateCurrentStreak,
+    calculateGamesCount,
+    calculateGuessDistribution,
+    calculateMaxStreak,
+    calculateWinPercentage,
+  } from "./Stats"
+
   import { data, modalViewed, settings } from "./store"
 
-  console.log({ data })
-  let gamesCount = 10
-  let winPercentage = 90
-  let currentStreak = 1
-  let maxStreak = 2
-  let guessDist = [0, 2, 3, 4, 1, 3]
+  let gamesCount = calculateGamesCount($data)
+  let winPercentage = calculateWinPercentage($data)
+  let currentStreak = calculateCurrentStreak($data)
+  let maxStreak = calculateMaxStreak($data)
+  let guessDist = calculateGuessDistribution($data)
   let guessDistMax = Math.max(...guessDist)
 </script>
 
@@ -69,6 +76,12 @@
       <span class="p-2 w-4">6</span><span
         class="ml-2 p-2 bg-slate-500 text-right"
         style={`width: ${Math.max(7, (100 * guessDist[5]) / guessDistMax)}%`}>{guessDist[5]}</span
+      >
+    </div>
+    <div class="w-[400px] flex">
+      <span class="p-2 w-4">X</span><span
+        class="ml-2 p-2 bg-slate-500 text-right"
+        style={`width: ${Math.max(7, (100 * guessDist[6]) / guessDistMax)}%`}>{guessDist[6]}</span
       >
     </div>
   </div>
