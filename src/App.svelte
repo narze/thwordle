@@ -316,7 +316,7 @@
     <hr />
   </header>
 
-  <Stats />
+  <Stats isSpecialStats={false} />
 
   <span class="flex gap-4 dark:text-white">
     <span>วันที่ {dateIndex + 1}</span>

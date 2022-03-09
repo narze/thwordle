@@ -4,6 +4,8 @@ import {
   calculateCurrentStreak,
   calculateMaxStreak,
   calculateGuessDistribution,
+  filterNormalDays,
+  filterSpecialDays,
 } from "./Stats"
 
 describe("calculateGamesCount", () => {
@@ -331,5 +333,26 @@ describe("calculateGuessDistribution", () => {
 
     expect(calculateGuessDistribution(data).length).toEqual(7)
     expect(calculateGuessDistribution(data)).toEqual([1, 1, 0, 2, 0, 1, 2])
+  })
+})
+
+describe("filterNormalDays", () => {
+  it("returns data of numeric days", () => {
+    const data = {
+      "1": {},
+      S1: {},
+    }
+
+    expect(filterNormalDays(data)).toEqual({ "1": {} })
+  })
+})
+describe("filterSpecialDays", () => {
+  it("returns data of non numeric days", () => {
+    const data = {
+      "1": {},
+      S1: {},
+    }
+
+    expect(filterSpecialDays(data)).toEqual({ S1: {} })
   })
 })

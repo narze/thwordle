@@ -61,3 +61,27 @@ export function calculateGuessDistribution(data) {
 
   return distribution
 }
+
+export function filterNormalDays(data) {
+  const attemptsData = {}
+
+  Object.entries(data).forEach(([day, attempt]) => {
+    if (day.match(/^\d+$/)) {
+      attemptsData[day] = attempt
+    }
+  })
+
+  return attemptsData
+}
+
+export function filterSpecialDays(data) {
+  const attemptsData = {}
+
+  Object.entries(data).forEach(([day, attempt]) => {
+    if (!day.match(/^\d+$/)) {
+      attemptsData[day] = attempt
+    }
+  })
+
+  return attemptsData
+}

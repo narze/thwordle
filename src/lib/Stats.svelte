@@ -5,15 +5,27 @@
     calculateGuessDistribution,
     calculateMaxStreak,
     calculateWinPercentage,
+    filterNormalDays,
+    filterSpecialDays,
   } from "./Stats"
 
   import { data, modalViewed, settings } from "./store"
 
-  let gamesCount = calculateGamesCount($data)
-  let winPercentage = calculateWinPercentage($data)
-  let currentStreak = calculateCurrentStreak($data)
-  let maxStreak = calculateMaxStreak($data)
-  let guessDist = calculateGuessDistribution($data)
+  export let isSpecialStats = false
+
+  let attemptsData = {}
+
+  if (isSpecialStats) {
+    attemptsData = filterSpecialDays($data)
+  } else {
+    attemptsData = filterNormalDays($data)
+  }
+
+  let gamesCount = calculateGamesCount(attemptsData)
+  let winPercentage = calculateWinPercentage(attemptsData)
+  let currentStreak = calculateCurrentStreak(attemptsData)
+  let maxStreak = calculateMaxStreak(attemptsData)
+  let guessDist = calculateGuessDistribution(attemptsData)
   let guessDistMax = Math.max(...guessDist)
 </script>
 
