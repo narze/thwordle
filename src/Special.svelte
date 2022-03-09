@@ -102,6 +102,10 @@
       day: "S16",
       word: "หงสาวดี",
     },
+    s17_2f5a: {
+      day: "S17",
+      word: "พจนานุกรม",
+    },
   }
 
   if (!specialEntries[specialId]) {
