@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex flex-col items-center gap-4">
-  <h2 class="text-xl font-bold">สถิติ</h2>
+  <h2 class="text-xl dark:text-white font-bold">สถิติ</h2>
 
   <div class="flex gap-4 w-full justify-center px-2 sm:px-4">
     <div
@@ -59,48 +59,48 @@
     </div>
   </div>
 
-  <h2 class="text-xl font-bold mt-8">จำนวนครั้ง</h2>
+  <h2 class="text-xl dark:text-white font-bold mt-8">จำนวนครั้ง</h2>
 
   <div class="flex flex-col gap-1 w-full sm:px-2">
     <div class="flex">
-      <span class="px-2 py-1 w-4">1</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">1</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[0]) / guessDistMax)}%`}>{guessDist[0]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">2</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">2</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[1]) / guessDistMax)}%`}>{guessDist[1]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">3</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">3</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[2]) / guessDistMax)}%`}>{guessDist[2]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">4</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">4</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[3]) / guessDistMax)}%`}>{guessDist[3]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">5</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">5</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[4]) / guessDistMax)}%`}>{guessDist[4]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">6</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">6</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[5]) / guessDistMax)}%`}>{guessDist[5]}</span
       >
     </div>
     <div class="flex">
-      <span class="px-2 py-1 w-4">X</span><span
-        class="ml-2 px-2 py-1 bg-gray-400 text-white font-bold text-right rounded"
+      <span class="px-2 py-1 w-4 dark:text-white">X</span><span
+        class="ml-2 px-2 py-1 bg-gray-400 text-white dark:bg-zinc-300 dark:text-stone-900 font-bold text-right rounded"
         style={`width: ${Math.max(7, (100 * guessDist[6]) / guessDistMax)}%`}>{guessDist[6]}</span
       >
     </div>
