@@ -45,7 +45,7 @@
           <div class="mt-4 flex w-full dark:text-white">
             <span class="grow font-bold">เลย์เอาท์</span>
             <span>
-              <select class="border dark:bg-slate-800" bind:value={$settings.layout}>
+              <select class="border rounded-md p-1 dark:bg-slate-800" bind:value={$settings.layout}>
                 <option value="Kedmanee">Kedmanee (ค่าเริ่มต้น)</option>
                 <option value="Manoonchai">Manoonchai</option>
                 <option value="ก-ฮ">ก-ฮ</option>
@@ -71,11 +71,10 @@
             </button>
           </div>
         </div>
-
-        <div class="py-3 flex flex-row-reverse">
+        <div class="py-3 flex justify-center">
           <button
             type="button"
-            class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:text-sm"
+            class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-5 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:text-sm"
             on:click={() => {
               onClose()
             }}
@@ -101,17 +100,17 @@
     font-size: 1rem;
     line-height: 20px;
 
-    width: 120px;
+    width: 70px;
     height: 35px;
     color: white;
-    background-color: white;
-    border: solid 1px rgba(0, 0, 0, 0.2);
+    background-color: rgb(37, 37, 37);
+    border-radius: 0.375rem;
 
     transition: all 0.3 ease;
   }
 
   .toggle-theme__button::before {
-    content: "ปิด";
+    content: "";
     position: absolute;
     display: flex;
     align-items: center;
@@ -119,23 +118,24 @@
     top: 4px;
     left: 5px;
     height: 25px;
+    width: 25px;
+    border-radius: 100%;
     padding: 0 10px;
 
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
+    background: white;
     transition: all 0.3s ease;
   }
 
   .toggle-theme__input:checked + .toggle-theme__button {
-    color: black;
-    background: rgba(0, 0, 0, 0.2);
-    border: solid 1px rgba(255, 255, 255, 1);
+    background: #f87160;
   }
 
   .toggle-theme__input:checked + .toggle-theme__button::before {
-    content: "เปิด";
-    left: 67px;
-    color: black;
-    background: white;
+    content: "";
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    left: 40px;
+    background: #fffdfd;
   }
 </style>
