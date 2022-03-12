@@ -71,4 +71,8 @@ export default {
     day: "S18",
     word: "กฤษฎีกา",
   },
+  s19_b8f4: {
+    day: "S19",
+    word: "รัตติกาล",
+  },
 }
