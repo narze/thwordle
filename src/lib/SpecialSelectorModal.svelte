@@ -1,5 +1,6 @@
 <script lang="ts">
   import specialWords from "./special-words"
+  import { data } from "./store"
 
   export let onClose = () => {}
 </script>
@@ -27,11 +28,17 @@
     <div
       class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-lg w-full"
     >
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-800">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-slate-800 dark:text-white">
+        <h2 class="text-lg">Special</h2>
         <div class="mt-3 text-left grid grid-cols-6 sm:grid-cols-8 gap-1 sm:gap-2">
-          {#each Object.entries(specialWords) as [key, { day }]}
+          {#each Object.entries(specialWords) as [key, { day }] (day)}
+            {@const win = $data[day]?.win}
+            {@const lose = $data[day]?.lose}
+
             <button
-              class="border rounded px-1 py-2 sm:p-2 dark:text-white"
+              class={`border rounded px-1 py-2 sm:p-2 ${
+                win ? "bg-green-500" : lose ? "bg-red-500" : ""
+              }`}
               on:click={() => {
                 window.location.href = `/#/s/${key}`
                 document.body.innerHTML = ""
@@ -41,7 +48,13 @@
           {/each}
         </div>
 
-        <div class="mt-4 flex flex-row-reverse">
+        <div class="mt-4">
+          ติดตามคำใหม่ก่อนใครได้ที่ <a href="https://twitter.com/thwordle" class="underline "
+            >Twitter @thwordle</a
+          >
+        </div>
+
+        <div class="mt-2 flex flex-row-reverse">
           <button
             type="button"
             class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:ring-offset-black focus:ring-gray-300 sm:ml-3 sm:text-sm"
