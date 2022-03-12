@@ -18,6 +18,7 @@
   import AlertModal from "./lib/AlertModal.svelte"
   import SettingModal from "./lib/SettingModal.svelte"
   import StatsModal from "./lib/StatsModal.svelte"
+  import SpecialModal from "./lib/SpecialSelectorModal.svelte"
   import { layouts } from "./lib/layouts"
   import specialWords from "./lib/special-words"
 
@@ -64,6 +65,7 @@
   let showAlert = false
   let settingModal = false
   let statsModal = false
+  let showSpecialModal = false
   let focusOnTextInput = false
   let dict: string[] = []
   let alertDelay = 1500
@@ -286,6 +288,17 @@
       inputKey(key)
     }
   })
+
+  window.addEventListener("load", () => {
+    const thwordleStorage = localStorage.getItem("thwordle-attempts")
+    const theme = JSON.parse(thwordleStorage)?.settings.darkMode
+
+    if (theme) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  })
 </script>
 
 <div class="footer-wrapper">
@@ -307,6 +320,11 @@
         Thwordle <span class="text-teal-800 underline">Special</span>
       </h1>
       <span class="flex gap-4 justify-center h-full dark:text-white">
+        <button
+          on:click={() => {
+            showSpecialModal = !showSpecialModal
+          }}>เลือกคำ</button
+        >
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>
@@ -315,7 +333,7 @@
   </header>
 
   <span class="flex gap-2 dark:text-white">
-    <span class="bg-gray-200 rounded px-2">{specialDay}</span>
+    <span class="bg-gray-200 dark:text-gray-700 rounded px-2">{specialDay}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
@@ -417,9 +435,17 @@
     {#if gameEnded}
       <button
         on:click={copyResult}
-        class="flex items-center justify-center rounded border mx-2 p-3 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+        class="flex items-center justify-center rounded border mx-2 p-3 bg-green-300 border-green-500 text-xs font-bold cursor-pointer hover:bg-green-300 active:bg-green-400"
       >
         {copied ? "Copied" : "Share"}
+      </button>
+      <button
+        on:click={() => {
+          showSpecialModal = !showSpecialModal
+        }}
+        class="flex items-center justify-center rounded border mx-2 p-3 bg-blue-300 border-blue-500 text-xs font-bold cursor-pointer hover:bg-blue-300 active:bg-blue-400"
+      >
+        เลือกคำ
       </button>
       <a
         href="/"
@@ -465,6 +491,14 @@
         statsModal = false
       }}
       special={true}
+    />
+  {/if}
+
+  {#if showSpecialModal}
+    <SpecialModal
+      onClose={() => {
+        showSpecialModal = false
+      }}
     />
   {/if}
 </main>

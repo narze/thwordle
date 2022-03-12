@@ -19,6 +19,7 @@
   import AlertModal from "./lib/AlertModal.svelte"
   import SettingModal from "./lib/SettingModal.svelte"
   import StatsModal from "./lib/StatsModal.svelte"
+  import SpecialModal from "./lib/SpecialSelectorModal.svelte"
   import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
@@ -61,6 +62,7 @@
   let showAlert = false
   let settingModal = false
   let statsModal = false
+  let showSpecialModal = false
   let focusOnTextInput = false
   let dict: string[] = []
   let alertDelay = 1500
@@ -424,13 +426,14 @@
         {copied ? "Copied" : "Share"}
       </button>
 
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href="https://twitter.com/thwordle"
-        class="flex items-center justify-center rounded border mx-2 p-2.5  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
-        >Special</a
+      <button
+        on:click={() => {
+          showSpecialModal = !showSpecialModal
+        }}
+        class="flex items-center justify-center rounded border mx-2 p-3 bg-blue-300 border-blue-500 text-xs font-bold cursor-pointer hover:bg-blue-300 active:bg-blue-400"
       >
+        Special
+      </button>
     {/if}
   </div>
 
@@ -470,6 +473,14 @@
         statsModal = false
       }}
       special={false}
+    />
+  {/if}
+
+  {#if showSpecialModal}
+    <SpecialModal
+      onClose={() => {
+        showSpecialModal = false
+      }}
     />
   {/if}
 </main>
