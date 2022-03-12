@@ -107,6 +107,10 @@
       day: "S17",
       word: "พจนานุกรม",
     },
+    s18_03fe: {
+      day: "S18",
+      word: "กฤษฎีกา",
+    },
   }
 
   if (!specialEntries[specialId]) {
