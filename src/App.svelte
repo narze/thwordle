@@ -25,7 +25,6 @@
   const title = "Thwordle : Thai Wordle เวอเดิ้ลภาษาไทย"
 
   const menuItems = [
-    { name: "เจอบั๊ก?", url: "https://twitter.com/narze/status/1483857313224355840" },
     { name: "Twitter", url: "https://twitter.com/thwordle" },
     { name: "Github", url: "https://github.com/narze/thwordle" },
   ]
