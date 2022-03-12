@@ -312,6 +312,12 @@
         Thwordle
       </h1>
       <span class="flex gap-4 justify-center h-full dark:text-white">
+        <button
+          class="text-teal-800 underline"
+          on:click={() => {
+            showSpecialModal = !showSpecialModal
+          }}>Special</button
+        >
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>
