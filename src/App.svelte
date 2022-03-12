@@ -319,7 +319,7 @@
     <hr />
   </header>
 
-  <span class="flex gap-4 dark:text-white">
+  <span class="flex gap-4 dark:text-white my-2">
     <span>วันที่ {dateIndex + 1}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
@@ -370,7 +370,7 @@
   <div class="layout my-4 w-full px-1 max-w-2xl">
     <input
       type="text"
-      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center dark:bg-gray-600 dark:text-white dark:placeholder:text-white"
+      class="w-full sm:w-[400px] block border mb-3.5 px-6 py-2 mx-auto text-center dark:bg-gray-600 dark:text-white dark:placeholder:text-white"
       on:keypress|preventDefault={(e) => {
         inputKey(e.key)
       }}
@@ -420,7 +420,7 @@
     {#if gameEnded}
       <button
         on:click={copyResult}
-        class="flex items-center justify-center rounded border mx-2 p-3 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
+        class="flex items-center justify-center rounded border mx-2 p-2.5 bg-green-300 border-green-300 text-xs font-bold cursor-pointer bg-green-200 hover:bg-green-300 active:bg-green-400"
       >
         {copied ? "Copied" : "Share"}
       </button>
@@ -429,7 +429,7 @@
         target="_blank"
         rel="noreferrer"
         href="https://twitter.com/thwordle"
-        class="flex items-center justify-center rounded border mx-2 p-3  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
+        class="flex items-center justify-center rounded border mx-2 p-2.5  border-red-500 text-xs font-bold cursor-pointer bg-red-200 hover:bg-red-300 active:bg-red-400"
         >Special</a
       >
     {/if}
@@ -486,7 +486,7 @@
   }
 
   .share-button {
-    margin-bottom: 4rem;
+    margin-bottom: 4.2rem;
   }
 
   .layout-key.layout-no-shift {
