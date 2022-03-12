@@ -134,9 +134,19 @@
   }
 
   onMount(async () => {
+    checkDarkMode()
+
     dict = (await import("./lib/dict.json")).default
     words = await getWords()
   })
+
+  function checkDarkMode() {
+    if ($settings.darkMode) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }
 
   async function getWords() {
     const res = await fetch(`/words.json`, {
@@ -279,17 +289,6 @@
       inputKey("↵")
     } else {
       inputKey(key)
-    }
-  })
-
-  window.addEventListener("load", () => {
-    const thwordleStorage = localStorage.getItem("thwordle-attempts")
-    const theme = JSON.parse(thwordleStorage)?.settings.darkMode
-
-    if (theme) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
     }
   })
 </script>
