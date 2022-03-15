@@ -96,7 +96,7 @@
       if (allMatched) {
         if (!gameEnded) {
           const score = attemptLimit + 1 - validations.length
-          console.log({ score })
+          // console.log({ score })
           window?.gtag("event", "post_score", { score })
         }
 
@@ -108,7 +108,7 @@
       } else if (attemptsLength >= attemptLimit) {
         if (!gameEnded) {
           const score = 0
-          console.log({ score })
+          // console.log({ score })
           window?.gtag("event", "post_score", { score })
         }
 
