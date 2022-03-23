@@ -75,4 +75,8 @@ export default {
     day: "S19",
     word: "รัตติกาล",
   },
+  s20_02af: {
+    day: "S20",
+    word: "ผกามาศ"
+  },
 }
