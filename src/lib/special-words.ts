@@ -77,6 +77,10 @@ export default {
   },
   s20_02af: {
     day: "S20",
-    word: "ผกามาศ"
+    word: "ผกามาศ",
+  },
+  s21_9beb: {
+    day: "S21",
+    word: "สงกรานต์",
   },
 }
