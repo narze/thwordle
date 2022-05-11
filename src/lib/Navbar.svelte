@@ -55,25 +55,23 @@
       <button on:click={() => modalViewed.set(false)}>วิธีเล่น</button>
     </span>
     <h1
-      class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
+      class={`absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none ${
+        training || special ? "left-12" : ""
+      }`}
     >
       Thwordle
       {#if training}
-          <span class="underline text-amber-600">
-            Training
-          </span>
+        <span class="text-amber-600 text-xs relative top-3 right-12 px-1 rounded">Training</span>
       {/if}
       {#if special}
-          <span class="underline text-teal-800">
-            Speacial
-          </span>
+        <span class="text-teal-800 text-xs relative top-3 right-12 px-1 rounded">Special</span>
       {/if}
     </h1>
     <div class="hidden md:block">
-      <span class="flex gap-4 justify-center h-full dark:text-white">
+      <span class="flex gap-3 justify-center h-full dark:text-white">
         {#if training || special}
           <button
-            class="text-red-400 underline"
+            class="text-red-400"
             on:click={() => {
               window.location.href = "/"
             }}
@@ -83,7 +81,7 @@
         {/if}
         {#if daily || training}
           <button
-            class="text-teal-800 underline"
+            class="text-teal-800"
             on:click={() => {
               showSpecialModal = !showSpecialModal
             }}
@@ -93,7 +91,7 @@
         {/if}
         {#if daily || special}
           <button
-            class="text-amber-600 underline"
+            class="text-amber-600"
             on:click={() => {
               window.location.href = "/#/training"
             }}
