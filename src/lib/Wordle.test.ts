@@ -309,7 +309,7 @@ describe("layout", () => {
       { correct: CharState.Correct, char: "ก" },
       { correct: CharState.Wrong, char: "ก" }, // Ignore if already at correct state
     ]
-    
+
     expect(generateAlphabetStateMap(alphabets, validations)).toEqual({
       ก: CharState.Correct,
       ข: CharState.OutOfPlace,

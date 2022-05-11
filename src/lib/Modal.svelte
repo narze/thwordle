@@ -38,7 +38,8 @@
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500",
+    [CharState.OutOfPlace]:
+      "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500",
     [CharState.Wrong]: "bg-gray-500 border-gray-500",
     [CharState.NotUsed]: "bg-white dark:bg-slate-800",
   }
@@ -175,7 +176,10 @@
             </div>
             <hr class="my-2" />
             <div class="mt-2">
-              <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
+              <h3
+                class="text-base leading-6 font-medium text-gray-900 dark:text-white"
+                id="modal-title"
+              >
                 กฎพิเศษ
               </h3>
               <p class="text-sm text-gray-500 dark:text-gray-300">
