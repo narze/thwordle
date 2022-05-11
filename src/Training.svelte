@@ -11,9 +11,6 @@
   import Modal from "./lib/Modal.svelte"
   import { modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
-  import SettingModal from "./lib/SettingModal.svelte"
-  import StatsModal from "./lib/StatsModal.svelte"
-  import SpecialModal from "./lib/SpecialSelectorModal.svelte"
   import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
@@ -45,8 +42,6 @@
   let shifted = false
   let alertMessage = ""
   let showAlert = false
-  let settingModal = false
-  let statsModal = false
   let showSpecialModal = false
   let focusOnTextInput = false
   let dict: string[] = []
@@ -394,30 +389,6 @@
     />
   {/if}
 
-  {#if settingModal}
-    <SettingModal
-      onClose={() => {
-        settingModal = false
-      }}
-    />
-  {/if}
-
-  {#if statsModal}
-    <StatsModal
-      onClose={() => {
-        statsModal = false
-      }}
-      special={false}
-    />
-  {/if}
-
-  {#if showSpecialModal}
-    <SpecialModal
-      onClose={() => {
-        showSpecialModal = false
-      }}
-    />
-  {/if}
 </main>
 
 <style lang="postcss">

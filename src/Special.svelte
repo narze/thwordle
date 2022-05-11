@@ -17,8 +17,6 @@
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
-  import SettingModal from "./lib/SettingModal.svelte"
-  import StatsModal from "./lib/StatsModal.svelte"
   import SpecialModal from "./lib/SpecialSelectorModal.svelte"
   import { layouts } from "./lib/layouts"
   import specialWords from "./lib/special-words"
@@ -64,8 +62,6 @@
   let shifted = false
   let alertMessage = ""
   let showAlert = false
-  let settingModal = false
-  let statsModal = false
   let showSpecialModal = false
   let focusOnTextInput = false
   let dict: string[] = []
@@ -453,23 +449,6 @@
       onClose={() => {
         showAlert = false
       }}
-    />
-  {/if}
-
-  {#if settingModal}
-    <SettingModal
-      onClose={() => {
-        settingModal = false
-      }}
-    />
-  {/if}
-
-  {#if statsModal}
-    <StatsModal
-      onClose={() => {
-        statsModal = false
-      }}
-      special={true}
     />
   {/if}
 
