@@ -272,6 +272,12 @@
             showSpecialModal = !showSpecialModal
           }}>Special</button
         >
+        <button
+          class="underline"
+          on:click={() => {
+            window.location.href = "/"
+          }}>Daily</button
+        >
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>

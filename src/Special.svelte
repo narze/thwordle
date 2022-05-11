@@ -318,11 +318,23 @@
       >
         Thwordle <span class="text-teal-800 underline">Special</span>
       </h1>
-      <span class="flex gap-4 justify-center h-full dark:text-white">
+      <span class="flex gap-2 justify-center h-full dark:text-white text-sm">
         <button
           on:click={() => {
             showSpecialModal = !showSpecialModal
           }}>เลือกคำ</button
+        >
+        <button
+          class="text-amber-600 underline"
+          on:click={() => {
+            window.location.href = "/#/training"
+          }}>Training</button
+        >
+        <button
+          class="underline"
+          on:click={() => {
+            window.location.href = "/"
+          }}>Daily</button
         >
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>

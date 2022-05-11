@@ -318,6 +318,12 @@
             showSpecialModal = !showSpecialModal
           }}>Special</button
         >
+        <button
+          class="text-amber-600 underline"
+          on:click={() => {
+            window.location.href = "/#/training"
+          }}>Training</button
+        >
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>
