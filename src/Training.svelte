@@ -2,7 +2,7 @@
   import { sineInOut } from "svelte/easing"
 
   import Head from "./lib/Head.svelte"
-  import Navbar from "./lib/Navbar.svelte";
+  import Navbar from "./lib/Navbar.svelte"
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
@@ -388,7 +388,6 @@
       }}
     />
   {/if}
-
 </main>
 
 <style lang="postcss">
