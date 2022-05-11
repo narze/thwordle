@@ -2,6 +2,7 @@
   import { sineInOut } from "svelte/easing"
 
   import Head from "./lib/Head.svelte"
+  import Navbar from "./lib/Navbar.svelte"
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
@@ -16,8 +17,6 @@
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
-  import SettingModal from "./lib/SettingModal.svelte"
-  import StatsModal from "./lib/StatsModal.svelte"
   import SpecialModal from "./lib/SpecialSelectorModal.svelte"
   import { layouts } from "./lib/layouts"
   import specialWords from "./lib/special-words"
@@ -63,8 +62,6 @@
   let shifted = false
   let alertMessage = ""
   let showAlert = false
-  let settingModal = false
-  let statsModal = false
   let showSpecialModal = false
   let focusOnTextInput = false
   let dict: string[] = []
@@ -308,40 +305,7 @@
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
 <main class="container h-screen flex flex-col items-center">
-  <header class="mb-4 w-full h-10 py-2">
-    <div class="flex justify-between w-full px-4 h-10">
-      <span class="flex justify-center h-full dark:text-white"
-        ><button on:click={() => modalViewed.set(false)}>วิธีเล่น</button></span
-      >
-      <h1
-        class="absolute text-center inset-x-0 top-4 leading-4 text-2xl text-red-400 mb-2 pointer-events-none"
-      >
-        Thwordle <span class="text-teal-800 underline">Special</span>
-      </h1>
-      <span class="flex gap-2 justify-center h-full dark:text-white text-sm">
-        <button
-          on:click={() => {
-            showSpecialModal = !showSpecialModal
-          }}>เลือกคำ</button
-        >
-        <button
-          class="text-amber-600 underline"
-          on:click={() => {
-            window.location.href = "/#/training"
-          }}>Training</button
-        >
-        <button
-          class="underline"
-          on:click={() => {
-            window.location.href = "/"
-          }}>Daily</button
-        >
-        <button on:click={() => (statsModal = true)}>สถิติ</button>
-        <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
-      </span>
-    </div>
-    <hr />
-  </header>
+  <Navbar {modalViewed} modes="special" />
 
   <span class="flex gap-2 dark:text-white">
     <span class="bg-gray-200 dark:text-gray-700 rounded px-2">{specialDay}</span>
@@ -485,23 +449,6 @@
       onClose={() => {
         showAlert = false
       }}
-    />
-  {/if}
-
-  {#if settingModal}
-    <SettingModal
-      onClose={() => {
-        settingModal = false
-      }}
-    />
-  {/if}
-
-  {#if statsModal}
-    <StatsModal
-      onClose={() => {
-        statsModal = false
-      }}
-      special={true}
     />
   {/if}
 
