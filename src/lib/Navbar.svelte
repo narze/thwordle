@@ -42,7 +42,7 @@
 
   if (modes == "daily") {
     daily = !daily
-  } else if (modes == "speacial") {
+  } else if (modes == "special") {
     special = !special
   } else {
     training = !training

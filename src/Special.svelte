@@ -305,7 +305,7 @@
 <Head {title} {description} {url} {imageUrl} {gtagId} />
 
 <main class="container h-screen flex flex-col items-center">
-  <Navbar {modalViewed} modes="speacial" />
+  <Navbar {modalViewed} modes="special" />
 
   <span class="flex gap-2 dark:text-white">
     <span class="bg-gray-200 dark:text-gray-700 rounded px-2">{specialDay}</span>
