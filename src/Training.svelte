@@ -5,13 +5,7 @@
   import Kofi from "./lib/Kofi.svelte"
   import Menu from "./lib/Menu.svelte"
   import Social from "./lib/Social.svelte"
-  import {
-    CharState,
-    generateAlphabetStateMap,
-    getShareResults,
-    splitWord,
-    validateWord,
-  } from "./lib/Wordle"
+  import { CharState, generateAlphabetStateMap, splitWord, validateWord } from "./lib/Wordle"
   import { onMount, tick } from "svelte"
   import Modal from "./lib/Modal.svelte"
   import { modalViewed, settings } from "./lib/store"
@@ -81,25 +75,13 @@
       })
 
       if (allMatched) {
-        if (!gameEnded) {
-          const score = attemptLimit + 1 - validations.length
-          // console.log({ score })
-          window?.gtag("event", "post_score", { score })
-        }
-
         setTimeout(() => {
           showAlertMessage("คุณชนะแล้ว!")
           gameEnded = true
         }, alertDelay)
       } else if (attemptsLength >= attemptLimit) {
-        if (!gameEnded) {
-          const score = 0
-          // console.log({ score })
-          window?.gtag("event", "post_score", { score })
-        }
-
         setTimeout(() => {
-          showAlertMessage(`คุณแพ้แล้ว คำประจำวันนี้คือ "${solution}"`)
+          showAlertMessage(`คุณแพ้แล้ว คำตอบคือ "${solution}"`)
           gameEnded = true
         }, alertDelay)
       }
@@ -171,13 +153,6 @@
 
     const validation = validateWord(input, solution)
     validations = [...validations, validation]
-
-    if (validations.length == 1) {
-      window?.gtag("event", "first_guess", {
-        event_category: "general",
-        event_label: input,
-      })
-    }
 
     input = ""
 
@@ -305,12 +280,9 @@
   </header>
 
   <span class="flex gap-4 dark:text-white my-2">
-    <span>DEBUG: {solution}</span>
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
   </span>
 
-  <!-- DEBUG: Solution word -->
-  <!-- <input type="text" class="border" bind:value={solution} /> -->
   <!-- Check Solution -->
   <div class="attempts grow overflow-y-auto" bind:this={attemptsContainer}>
     {#each attempts as input, n (n)}
