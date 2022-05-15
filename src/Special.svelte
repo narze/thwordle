@@ -127,9 +127,10 @@
 
   const colors = {
     [CharState.Correct]: "bg-green-500 border-green-500 text-white",
-    [CharState.OutOfPlace]: "bg-yellow-500 border-yellow-500 text-white",
-    [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white",
-    [CharState.NotUsed]: "bg-white text-black",
+    [CharState.OutOfPlace]:
+      "bg-yellow-500 border-yellow-500 dark:bg-amber-500 dark:border-amber-500 text-white",
+    [CharState.Wrong]: "bg-gray-500 border-gray-500 text-white dark:bg-gray-700 dark:text-white",
+    [CharState.NotUsed]: "bg-white text-black dark:bg-gray-500 dark:text-white",
   }
 
   onMount(async () => {
@@ -336,7 +337,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _, i}
           <div
-            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded`}
+            class={`bg-white attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold rounded dark:bg-slate-800 dark:text-white`}
           >
             {splittedInput[i] || ""}
           </div>
@@ -348,7 +349,7 @@
       <div class="flex justify-center my-1">
         {#each new Array(solutionLength).fill(0) as _}
           <div
-            class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
+            class={`${"bg-white dark:bg-slate-800"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
       rounded`}
           />
         {/each}
@@ -360,7 +361,7 @@
   <div class="layout my-4 w-full px-1 max-w-2xl">
     <input
       type="text"
-      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center"
+      class="w-full sm:w-[400px] block border mb-1 px-6 py-2 mx-auto text-center dark:bg-gray-600 dark:text-white dark:placeholder:text-white"
       on:keypress|preventDefault={(e) => {
         inputKey(e.key)
       }}
