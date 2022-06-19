@@ -195,7 +195,9 @@
   }
 
   function copyResult() {
-    const results = getShareResults(validations)
+    const results = $settings.darkMode
+      ? getShareResults(validations).map((result) => result.replaceAll("⬜", "⬛"))
+      : getShareResults(validations)
 
     const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
 
