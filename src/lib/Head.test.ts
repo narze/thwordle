@@ -15,15 +15,3 @@ it("works", () => {
 
   expect(component).toBeDefined()
 })
-
-it("renders with measurement ID G-F2Q37REQE6", () => {
-  const { component } = render(Head, {
-    title: "Test Title",
-    url: "http://test.com",
-    description: "Test description",
-    imageUrl: "test.jpg",
-    gtagId: "G-F2Q37REQE6",
-  })
-
-  expect(component).toBeDefined()
-})
