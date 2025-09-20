@@ -83,4 +83,8 @@ export default {
     day: "S21",
     word: "สงกรานต์",
   },
+  s22_47d4: {
+    day: "S22",
+    word: "ไอโฟน",
+  },
 }
