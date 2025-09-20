@@ -97,7 +97,7 @@
         if (!gameEnded) {
           const score = attemptLimit + 1 - validations.length
           console.log({ score })
-          window?.gtag("event", "post_score", { score })
+          if (window && window.gtag) window.gtag("event", "post_score", { score })
         }
 
         setTimeout(() => {
@@ -109,7 +109,7 @@
         if (!gameEnded) {
           const score = 0
           console.log({ score })
-          window?.gtag("event", "post_score", { score })
+          if (window && window.gtag) window.gtag("event", "post_score", { score })
         }
 
         setTimeout(() => {
@@ -187,10 +187,12 @@
     validations = [...validations, validation]
 
     if (validations.length == 1) {
-      window?.gtag("event", "first_guess", {
-        event_category: "general",
-        event_label: input,
-      })
+      if (window && window.gtag) {
+        window.gtag("event", "first_guess", {
+          event_category: "general",
+          event_label: input,
+        })
+      }
     }
 
     input = ""
