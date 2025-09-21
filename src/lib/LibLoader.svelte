@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   // Based on code from https://stackoverflow.com/questions/59629947/how-do-i-load-an-external-js-library-in-svelte-sapper
   import { onMount, createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
-  export let src
+  export let src: string
   export let libraryDetectionObject
   let script
 
@@ -24,5 +24,5 @@
 </script>
 
 <svelte:head>
-  <script bind:this={script} {src}></script>
+  <script bind:this={script} src={src}></script>
 </svelte:head>

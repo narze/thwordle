@@ -353,7 +353,7 @@
           <div
             class={`${"bg-white dark:bg-slate-800"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white
       rounded`}
-          />
+          ></div>
         {/each}
       </div>
     {/each}
