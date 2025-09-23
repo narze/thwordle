@@ -106,7 +106,10 @@
     <div class="block md:hidden">
       <div class="relative" bind:this={menu}>
         <div>
-          <button on:click={() => (show = !show)} class="flex justify-center h-full leading-10">
+          <button
+            on:click={() => (show = !show)}
+            class="flex justify-center h-full leading-10 dark:text-white"
+          >
             Menu
           </button>
 
