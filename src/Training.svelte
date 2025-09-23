@@ -326,7 +326,9 @@
 
   <span class="flex items-center gap-8 dark:text-white my-2">
     <span class="badge" on:click={changeCodeDialog}
-      >รหัส: <span class="font-mono">{indexToHashCode(dateIndex)}</span></span
+      >รหัส: <span class="font-mono"
+        >{$settings.hideTrainingCode ? "****" : indexToHashCode(dateIndex)}</span
+      ></span
     >
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
     <!-- <span>DEBUG: Index: {dateIndex}</span> -->

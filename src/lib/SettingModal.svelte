@@ -20,7 +20,6 @@
   role="dialog"
   aria-modal="true"
 >
-  >
   <div
     class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
   >
@@ -64,6 +63,23 @@
                     class="toggle-theme__input"
                     bind:checked={$settings.darkMode}
                     on:change={onToggleChange}
+                  />
+                  <span class="toggle-theme__button" />
+                </label>
+              </section>
+            </button>
+          </div>
+          <div class="mt-4 flex w-full">
+            <span class="grow font-bold self-center dark:text-white">ซ่อนรหัสในโหมด Unlimited</span>
+            <button>
+              <section>
+                <label for="toggle-training-code" class="toggle-theme">
+                  <input
+                    type="checkbox"
+                    name="toggle-training-code"
+                    id="toggle-training-code"
+                    class="toggle-theme__input"
+                    bind:checked={$settings.hideTrainingCode}
                   />
                   <span class="toggle-theme__button" />
                 </label>
