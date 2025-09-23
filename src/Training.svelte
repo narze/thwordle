@@ -33,7 +33,7 @@
 
   const attemptLimit = 6
   let input = ""
-  let dateIndex = 0
+  let dateIndex = -1
   $: solution = words[dateIndex % words.length] || ""
   let attempts: string[] = []
   $: validations = attempts.map((word) => validateWord(word, solution))
@@ -156,10 +156,10 @@
     attemptsContainer.scrollTop = attemptsContainer.scrollHeight
   }
 
-  function restart() {
+  function restart(_event?: Event, index?: number) {
     attempts = []
     validations = []
-    dateIndex = Math.floor(Math.random() * words.length)
+    dateIndex = index === undefined ? Math.floor(Math.random() * words.length) : index
     gameEnded = false
   }
 
@@ -228,6 +228,77 @@
     }
   }
 
+  function indexToHashCode(index: number) {
+    if (index === -1) return "..."
+
+    // Step 1: Multiply by a smaller prime
+    let x = index * 37
+
+    // Step 2: XOR with another prime
+    x = x ^ 41
+
+    // Step 3: Add another prime
+    x = x + 9967
+
+    // Step 4: Multiply by another prime
+    x = x * 43
+
+    // Convert to base 36 and reverse
+    return x.toString(36).toUpperCase().split("").reverse().join("")
+  }
+
+  function hashCodeToIndex(hashCode: string) {
+    // Convert to uppercase first to match the encoding
+    const upperHashCode = hashCode.toLowerCase().split("").reverse().join("")
+
+    // Convert from base 36 back to number
+    let x = parseInt(upperHashCode, 36)
+
+    x = x / 43
+
+    x = x - 9967
+
+    x = x ^ 41
+
+    x = x / 37
+
+    return x
+  }
+
+  // // Test if all indexes from 1-10000 can be decoded correctly
+  // Array.from({ length: 100000 }, (_, i) => {
+  //   const hashCode = indexToHashCode(i)
+  //   const index = hashCodeToIndex(hashCode)
+
+  //   if (index !== i) {
+  //     throw new Error(`Index ${i} decoded to ${index} instead of ${i}`)
+  //   }
+  // });
+
+  // // Test if all hash codes from 1-10000 are unique
+  // const hashCodes = Array.from({ length: 100000 }, (_, i) => indexToHashCode(i))
+  // const uniqueHashCodes = new Set(hashCodes)
+  // if (uniqueHashCodes.size !== 100000) {
+  //   throw new Error("All hash codes from 1-10000 are not unique")
+  // }
+
+  function changeCodeDialog() {
+    if (window) {
+      const newCode = window.prompt(
+        "เปลี่ยนรหัส หรือแชร์รหัสนี้เพื่อเล่นคำเดียวกัน",
+        `${indexToHashCode(dateIndex)}`
+      )
+
+      if (newCode.toUpperCase() !== indexToHashCode(dateIndex)) {
+        const newDateIndex = hashCodeToIndex(newCode)
+
+        if (words[newDateIndex] !== undefined) {
+          restart(null, newDateIndex)
+        }
+      }
+    }
+  }
+
   document.addEventListener("keydown", ({ key }) => {
     if (focusOnTextInput) {
       return
@@ -253,8 +324,14 @@
 <main class="container h-screen flex flex-col items-center dark:bg-slate-800">
   <Navbar {modalViewed} modes="training" />
 
-  <span class="flex gap-4 dark:text-white my-2">
+  <span class="flex items-center gap-8 dark:text-white my-2">
+    <span class="badge" on:click={changeCodeDialog}
+      >รหัส: <span class="font-mono">{indexToHashCode(dateIndex)}</span></span
+    >
     <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
+    <!-- <span>DEBUG: Index: {dateIndex}</span> -->
+    <!-- <span>DEBUG: Solution: {solution}</span> -->
+    <!-- <span>Index Decoded: {hashCodeToIndex(indexToHashCode(dateIndex))}</span> -->
   </span>
 
   <!-- Check Solution -->
@@ -394,6 +471,10 @@
   :root {
     font-family: "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+
+  .badge {
+    @apply px-2 py-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 cursor-pointer;
   }
 
   .attempts {
