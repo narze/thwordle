@@ -325,10 +325,10 @@
   <Navbar {modalViewed} modes="training" />
 
   <span class="flex items-center gap-8 dark:text-white my-2">
-    <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
     <span class="badge" on:click={changeCodeDialog}
       >รหัส: <span class="font-mono">{indexToHashCode(dateIndex)}</span></span
     >
+    <span>ครั้งที่ {attemptsLength}/{attemptLimit}</span>
     <!-- <span>DEBUG: Index: {dateIndex}</span> -->
     <!-- <span>DEBUG: Solution: {solution}</span> -->
     <!-- <span>Index Decoded: {hashCodeToIndex(indexToHashCode(dateIndex))}</span> -->
