@@ -61,7 +61,7 @@
     >
       Thwordle
       {#if training}
-        <span class="text-amber-600 text-xs relative top-3 right-12 px-1 rounded">Training</span>
+        <span class="text-amber-600 text-xs relative top-3 right-12 px-1 rounded">Unlimited</span>
       {/if}
       {#if special}
         <span class="text-teal-800 text-xs relative top-3 right-12 px-1 rounded">Special</span>
@@ -79,6 +79,16 @@
             Daily
           </button>
         {/if}
+        {#if daily || special}
+          <button
+            class="text-amber-600"
+            on:click={() => {
+              window.location.href = "/#/unlimited"
+            }}
+          >
+            Unlimited
+          </button>
+        {/if}
         {#if daily || training}
           <button
             class="text-teal-800"
@@ -89,16 +99,6 @@
             Special
           </button>
         {/if}
-        {#if daily || special}
-          <button
-            class="text-amber-600"
-            on:click={() => {
-              window.location.href = "/#/training"
-            }}
-          >
-            Training
-          </button>
-        {/if}
         <button on:click={() => (statsModal = true)}>สถิติ</button>
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>
@@ -106,7 +106,10 @@
     <div class="block md:hidden">
       <div class="relative" bind:this={menu}>
         <div>
-          <button on:click={() => (show = !show)} class="flex justify-center h-full leading-10">
+          <button
+            on:click={() => (show = !show)}
+            class="flex justify-center h-full leading-10 dark:text-white"
+          >
             Menu
           </button>
 
@@ -125,20 +128,20 @@
                   }}>Daily</button
                 >
               {/if}
+              {#if daily || special}
+                <button
+                  class="block px-4 py-2 hover:bg-gray-200 hover:text-amber-600 w-full"
+                  on:click={() => {
+                    window.location.href = "/#/unlimited"
+                  }}>Unlimited</button
+                >
+              {/if}
               {#if daily || training}
                 <button
                   class="block px-4 py-2 hover:bg-gray-200 hover:text-teal-800 w-full"
                   on:click={() => {
                     showSpecialModal = !showSpecialModal
                   }}>Special</button
-                >
-              {/if}
-              {#if daily || special}
-                <button
-                  class="block px-4 py-2 hover:bg-gray-200 hover:text-amber-600 w-full"
-                  on:click={() => {
-                    window.location.href = "/#/training"
-                  }}>Training</button
                 >
               {/if}
               <button
