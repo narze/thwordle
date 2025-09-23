@@ -79,16 +79,6 @@
             Daily
           </button>
         {/if}
-        {#if daily || training}
-          <button
-            class="text-teal-800"
-            on:click={() => {
-              showSpecialModal = !showSpecialModal
-            }}
-          >
-            Special
-          </button>
-        {/if}
         {#if daily || special}
           <button
             class="text-amber-600"
@@ -97,6 +87,16 @@
             }}
           >
             Unlimited
+          </button>
+        {/if}
+        {#if daily || training}
+          <button
+            class="text-teal-800"
+            on:click={() => {
+              showSpecialModal = !showSpecialModal
+            }}
+          >
+            Special
           </button>
         {/if}
         <button on:click={() => (statsModal = true)}>สถิติ</button>
@@ -128,20 +128,20 @@
                   }}>Daily</button
                 >
               {/if}
-              {#if daily || training}
-                <button
-                  class="block px-4 py-2 hover:bg-gray-200 hover:text-teal-800 w-full"
-                  on:click={() => {
-                    showSpecialModal = !showSpecialModal
-                  }}>Special</button
-                >
-              {/if}
               {#if daily || special}
                 <button
                   class="block px-4 py-2 hover:bg-gray-200 hover:text-amber-600 w-full"
                   on:click={() => {
                     window.location.href = "/#/unlimited"
                   }}>Unlimited</button
+                >
+              {/if}
+              {#if daily || training}
+                <button
+                  class="block px-4 py-2 hover:bg-gray-200 hover:text-teal-800 w-full"
+                  on:click={() => {
+                    showSpecialModal = !showSpecialModal
+                  }}>Special</button
                 >
               {/if}
               <button
