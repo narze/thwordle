@@ -61,7 +61,7 @@
     >
       Thwordle
       {#if training}
-        <span class="text-amber-600 text-xs relative top-3 right-12 px-1 rounded">Training</span>
+        <span class="text-amber-600 text-xs relative top-3 right-12 px-1 rounded">Unlimited</span>
       {/if}
       {#if special}
         <span class="text-teal-800 text-xs relative top-3 right-12 px-1 rounded">Special</span>
@@ -93,10 +93,10 @@
           <button
             class="text-amber-600"
             on:click={() => {
-              window.location.href = "/#/training"
+              window.location.href = "/#/unlimited"
             }}
           >
-            Training
+            Unlimited
           </button>
         {/if}
         <button on:click={() => (statsModal = true)}>สถิติ</button>
@@ -140,8 +140,8 @@
                 <button
                   class="block px-4 py-2 hover:bg-gray-200 hover:text-amber-600 w-full"
                   on:click={() => {
-                    window.location.href = "/#/training"
-                  }}>Training</button
+                    window.location.href = "/#/unlimited"
+                  }}>Unlimited</button
                 >
               {/if}
               <button

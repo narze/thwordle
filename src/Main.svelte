@@ -8,7 +8,7 @@
 
 {#if $url.hash.indexOf("#/s/") === 0 || $url.hash === "#/"}
   <Special specialId={$url.hash.split(["#/s/"])[1]} />
-{:else if $url.hash.indexOf("#/training") === 0}
+{:else if $url.hash.indexOf("#/training") === 0 || $url.hash.indexOf("#/unlimited") === 0}
   <Training />
 {:else}
   <App />
