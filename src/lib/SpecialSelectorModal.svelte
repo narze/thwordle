@@ -19,7 +19,7 @@
       class="fixed fadein inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
       aria-hidden="true"
       on:click={() => onClose()}
-    />
+    ></div>
 
     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true"
       >&#8203;</span
