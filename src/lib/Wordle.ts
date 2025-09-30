@@ -16,11 +16,9 @@ export function splitWord(word: string) {
   const out = []
 
   alphas.forEach((a) => {
-    // ถ้าตัวอักษรเป็นตัวตรงกลาง ให้ถือเป็นตัวใหม่
     if (a.match(/[ก-ฮa-zA-Z]/) || a.match(/[ใเแโไาำะๆฯฤา]/)) {
       out.push(a)
     } else {
-      // ถ้าเป็นสระบนล่าง หรือวรรณยุกต์ ให้ต่อท้ายตัวเดิม
       out[out.length - 1] += a
     }
   })
