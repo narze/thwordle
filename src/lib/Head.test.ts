@@ -1,10 +1,9 @@
-import "@testing-library/jest-dom"
-
+import { test } from "vitest"
 import { render } from "@testing-library/svelte"
 
 import Head from "./Head.svelte"
 
-it("works", () => {
+test("works", () => {
   const { component } = render(Head, {
     title: "Twitter",
     url: "http://twitter.com/foo",

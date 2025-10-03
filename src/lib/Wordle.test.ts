@@ -1,3 +1,4 @@
+import { test, describe } from "vitest"
 import {
   CharState,
   getShareResults,
@@ -8,25 +9,25 @@ import {
 } from "./Wordle"
 
 describe("#splitWord", () => {
-  it("exists", () => {
+  test("exists", () => {
     expect(splitWord).toBeDefined()
   })
 
-  it("splits ไทย to ไ ท ย", () => {
+  test("splits ไทย to ไ ท ย", () => {
     const input = "ไทย"
     const expectedOutput = ["ไ", "ท", "ย"]
 
     expect(splitWord(input)).toEqual(expectedOutput)
   })
 
-  it("splits สวัสดี to ส วั ส ดี", () => {
+  test("splits สวัสดี to ส วั ส ดี", () => {
     const input = "สวัสดี"
     const expectedOutput = ["ส", "วั", "ส", "ดี"]
 
     expect(splitWord(input)).toEqual(expectedOutput)
   })
 
-  it("splits whole sentence correctly", () => {
+  test("splits whole sentence correctly", () => {
     const input1 =
       "เป็นมนุษย์ สุดประเสริฐ เลิศคุณค่า ยังดีกว่า ฝูงสัตว์ เดรัจฉาน จงฝ่าฟัน พัฒนา".replace(
         / /g,
@@ -45,7 +46,7 @@ describe("#splitWord", () => {
 })
 
 describe("normalizeWord", () => {
-  it("strips upper-lower characters", () => {
+  test("strips upper-lower characters", () => {
     const input = "สวัสดี"
     const expectedOutput = "สวสด"
 
@@ -54,11 +55,11 @@ describe("normalizeWord", () => {
 })
 
 describe("validateWord", () => {
-  it("exists", () => {
+  test("exists", () => {
     expect(validateWord).toBeDefined()
   })
 
-  it("returns array of objects", () => {
+  test("returns array of objects", () => {
     const input = "ไทย"
     const solution = "ไทย"
 
@@ -70,7 +71,7 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
-  it("validate wrong alphabets", () => {
+  test("validate wrong alphabets", () => {
     const input = "ไหล"
     const solution = "ไทย"
 
@@ -82,7 +83,7 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
-  it("validate out-of-place alphabets", () => {
+  test("validate out-of-place alphabets", () => {
     const input = "ไยล"
     const solution = "ไทย"
 
@@ -94,7 +95,7 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
-  it("validate out-of-place alphabets and match substring with upper-lower sara", () => {
+  test("validate out-of-place alphabets and match substring with upper-lower sara", () => {
     const input = "xจxxx"
     const solution = "จังหวัด"
 
@@ -108,7 +109,7 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
-  it("checks without upper/lower sara", () => {
+  test("checks without upper/lower sara", () => {
     const input = "ปลาชชร"
     const solution = "ประชุมว"
 
@@ -123,7 +124,7 @@ describe("validateWord", () => {
     expect(validateWord(input, solution)).toEqual(expectedOutput)
   })
 
-  it("ignores already correct characters from matching again", () => {
+  test("ignores already correct characters from matching again", () => {
     const input = "ชมนม"
     const solution = "ชุมชน"
 
@@ -137,7 +138,7 @@ describe("validateWord", () => {
   })
 
   describe("edge cases", () => {
-    it("mark only one character to be out of place", () => {
+    test("mark only one character to be out of place", () => {
       const input = "อัศจรรย์"
       const solution = "ประเทศ"
 
@@ -152,7 +153,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("auto corrects in-place character", () => {
+    test("auto corrects in-place character", () => {
       const input = "กรุงเทพ"
       const solution = "ประเทศ"
 
@@ -167,7 +168,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("strips all upper-lower characters of out-of-place characters", () => {
+    test("strips all upper-lower characters of out-of-place characters", () => {
       const input = "นักเรียน"
       const solution = "ประเทศ"
 
@@ -182,7 +183,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("mark two of the same characters to be out of place", () => {
+    test("mark two of the same characters to be out of place", () => {
       const input = "อัศจรรย์"
       const solution = "ปรรเทศ"
 
@@ -197,7 +198,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks correctly for 1 correct & 1 out of place characters", () => {
+    test("checks correctly for 1 correct & 1 out of place characters", () => {
       const input = "สารบาญ"
       const solution = "สามารถ"
 
@@ -212,7 +213,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks the correct position first, then run another pass to check out-of-place characters", () => {
+    test("checks the correct position first, then run another pass to check out-of-place characters", () => {
       const input = "สมมาตร"
       const solution = "สามารถ"
 
@@ -228,7 +229,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks the correct position first, then run another pass to check out-of-place characters (2)", () => {
+    test("checks the correct position first, then run another pass to check out-of-place characters (2)", () => {
       const input = "อาถรรพ์"
       const solution = "สามารถ"
 
@@ -244,7 +245,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks the correct position first, then run another pass to check out-of-place characters (3)", () => {
+    test("checks the correct position first, then run another pass to check out-of-place characters (3)", () => {
       const input = "ราดหน้า"
       const solution = "สามารถ"
 
@@ -260,7 +261,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks the correct position first, then run another pass to check out-of-place characters (4)", () => {
+    test("checks the correct position first, then run another pass to check out-of-place characters (4)", () => {
       const input = "ภารโรง"
       const solution = "สามารถ"
 
@@ -276,7 +277,7 @@ describe("validateWord", () => {
       expect(validateWord(input, solution)).toEqual(expectedOutput)
     })
 
-    it("checks the correct position first, then run another pass to check out-of-place characters (5)", () => {
+    test("checks the correct position first, then run another pass to check out-of-place characters (5)", () => {
       const input = "ดาวหาง"
       const solution = "ระหว่าง"
 
@@ -295,12 +296,12 @@ describe("validateWord", () => {
 })
 
 describe("layout", () => {
-  it("returns sets of all possible alphabets as keys", () => {
+  test("returns sets of all possible alphabets as keys", () => {
     const alphabets = ["ก", "ข", "ค"]
     expect(Object.keys(generateAlphabetStateMap(alphabets))).toEqual("กขค".split(""))
   })
 
-  it("returns state of alphabet as values", () => {
+  test("returns state of alphabet as values", () => {
     const alphabets = ["ก", "ข", "ค", "ง"]
     const validations = [
       { correct: CharState.Wrong, char: "ก" },
@@ -318,7 +319,7 @@ describe("layout", () => {
     })
   })
 
-  it("does not mark upper-lower characters as wrong, leave it not used", () => {
+  test("does not mark upper-lower characters as wrong, leave it not used", () => {
     const input = "หนู"
     const solution = "จูง"
     const validation = validateWord(input, solution)
@@ -330,7 +331,7 @@ describe("layout", () => {
     })
   })
 
-  it("does not mark upper-lower characters as wrong, leave it not used (2)", () => {
+  test("does not mark upper-lower characters as wrong, leave it not used (2)", () => {
     const input = "เสือดำ"
     const solution = "เหมือน"
     const validation = validateWord(input, solution)
@@ -347,7 +348,7 @@ describe("layout", () => {
 })
 
 describe("#getShareResults", () => {
-  it("receives sets of attempts, then returns sharable text with emojis", () => {
+  test("receives sets of attempts, then returns sharable text with emojis", () => {
     const input = [
       [
         { correct: CharState.Wrong, char: "ก" },
