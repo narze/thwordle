@@ -1,10 +1,9 @@
-import "@testing-library/jest-dom"
-
+import { test } from "vitest"
 import { render } from "@testing-library/svelte"
 
 import Menu from "./Menu.svelte"
 
-it("works", () => {
+test("works", () => {
   const { getByText } = render(Menu, {
     items: [{ name: "Twitter", url: "http://twitter.com/foo" }],
   })
