@@ -14,6 +14,7 @@
     validateWord,
   } from "./lib/Wordle"
   import { onMount, tick } from "svelte"
+  import { get } from "svelte/store"
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
@@ -34,8 +35,15 @@
   const gtagId = "G-F2Q37REQE6"
   let words = []
 
-  $: rows = layouts[$settings.layout].rows
-  $: rowsShifted = layouts[$settings.layout].rowsShifted
+  let currentSettings
+  let currentData = {}
+  let currentModalViewed = false
+  
+  $: {
+    currentSettings = $settings
+  }
+  $: layoutRows = layouts[currentSettings?.layout || "Kedmanee"].rows
+  $: layoutRowsShifted = layouts[currentSettings?.layout || "Kedmanee"].rowsShifted
 
   // January 19, 2022 Game Epoch
   const epochMs = 1642525200000
@@ -47,9 +55,14 @@
 
   let input = ""
   $: solution = words[dateIndex % words.length] || ""
-  let attempts: string[] = $data[dateIndex]?.attempts || []
+  let attempts: string[] = []
+  let gameEnded = false
+  
+  $: {
+    attempts = $data[dateIndex]?.attempts || []
+    gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
+  }
   $: validations = attempts.map((word) => validateWord(word, solution))
-  let gameEnded = !!$data[dateIndex]?.win || !!$data[dateIndex]?.lose
   let attemptsContainer
   let copied = false
   let lose = false
@@ -65,10 +78,10 @@
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
   $: alertDelay = 500 + 150 * solutionLength
-  $: currentRows = shifted ? rowsShifted : rows
-  $: inverseRows = shifted ? rows : rowsShifted
+  $: currentRows = shifted ? layoutRowsShifted : layoutRows
+  $: inverseRows = shifted ? layoutRows : layoutRowsShifted
   $: alphabetStateMap = generateAlphabetStateMap(
-    [...rows, ...rowsShifted].flat(),
+    [...layoutRows, ...layoutRowsShifted].flat(),
     validations.flat()
   )
   $: input = input.replace(/[^ก-๙]/g, "")
@@ -136,7 +149,7 @@
   })
 
   function checkDarkMode() {
-    if ($settings.darkMode) {
+    if (currentSettings?.darkMode) {
       document.documentElement.classList.add("dark")
     } else {
       document.documentElement.classList.remove("dark")
@@ -196,7 +209,7 @@
   }
 
   function copyResult() {
-    const results = $settings.darkMode
+    const results = currentSettings?.darkMode
       ? getShareResults(validations).map((result) => result.replaceAll("⬜", "⬛"))
       : getShareResults(validations)
 
@@ -342,7 +355,7 @@
         {#each new Array(solutionLength).fill(0) as _}
           <div
             class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white rounded dark:bg-slate-800 dark:text-white`}
-          />
+          ></div>
         {/each}
       </div>
     {/each}
@@ -376,7 +389,7 @@
                 " " +
                 `${"⇧↵⬅".includes(alphabet) ? "border-gray-500" : ""}` +
                 " " +
-                `${$settings.layout === "ก-ฮ" ? "layout-no-shift" : ""}` +
+                `${currentSettings?.layout === "ก-ฮ" ? "layout-no-shift" : ""}` +
                 " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >

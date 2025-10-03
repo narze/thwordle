@@ -8,6 +8,7 @@
   import Social from "./lib/Social.svelte"
   import { CharState, generateAlphabetStateMap, splitWord, validateWord } from "./lib/Wordle"
   import { onMount, tick } from "svelte"
+  import { get } from "svelte/store"
   import Modal from "./lib/Modal.svelte"
   import { modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
@@ -28,8 +29,12 @@
   const gtagId = "G-F2Q37REQE6"
   let words = []
 
-  $: rows = layouts[$settings.layout].rows
-  $: rowsShifted = layouts[$settings.layout].rowsShifted
+  let currentSettings
+  settings.subscribe(value => {
+    currentSettings = value
+  })
+  $: layoutRows = layouts[currentSettings?.layout || "Kedmanee"].rows
+  $: layoutRowsShifted = layouts[currentSettings?.layout || "Kedmanee"].rowsShifted
 
   const attemptLimit = 6
   let input = ""
@@ -50,10 +55,10 @@
   $: attemptsLength = attempts.length
   $: solutionLength = splitWord(solution).length
   $: alertDelay = 500 + 150 * solutionLength
-  $: currentRows = shifted ? rowsShifted : rows
-  $: inverseRows = shifted ? rows : rowsShifted
+  $: currentRows = shifted ? layoutRowsShifted : layoutRows
+  $: inverseRows = shifted ? layoutRows : layoutRowsShifted
   $: alphabetStateMap = generateAlphabetStateMap(
-    [...rows, ...rowsShifted].flat(),
+    [...layoutRows, ...layoutRowsShifted].flat(),
     validations.flat()
   )
   $: input = input.replace(/[^ก-๙]/g, "")
@@ -105,7 +110,7 @@
   })
 
   function checkDarkMode() {
-    if ($settings.darkMode) {
+    if (currentSettings?.darkMode) {
       document.documentElement.classList.add("dark")
     } else {
       document.documentElement.classList.remove("dark")
@@ -370,7 +375,7 @@
         {#each new Array(solutionLength).fill(0) as _}
           <div
             class={`${"bg-white"} attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white rounded dark:bg-slate-800 dark:text-white`}
-          />
+          ></div>
         {/each}
       </div>
     {/each}
@@ -404,7 +409,7 @@
                 " " +
                 `${"⇧↵⬅".includes(alphabet) ? "border-gray-500" : ""}` +
                 " " +
-                `${$settings.layout === "ก-ฮ" ? "layout-no-shift" : ""}` +
+                `${currentSettings?.layout === "ก-ฮ" ? "layout-no-shift" : ""}` +
                 " " +
                 "flex-grow layout-key border-solid border-2 flex items-end justify-end text-xl font-bold rounded text-black"}
             >
