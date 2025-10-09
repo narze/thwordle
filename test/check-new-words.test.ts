@@ -1,8 +1,12 @@
+import { test, describe } from "vitest"
 import fs from "fs"
 import path from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe("NEW_WORDS.md validation", () => {
-  it("should check if any words from NEW_WORDS.md exist in words.json", () => {
+  test("should check if any words from NEW_WORDS.md exist in words.json", () => {
     const newWordsPath = path.join(__dirname, "../NEW_WORDS.md")
     const newWordsContent = fs.readFileSync(newWordsPath, "utf-8")
 
@@ -27,7 +31,7 @@ describe("NEW_WORDS.md validation", () => {
     expect(duplicateWords).toHaveLength(0)
   })
 
-  it("should check if any words from NEW_WORDS.md are duplicates within the same file", () => {
+  test("should check if any words from NEW_WORDS.md are duplicates within the same file", () => {
     const newWordsPath = path.join(__dirname, "../NEW_WORDS.md")
     const newWordsContent = fs.readFileSync(newWordsPath, "utf-8")
 

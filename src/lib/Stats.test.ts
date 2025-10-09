@@ -1,3 +1,4 @@
+import { test, describe } from "vitest"
 import {
   calculateGamesCount,
   calculateWinPercentage,
@@ -9,7 +10,7 @@ import {
 } from "./Stats"
 
 describe("calculateGamesCount", () => {
-  it("counts if win", () => {
+  test("counts if win", () => {
     const data = {
       "1": {
         win: true,
@@ -20,7 +21,7 @@ describe("calculateGamesCount", () => {
     expect(calculateGamesCount(data)).toEqual(1)
   })
 
-  it("counts if lose", () => {
+  test("counts if lose", () => {
     const data = {
       "1": {
         win: false,
@@ -31,7 +32,7 @@ describe("calculateGamesCount", () => {
     expect(calculateGamesCount(data)).toEqual(1)
   })
 
-  it("does not count if neither win nor lose", () => {
+  test("does not count if neither win nor lose", () => {
     const data = {
       "1": {
         win: false,
@@ -42,7 +43,7 @@ describe("calculateGamesCount", () => {
     expect(calculateGamesCount(data)).toEqual(0)
   })
 
-  it("returns number of games played, determined by win / lose", () => {
+  test("returns number of games played, determined by win / lose", () => {
     const data = {
       "1": {
         win: true,
@@ -63,7 +64,7 @@ describe("calculateGamesCount", () => {
 })
 
 describe("calculateWinPercentage", () => {
-  it("return 0 if did't play at all", () => {
+  test("return 0 if did't play at all", () => {
     const data = {
       "1": {
         win: false,
@@ -74,7 +75,7 @@ describe("calculateWinPercentage", () => {
     expect(calculateWinPercentage(data)).toEqual(0)
   })
 
-  it("returns 0 if lose all games", () => {
+  test("returns 0 if lose all games", () => {
     const data = {
       "1": {
         win: false,
@@ -89,7 +90,7 @@ describe("calculateWinPercentage", () => {
     expect(calculateWinPercentage(data)).toEqual(0)
   })
 
-  it("returns 50 if win 1 & lose 1", () => {
+  test("returns 50 if win 1 & lose 1", () => {
     const data = {
       "1": {
         win: false,
@@ -104,7 +105,7 @@ describe("calculateWinPercentage", () => {
     expect(calculateWinPercentage(data)).toEqual(50)
   })
 
-  it("returns 100 if win all games", () => {
+  test("returns 100 if win all games", () => {
     const data = {
       "1": {
         win: true,
@@ -125,7 +126,7 @@ describe("calculateWinPercentage", () => {
 })
 
 describe("calculateCurrentStreak", () => {
-  it("returns 0 if not played at all", () => {
+  test("returns 0 if not played at all", () => {
     const data = {
       "1": {
         win: false,
@@ -140,7 +141,7 @@ describe("calculateCurrentStreak", () => {
     expect(calculateCurrentStreak(data)).toEqual(0)
   })
 
-  it("returns 0 if lose the last game", () => {
+  test("returns 0 if lose the last game", () => {
     const data = {
       "1": {
         win: true,
@@ -153,7 +154,7 @@ describe("calculateCurrentStreak", () => {
     expect(calculateCurrentStreak(data)).toEqual(0)
   })
 
-  it("does not count if last date is not played yet", () => {
+  test("does not count if last date is not played yet", () => {
     const data = {
       "1": {
         win: true,
@@ -170,7 +171,7 @@ describe("calculateCurrentStreak", () => {
     expect(calculateCurrentStreak(data)).toEqual(2)
   })
 
-  it("resets if second to last date is not played yet", () => {
+  test("resets if second to last date is not played yet", () => {
     const data = {
       "1": {
         win: true,
@@ -191,7 +192,7 @@ describe("calculateCurrentStreak", () => {
     expect(calculateCurrentStreak(data)).toEqual(0)
   })
 
-  it("returns number of latest win streaks", () => {
+  test("returns number of latest win streaks", () => {
     const data = {
       "1": {
         lose: true,
@@ -215,7 +216,7 @@ describe("calculateCurrentStreak", () => {
 })
 
 describe("calculateMaxStreak", () => {
-  it("return 0 if did't play at all", () => {
+  test("return 0 if did't play at all", () => {
     const data = {
       "1": {
         win: false,
@@ -226,7 +227,7 @@ describe("calculateMaxStreak", () => {
     expect(calculateMaxStreak(data)).toEqual(0)
   })
 
-  it("returns 0 if lose all games", () => {
+  test("returns 0 if lose all games", () => {
     const data = {
       "1": {
         win: false,
@@ -241,7 +242,7 @@ describe("calculateMaxStreak", () => {
     expect(calculateMaxStreak(data)).toEqual(0)
   })
 
-  it("returns max win streaks (2 days)", () => {
+  test("returns max win streaks (2 days)", () => {
     const data = {
       "1": {
         win: true,
@@ -263,7 +264,7 @@ describe("calculateMaxStreak", () => {
     expect(calculateMaxStreak(data)).toEqual(2)
   })
 
-  it("returns max win streaks (2 days)", () => {
+  test("returns max win streaks (2 days)", () => {
     const data = {
       "1": {
         win: true,
@@ -294,7 +295,7 @@ describe("calculateMaxStreak", () => {
 })
 
 describe("calculateGuessDistribution", () => {
-  it("returns array with 7 elements", () => {
+  test("returns array with 7 elements", () => {
     const data = {
       incompleted_1: {
         attempts: ["foo"],
@@ -337,7 +338,7 @@ describe("calculateGuessDistribution", () => {
 })
 
 describe("filterNormalDays", () => {
-  it("returns data of numeric days", () => {
+  test("returns data of numeric days", () => {
     const data = {
       "1": {},
       S1: {},
@@ -347,7 +348,7 @@ describe("filterNormalDays", () => {
   })
 })
 describe("filterSpecialDays", () => {
-  it("returns data of non numeric days", () => {
+  test("returns data of non numeric days", () => {
     const data = {
       "1": {},
       S1: {},
