@@ -15,3 +15,10 @@
 - [Ko-fi](https://ko-fi.com)
 - [Jest](https://jestjs.io) & [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library)
 - etc.
+
+## End-to-End Testing (Playwright)
+
+Uses [Playwright](https://playwright.dev) for E2E testing.  
+Run `npm run e2e:install` and then `npm run e2e`.
+
+Currently covers win/lose scenarios.
