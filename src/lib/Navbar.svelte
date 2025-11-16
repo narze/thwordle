@@ -67,8 +67,18 @@
         <span class="text-teal-800 text-xs relative top-3 right-12 px-1 rounded">Special</span>
       {/if}
     </h1>
-    <div class="hidden md:block">
-      <span class="flex gap-3 justify-center h-full dark:text-white">
+    <div class="hidden lg:block">
+      <span class="flex gap-3 justify-center h-full dark:text-white items-center">
+        <a
+          href="https://word.in.th"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-red-400 hover:text-red-700 relative mr-8"
+          ><span
+            class="absolute -top-2 -right-10 bg-yellow-300 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full"
+            >NEW!</span
+          > เวิดดิ้น
+        </a>
         {#if training || special}
           <button
             class="text-red-400"
@@ -103,7 +113,7 @@
         <button on:click={() => (settingModal = true)}>ตั้งค่า</button>
       </span>
     </div>
-    <div class="block md:hidden">
+    <div class="block lg:hidden">
       <div class="relative" bind:this={menu}>
         <div>
           <button
@@ -144,6 +154,18 @@
                   }}>Special</button
                 >
               {/if}
+              <a
+                href="https://word.in.th"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block px-4 py-2 hover:bg-gray-200 hover:text-red-700 w-full text-center text-red-400 relative"
+              >
+                <span
+                  class="absolute -top-2 right-10 bg-yellow-300 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded-full"
+                  >NEW!</span
+                >
+                เวิดดิ้น
+              </a>
               <button
                 class="block px-4 py-2 hover:bg-gray-200 hover:text-black w-full"
                 on:click={() => (statsModal = true)}>สถิติ</button
