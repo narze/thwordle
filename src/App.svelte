@@ -17,6 +17,7 @@
   import Modal from "./lib/Modal.svelte"
   import { data, modalViewed, settings } from "./lib/store"
   import AlertModal from "./lib/AlertModal.svelte"
+  import AnnouncementModal from "./lib/AnnouncementModal.svelte"
   import { layouts } from "./lib/layouts"
 
   const url = "https://thwordle.vercel.app"
@@ -439,6 +440,27 @@
       }}
     />
   {/if}
+
+  <AnnouncementModal onClose={() => {}}>
+    <h3
+      class="text-base leading-6 font-medium text-gray-900 dark:text-white"
+      id="announcement-modal-title"
+    >
+      ประกาศ
+    </h3>
+    <div class="mt-2">
+      <p class="text-sm text-gray-500 dark:text-gray-300">
+        <!-- Add your announcement content here -->
+        เปิดตัวเกมใหม่
+        <a
+          href="https://word.in.th"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline text-blue-600">เวิดดิ้น</a
+        > ลองไปเล่นกันได้เลย!
+      </p>
+    </div>
+  </AnnouncementModal>
 </main>
 
 <style>
