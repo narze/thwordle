@@ -113,18 +113,15 @@
   }
 
   async function getWords() {
-    const res = await fetch(`/words.json`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    const json = await res.json()
-
-    if (res.ok) {
-      return json.words
-    } else {
-      throw new Error(await res.text())
-    }
+    const [res1, res2] = await Promise.all([
+      fetch("/words.json", { headers: { "Content-Type": "application/json" } }),
+      fetch("/words-unlimited.json", { headers: { "Content-Type": "application/json" } }),
+    ])
+    if (!res1.ok) throw new Error(await res1.text())
+    if (!res2.ok) throw new Error(await res2.text())
+    const [json1, json2] = await Promise.all([res1.json(), res2.json()])
+    const combined = [...(json1.words || []), ...(json2.words || [])]
+    return combined
   }
 
   async function submit() {
