@@ -136,7 +136,6 @@
                   on:click={() => {
                     goto("/")
                   }}>Daily</button>
-                >
               {/if}
               {#if daily || special}
                 <button
@@ -144,7 +143,6 @@
                   on:click={() => {
                     goto("/unlimited")
                   }}>Unlimited</button>
-                >
               {/if}
               {#if daily || training}
                 <button
