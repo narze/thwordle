@@ -1,4 +1,12 @@
 import { test, expect } from "@playwright/test"
+import wordsData from "../static/words.json"
+
+// Calculate today's word based on date index (same logic as the app)
+const epochMs = 1642525200000
+const now = Date.now()
+const msInDay = 86400000
+const dateIndex = Math.floor((now - epochMs) / msInDay)
+const todayWord = wordsData.words[dateIndex % wordsData.words.length]
 
 test.describe("Smoke Tests - All Routes", () => {
   test.beforeEach(async ({ page }) => {
@@ -78,5 +86,44 @@ test.describe("Smoke Tests - All Routes", () => {
     await keyboardButton.click()
 
     await page.waitForTimeout(100)
+  })
+
+  test("Daily mode - enter a word and verify game works", async ({ page }) => {
+    await page.goto("/")
+
+    // Close the instructions modal
+    await page.click('[role="dialog"]')
+
+    // Wait for words to load (the input field should be enabled)
+    const input = page.locator("main .layout input")
+    await expect(input).toBeVisible()
+
+    // Wait a bit for words.json to load
+    await page.waitForTimeout(1000)
+
+    // Use today's actual word - handles variable length (4-10 chars)
+    console.log(`Today's word: ${todayWord} (${todayWord.length} chars)`)
+
+    // Type today's word
+    await input.fill(todayWord)
+
+    // Verify input contains the word
+    await expect(input).toHaveValue(todayWord)
+
+    // Press Enter to submit
+    await page.keyboard.press("Enter")
+
+    // Wait for the word to appear on the board
+    await page.waitForTimeout(500)
+
+    // Verify the attempt appears on the board (check for colored tiles)
+    const attemptTiles = page.locator(".attempt-key")
+    await expect(attemptTiles.first()).toBeVisible({ timeout: 5000 })
+
+    // Verify attempt counter increased to show the game accepted the word
+    await expect(page.locator("text=ครั้งที่ 1/")).toBeVisible()
+
+    // Verify no error message appeared (word was valid)
+    await expect(page.locator("text=คำนี้ไม่มีในพจนานุกรม")).not.toBeVisible()
   })
 })
