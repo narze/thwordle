@@ -18,7 +18,7 @@ function split(word: string) {
 
 function wrong(len: number, exclude: string, max: number) {
   const res: string[] = []
-  const wordsPath = path.join(process.cwd(), "public", "words.json")
+  const wordsPath = path.join(process.cwd(), "static", "words.json")
   const json = JSON.parse(fs.readFileSync(wordsPath, "utf-8")) as { words: string[] }
   for (const w of json.words) {
     if (w === exclude) continue
