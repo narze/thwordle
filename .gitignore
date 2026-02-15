@@ -5,3 +5,5 @@
 test-results/
 playwright-report/
 
+.svelte-kit/
+package-lock.json

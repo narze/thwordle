@@ -1,4 +1,5 @@
 import { writable } from "svelte/store"
+import { browser } from "$app/environment"
 import { CharState } from "./Wordle"
 
 interface IStore {
@@ -30,12 +31,14 @@ const DEFAULT: IStore = {
 
 const LOCALSTORAGE_KEY = "thwordle-attempts"
 
-const storage: IStore = JSON.parse(
-  window.localStorage.getItem(LOCALSTORAGE_KEY) || JSON.stringify(DEFAULT)
-)
+const storage: IStore = browser
+  ? JSON.parse(window.localStorage.getItem(LOCALSTORAGE_KEY) || JSON.stringify(DEFAULT))
+  : DEFAULT
 
 function storeSettings() {
-  window.localStorage[LOCALSTORAGE_KEY] = JSON.stringify(storage)
+  if (browser) {
+    window.localStorage[LOCALSTORAGE_KEY] = JSON.stringify(storage)
+  }
 }
 
 export const modalViewed = writable<IStore["modalViewed"]>(

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    %sveltekit.head%
 
     <title>Thwordle : Thai Wordle เวอเดิ้ลภาษาไทย</title>
 
     <meta name="title" content="Thwordle : Thai Wordle" />
     <meta name="description" content="เวอเดิ้ลภาษาไทย" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:url" content="https://github.com/narze/thwordle" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Thwordle : Thai Wordle" />
@@ -30,8 +29,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
-    <div class="dark:bg-slate-800" id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>
