@@ -14,6 +14,7 @@
     validateWord,
   } from "$lib/Wordle"
   import { onMount, tick } from "svelte"
+  import { browser } from "$app/environment"
   import Modal from "$lib/Modal.svelte"
   import { data, modalViewed, settings } from "$lib/store"
   import AlertModal from "$lib/AlertModal.svelte"
@@ -134,9 +135,7 @@
 
     dict = (await import("$lib/dict.json")).default
     words = await getWords()
-  })
 
-  onMount(() => {
     const handleKeydown = ({ key }) => {
       if (focusOnTextInput) {
         return
