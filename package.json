@@ -22,6 +22,8 @@
     "@playwright/test": "^1.48.2",
     "@sveltejs/adapter-auto": "^7.0.0",
     "@sveltejs/kit": "^2.50.2",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/svelte": "^5.3.1",
     "@tsconfig/svelte": "^5.0.0",
     "@vitest/ui": "^3.2.4",
