@@ -10,7 +10,7 @@ describe("NEW_WORDS.md validation", () => {
     const newWordsPath = path.join(__dirname, "../NEW_WORDS.md")
     const newWordsContent = fs.readFileSync(newWordsPath, "utf-8")
 
-    const wordsJsonPath = path.join(__dirname, "../public/words.json")
+    const wordsJsonPath = path.join(__dirname, "../static/words.json")
     const wordsJsonContent = fs.readFileSync(wordsJsonPath, "utf-8")
     const wordsData = JSON.parse(wordsJsonContent)
     const existingWords = new Set(wordsData.words)

@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe("words.json validation", () => {
   test("should not contain English characters, words, or spaces", () => {
-    const wordsJsonPath = path.join(__dirname, "../public/words.json")
+    const wordsJsonPath = path.join(__dirname, "../static/words.json")
     const wordsJsonContent = fs.readFileSync(wordsJsonPath, "utf-8")
     const wordsData = JSON.parse(wordsJsonContent)
     const words: string[] = wordsData.words
@@ -51,7 +51,7 @@ describe("words.json validation", () => {
   })
 
   test("should not contain duplicate words", () => {
-    const wordsJsonPath = path.join(__dirname, "../public/words.json")
+    const wordsJsonPath = path.join(__dirname, "../static/words.json")
     const wordsJsonContent = fs.readFileSync(wordsJsonPath, "utf-8")
     const wordsData = JSON.parse(wordsJsonContent)
     const words: string[] = wordsData.words
