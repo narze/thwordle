@@ -4,7 +4,7 @@
   import StatsModal from "./StatsModal.svelte"
   import { onMount } from "svelte"
   import { scale } from "svelte/transition"
-
+  import { goto } from '$app/navigation'
   let show = false
   let menu = null
 
@@ -83,7 +83,7 @@
           <button
             class="text-red-400"
             on:click={() => {
-              window.location.href = "/"
+              goto("/")
             }}
           >
             Daily
@@ -93,7 +93,7 @@
           <button
             class="text-amber-600"
             on:click={() => {
-              window.location.href = "/#/unlimited"
+              goto("/unlimited")
             }}
           >
             Unlimited
@@ -134,16 +134,16 @@
                 <button
                   class="block px-4 py-2 hover:bg-gray-200 hover:text-red-400 w-full"
                   on:click={() => {
-                    window.location.href = "/"
-                  }}>Daily</button
+                    goto("/")
+                  }}>Daily</button>
                 >
               {/if}
               {#if daily || special}
                 <button
                   class="block px-4 py-2 hover:bg-gray-200 hover:text-amber-600 w-full"
                   on:click={() => {
-                    window.location.href = "/#/unlimited"
-                  }}>Unlimited</button
+                    goto("/unlimited")
+                  }}>Unlimited</button>
                 >
               {/if}
               {#if daily || training}
