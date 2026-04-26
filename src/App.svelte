@@ -203,7 +203,11 @@
 
     const score: string = (lose ? "X" : `${results.length}`) + `/${attemptLimit}`
 
-    navigator.clipboard.writeText(`#Thwordle ${dateIndex + 1} ${score}\n\n${results.join("\n")}`)
+    const shareLinkLine = `เล่นเกม ➡️ ${new URL(url).host}`
+
+    navigator.clipboard.writeText(
+      `#Thwordle ${dateIndex + 1} ${score}\n\n${results.join("\n")}\n\n${shareLinkLine}`
+    )
 
     copied = true
 
