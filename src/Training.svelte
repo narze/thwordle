@@ -342,7 +342,7 @@
             class={`${
               colors[correct] || "bg-white"
             } attempt-key border-solid border-2 flex items-center justify-center mx-0.5 text-3xl font-bold text-white rounded `}
-            in:spinAnimation={{ duration: 500, delay: 150 * idx }}
+            in:spinAnimation|global={{ duration: 500, delay: 150 * idx }}
           >
             {char ?? ""}
           </div>

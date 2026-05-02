@@ -1,10 +1,10 @@
 import "./app.css"
+import { mount } from "svelte"
 import Main from "./Main.svelte"
 
-const app = new Main({
-  target: document.getElementById("app"),
+const app = mount(Main, {
+  target: document.getElementById("app")!,
   intro: true,
-  // hydrate: true,
 })
 
 export default app
